@@ -1,0 +1,28 @@
+body {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.spinner {
+  background: linear-gradient(red, blue, green, yellow, pink);
+  height: 300px;
+  width: 300px;
+  border-radius: 50%;
+  animation: spin 2.5s linear infinite;
+  margin-bottom: 30px;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner.paused {
+  animation-play-state: paused;
+}

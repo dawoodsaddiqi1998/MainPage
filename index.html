@@ -1,0 +1,2158 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Bilingual central learning hub for the 60-Day Front-End Web Development & AI course"
+    />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="Web Development & AI — 60-Day Learning Hub"
+    />
+    <meta
+      property="og:description"
+      content="Teaching, student projects, the 60-day plan, and focused practice pages in one connected hub."
+    />
+    <meta property="og:image" content="./public/og.png" />
+    <meta
+      property="og:image:alt"
+      content="Web Development & AI — 60-Day Learning Hub"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Web Development & AI — 60-Day Learning Hub"
+    />
+    <meta
+      name="twitter:description"
+      content="Learn, explore, plan, and practice from one connected course hub."
+    />
+    <meta name="twitter:image" content="./public/og.png" />
+    <title>Web Development & AI | NETLINKS × UNICEF Learning Hub</title>
+
+    <style>
+      :root {
+        --bg: #07111f;
+        --bg-2: #0b1728;
+        --panel: #101f33;
+        --panel-2: #132740;
+        --text: #edf4ff;
+        --muted: #99abc3;
+        --line: rgba(255, 255, 255, 0.09);
+        --primary: #67a4ff;
+        --primary-2: #8fc1ff;
+        --green: #65d6a5;
+        --yellow: #ffd36a;
+        --purple: #b99cff;
+        --red: #ff8d8d;
+        --shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+        --radius: 22px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+          Inter,
+          ui-sans-serif,
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Arial,
+          sans-serif;
+        background:
+          radial-gradient(
+            circle at 15% 5%,
+            rgba(103, 164, 255, 0.13),
+            transparent 26%
+          ),
+          radial-gradient(
+            circle at 90% 18%,
+            rgba(185, 156, 255, 0.1),
+            transparent 24%
+          ),
+          linear-gradient(180deg, var(--bg), var(--bg-2));
+        color: var(--text);
+      }
+
+      body[dir="rtl"] {
+        font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+      }
+
+      a {
+        color: inherit;
+      }
+      button,
+      input {
+        font: inherit;
+      }
+      .site-shell {
+        max-width: 1240px;
+        margin: 0 auto;
+        padding: 0 22px 70px;
+      }
+
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        backdrop-filter: blur(18px);
+        background: rgba(7, 17, 31, 0.82);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav {
+        max-width: 1240px;
+        margin: auto;
+        padding: 13px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+      }
+
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        text-decoration: none;
+      }
+      .brand-mark {
+        width: 42px;
+        height: 42px;
+        border-radius: 13px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(135deg, var(--primary), var(--purple));
+        color: #07111f;
+        font-weight: 900;
+        font-size: 18px;
+        box-shadow: 0 8px 30px rgba(103, 164, 255, 0.22);
+      }
+      .brand-text strong {
+        display: block;
+        font-size: 0.98rem;
+      }
+      .brand-text span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.76rem;
+        margin-top: 1px;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      .nav-links {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .nav-links a {
+        text-decoration: none;
+        color: #b9c9dc;
+        font-size: 0.86rem;
+        padding: 9px 10px;
+        border-radius: 10px;
+      }
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.06);
+        color: white;
+      }
+
+      .lang-switch {
+        display: flex;
+        align-items: center;
+        padding: 4px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.035);
+      }
+      .lang-btn {
+        border: 0;
+        background: transparent;
+        color: #9fb1c6;
+        padding: 7px 10px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 800;
+        font-size: 0.76rem;
+      }
+      .lang-btn.active {
+        background: var(--primary);
+        color: #07111f;
+      }
+
+      .hero {
+        display: grid;
+        grid-template-columns: 1.25fr 0.75fr;
+        gap: 32px;
+        align-items: center;
+        padding: 76px 0 42px;
+      }
+      .kicker {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        border: 1px solid rgba(103, 164, 255, 0.25);
+        background: rgba(103, 164, 255, 0.08);
+        color: #b9d6ff;
+        padding: 7px 11px;
+        border-radius: 999px;
+        font-weight: 700;
+        font-size: 0.78rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      body[dir="rtl"] .kicker {
+        letter-spacing: 0;
+      }
+      .pulse {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--green);
+        box-shadow: 0 0 0 5px rgba(101, 214, 165, 0.1);
+      }
+      h1 {
+        font-size: clamp(2.6rem, 6vw, 5.6rem);
+        line-height: 1.03;
+        letter-spacing: -0.05em;
+        margin: 20px 0 20px;
+      }
+      body[dir="rtl"] h1 {
+        letter-spacing: 0;
+      }
+      h1 span {
+        background: linear-gradient(
+          90deg,
+          #fff 0%,
+          var(--primary-2) 55%,
+          #d6cbff 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero p {
+        color: #aebed1;
+        font-size: 1.06rem;
+        line-height: 1.8;
+        max-width: 760px;
+      }
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 11px;
+        margin-top: 28px;
+      }
+      .btn {
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        padding: 12px 16px;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        transition: 0.2s ease;
+      }
+      .btn.primary {
+        background: var(--primary);
+        border-color: var(--primary);
+        color: #07111f;
+      }
+      .btn.secondary {
+        background: rgba(255, 255, 255, 0.04);
+        color: white;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+
+      .hero-panel {
+        background: linear-gradient(
+          180deg,
+          rgba(19, 39, 64, 0.92),
+          rgba(13, 29, 49, 0.92)
+        );
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        padding: 22px;
+        box-shadow: var(--shadow);
+      }
+      .hero-panel-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 14px;
+      }
+      .hero-panel h3 {
+        margin: 0;
+        font-size: 1rem;
+      }
+      .status {
+        font-size: 0.72rem;
+        color: var(--green);
+        background: rgba(101, 214, 165, 0.1);
+        padding: 5px 8px;
+        border-radius: 999px;
+      }
+      .metric-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .metric {
+        padding: 16px;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid var(--line);
+      }
+      .metric strong {
+        display: block;
+        font-size: 1.7rem;
+        letter-spacing: -0.03em;
+      }
+      .metric span {
+        display: block;
+        color: var(--muted);
+        font-size: 0.77rem;
+        margin-top: 4px;
+      }
+      .path-line {
+        margin-top: 14px;
+        padding: 14px;
+        border-radius: 16px;
+        background: rgba(103, 164, 255, 0.06);
+        border: 1px solid rgba(103, 164, 255, 0.12);
+      }
+      .path-line small {
+        color: #8da3bd;
+      }
+      .path {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 7px;
+        font-size: 0.78rem;
+        flex-wrap: wrap;
+      }
+      .path b {
+        color: #d9e8ff;
+      }
+      .arrow {
+        color: #627994;
+      }
+
+      .section {
+        padding-top: 54px;
+      }
+      .section-head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 25px;
+        margin-bottom: 20px;
+      }
+      .section-head h2 {
+        margin: 0;
+        font-size: clamp(1.7rem, 3vw, 2.5rem);
+        letter-spacing: -0.035em;
+      }
+      body[dir="rtl"] .section-head h2 {
+        letter-spacing: 0;
+      }
+      .section-head p {
+        max-width: 620px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+        line-height: 1.7;
+      }
+
+      .core-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+      }
+      .core-card {
+        min-height: 245px;
+        padding: 20px;
+        border-radius: var(--radius);
+        border: 1px solid var(--line);
+        background: rgba(16, 31, 51, 0.78);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        transition: 0.22s ease;
+      }
+      .core-card:hover {
+        transform: translateY(-5px);
+        background: rgba(19, 39, 64, 0.96);
+        border-color: rgba(103, 164, 255, 0.25);
+      }
+      .icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        font-size: 1.16rem;
+        margin-bottom: 25px;
+      }
+      .blue {
+        background: rgba(103, 164, 255, 0.12);
+        color: var(--primary-2);
+      }
+      .green {
+        background: rgba(101, 214, 165, 0.12);
+        color: var(--green);
+      }
+      .purple {
+        background: rgba(185, 156, 255, 0.12);
+        color: #c8b4ff;
+      }
+      .yellow {
+        background: rgba(255, 211, 106, 0.12);
+        color: var(--yellow);
+      }
+      .core-card h3 {
+        margin: 0 0 8px;
+        font-size: 1.1rem;
+      }
+      .core-card p {
+        color: var(--muted);
+        font-size: 0.86rem;
+        line-height: 1.65;
+        margin: 0 0 20px;
+      }
+      .card-link {
+        margin-top: auto;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.82rem;
+        color: #d5e7ff;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+
+      .journey {
+        background: rgba(16, 31, 51, 0.68);
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        padding: 19px;
+      }
+      .module-list {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+      .module {
+        padding: 15px;
+        border: 1px solid var(--line);
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.025);
+        text-decoration: none;
+        transition: 0.18s ease;
+      }
+      .module:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(103, 164, 255, 0.24);
+      }
+      .module-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+      }
+      .module-top strong {
+        font-size: 0.9rem;
+      }
+      .days {
+        color: var(--primary-2);
+        font-size: 0.73rem;
+        font-weight: 800;
+        white-space: nowrap;
+      }
+      .module p {
+        font-size: 0.78rem;
+        color: var(--muted);
+        margin: 7px 0 0;
+        line-height: 1.5;
+      }
+
+      .resource-toolbar {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .search {
+        flex: 1;
+        min-width: 240px;
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid var(--line);
+        border-radius: 13px;
+        padding: 0 12px;
+      }
+      .search input {
+        width: 100%;
+        padding: 12px 0;
+        border: 0;
+        outline: 0;
+        background: transparent;
+        color: white;
+      }
+      .search input::placeholder {
+        color: #70849e;
+      }
+      .filters {
+        display: flex;
+        gap: 7px;
+        flex-wrap: wrap;
+      }
+      .filter {
+        border: 1px solid var(--line);
+        background: transparent;
+        color: #aabbd0;
+        padding: 8px 10px;
+        border-radius: 999px;
+        cursor: pointer;
+        font-size: 0.77rem;
+        font-weight: 700;
+      }
+      .filter.active,
+      .filter:hover {
+        background: rgba(103, 164, 255, 0.11);
+        color: #ddebff;
+        border-color: rgba(103, 164, 255, 0.24);
+      }
+
+      .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .resource {
+        padding: 17px;
+        border-radius: 17px;
+        background: rgba(16, 31, 51, 0.72);
+        border: 1px solid var(--line);
+        min-height: 150px;
+        display: flex;
+        flex-direction: column;
+      }
+      .resource .tag {
+        align-self: flex-start;
+        font-size: 0.68rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+        color: #b9d6ff;
+        background: rgba(103, 164, 255, 0.08);
+        padding: 5px 7px;
+        border-radius: 7px;
+      }
+      body[dir="rtl"] .resource .tag {
+        align-self: flex-end;
+        letter-spacing: 0;
+      }
+      .resource h3 {
+        font-size: 1rem;
+        margin: 12px 0 5px;
+      }
+      .resource p {
+        font-size: 0.79rem;
+        line-height: 1.55;
+        color: var(--muted);
+        margin: 0 0 14px;
+      }
+      .resource a {
+        margin-top: auto;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 0.78rem;
+        color: #d7e8ff;
+      }
+
+      .projects-shell {
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        padding: 20px;
+        background: rgba(16, 31, 51, 0.62);
+      }
+      .project-featured {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 16px;
+        margin-bottom: 16px;
+      }
+      .project-hero {
+        min-height: 270px;
+        border-radius: 20px;
+        padding: 24px;
+        position: relative;
+        overflow: hidden;
+        background:
+          linear-gradient(
+            135deg,
+            rgba(103, 164, 255, 0.18),
+            rgba(185, 156, 255, 0.1)
+          ),
+          rgba(255, 255, 255, 0.025);
+        border: 1px solid rgba(103, 164, 255, 0.18);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+      .project-hero::before {
+        content: "</>";
+        position: absolute;
+        right: 24px;
+        top: 15px;
+        font-size: 6rem;
+        font-weight: 900;
+        color: rgba(255, 255, 255, 0.035);
+      }
+      body[dir="rtl"] .project-hero::before {
+        right: auto;
+        left: 24px;
+      }
+      .project-hero .badge,
+      .project-card .badge {
+        width: max-content;
+        padding: 5px 8px;
+        border-radius: 999px;
+        color: #cfe4ff;
+        background: rgba(103, 164, 255, 0.12);
+        font-size: 0.68rem;
+        font-weight: 800;
+      }
+      .project-hero h3 {
+        font-size: 1.7rem;
+        margin: 10px 0 8px;
+      }
+      .project-hero p {
+        max-width: 620px;
+        color: var(--muted);
+        margin: 0 0 15px;
+        line-height: 1.65;
+      }
+      .project-stats {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .project-stat {
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .project-stat strong {
+        font-size: 1.4rem;
+        display: block;
+      }
+      .project-stat span {
+        font-size: 0.78rem;
+        color: var(--muted);
+      }
+      .project-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .project-card {
+        min-height: 185px;
+        padding: 17px;
+        border-radius: 17px;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.024);
+        display: flex;
+        flex-direction: column;
+      }
+      .project-card h3 {
+        margin: 12px 0 6px;
+        font-size: 1rem;
+      }
+      .project-card p {
+        color: var(--muted);
+        font-size: 0.78rem;
+        line-height: 1.55;
+        margin: 0 0 14px;
+      }
+      .project-card a {
+        margin-top: auto;
+        text-decoration: none;
+        color: #d8e9ff;
+        font-weight: 800;
+        font-size: 0.78rem;
+      }
+
+      .workflow {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+      }
+      .step {
+        position: relative;
+        padding: 17px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.025);
+      }
+      .step small {
+        color: var(--primary-2);
+        font-weight: 900;
+      }
+      .step strong {
+        display: block;
+        margin: 7px 0 5px;
+        font-size: 0.9rem;
+      }
+      .step p {
+        color: var(--muted);
+        font-size: 0.76rem;
+        line-height: 1.5;
+        margin: 0;
+      }
+
+      .notice {
+        margin-top: 48px;
+        padding: 20px;
+        border-radius: 18px;
+        border: 1px dashed rgba(255, 211, 106, 0.28);
+        background: rgba(255, 211, 106, 0.055);
+      }
+      .notice strong {
+        color: var(--yellow);
+      }
+      .notice p {
+        margin: 5px 0 0;
+        color: #b9b2a0;
+        font-size: 0.85rem;
+        line-height: 1.65;
+      }
+      code {
+        background: rgba(255, 255, 255, 0.06);
+        padding: 2px 5px;
+        border-radius: 6px;
+        color: #d8e7ff;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        margin-top: 70px;
+        padding: 28px 0 0;
+        color: #72859d;
+        font-size: 0.78rem;
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .dr {
+        display: none;
+      }
+      body.lang-dr .en {
+        display: none !important;
+      }
+      body.lang-dr .dr {
+        display: inline;
+      }
+      body.lang-dr div.dr,
+      body.lang-dr p.dr,
+      body.lang-dr h1.dr,
+      body.lang-dr h2.dr,
+      body.lang-dr h3.dr {
+        display: block;
+      }
+      body.lang-dr .brand-text span.dr {
+        display: block;
+      }
+
+      @media (max-width: 1050px) {
+        .nav-links {
+          display: none;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .core-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .module-list {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .resource-grid,
+        .project-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .workflow {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .project-featured {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 680px) {
+        .nav {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+        .brand-text span {
+          display: none !important;
+        }
+        .site-shell {
+          padding-left: 14px;
+          padding-right: 14px;
+        }
+        .hero {
+          padding-top: 48px;
+        }
+        .core-grid,
+        .module-list,
+        .resource-grid,
+        .project-grid,
+        .workflow {
+          grid-template-columns: 1fr;
+        }
+        .section-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .metric-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+        h1 {
+          font-size: 3rem;
+        }
+      }
+    </style>
+
+    <style id="netlinks-unicef-brand-theme">
+      /*
+  NETLINKS + UNICEF course theme
+  UNICEF direction: cyan + white, with bright secondary accents.
+  NETLINKS direction: orange + purple identity accents.
+*/
+      :root {
+        --unicef-cyan: #00aeef;
+        --unicef-cyan-dark: #008cc8;
+        --unicef-cyan-soft: #eaf9fe;
+
+        --netlinks-orange: #f8781e;
+        --netlinks-orange-soft: #fff2e8;
+        --netlinks-purple: #64468c;
+        --netlinks-purple-soft: #f3eef8;
+
+        --brand-yellow: #ffc72c;
+        --brand-pink: #e94b8a;
+
+        --bg: #f5fafd;
+        --bg-2: #ffffff;
+        --panel: #ffffff;
+        --panel-2: #f7fbfd;
+        --text: #22313f;
+        --muted: #667784;
+        --line: #ddeaf0;
+
+        --primary: var(--unicef-cyan);
+        --primary-2: var(--unicef-cyan-dark);
+        --green: #31a779;
+        --yellow: var(--brand-yellow);
+        --purple: var(--netlinks-purple);
+        --red: #d95757;
+        --shadow: 0 14px 40px rgba(39, 80, 101, 0.1);
+      }
+
+      /* Base */
+      body {
+        background:
+          radial-gradient(
+            circle at 7% 4%,
+            rgba(0, 174, 239, 0.1),
+            transparent 24%
+          ),
+          radial-gradient(
+            circle at 94% 10%,
+            rgba(100, 70, 140, 0.08),
+            transparent 23%
+          ),
+          linear-gradient(180deg, #f8fcfe 0%, #ffffff 46%, #f8fbfd 100%);
+        color: var(--text);
+      }
+
+      /* Header / navigation */
+      .topbar {
+        background: rgba(255, 255, 255, 0.94);
+        border-bottom: 1px solid #d8e9f0;
+        box-shadow: 0 4px 22px rgba(39, 80, 101, 0.06);
+      }
+      .brand-mark {
+        background: linear-gradient(
+          135deg,
+          var(--netlinks-orange) 0 48%,
+          var(--netlinks-purple) 52% 100%
+        );
+        color: white;
+        box-shadow: 0 8px 22px rgba(100, 70, 140, 0.16);
+      }
+      .brand-text strong {
+        color: #263746;
+      }
+      .brand-text span {
+        color: #778995;
+      }
+      .nav-links a {
+        color: #526777;
+      }
+      .nav-links a:hover {
+        background: var(--unicef-cyan-soft);
+        color: var(--unicef-cyan-dark);
+      }
+
+      .lang-switch {
+        background: #f4f9fc;
+        border-color: #d6e8f0;
+      }
+      .lang-btn {
+        color: #607684;
+      }
+      .lang-btn.active {
+        background: var(--unicef-cyan);
+        color: white;
+      }
+
+      /* Hero */
+      .kicker {
+        border-color: rgba(0, 174, 239, 0.25);
+        background: var(--unicef-cyan-soft);
+        color: var(--unicef-cyan-dark);
+      }
+      .pulse {
+        background: var(--netlinks-orange);
+        box-shadow: 0 0 0 5px rgba(248, 120, 30, 0.12);
+      }
+      h1 {
+        color: #1f3342;
+      }
+      h1 span {
+        background: linear-gradient(
+          90deg,
+          var(--unicef-cyan-dark) 0 40%,
+          var(--netlinks-purple) 67%,
+          var(--netlinks-orange) 100%
+        );
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .hero p {
+        color: #647887;
+      }
+
+      .btn {
+        border-color: #d7e6ed;
+      }
+      .btn.primary {
+        background: var(--unicef-cyan);
+        border-color: var(--unicef-cyan);
+        color: white;
+        box-shadow: 0 8px 22px rgba(0, 174, 239, 0.2);
+      }
+      .btn.primary:hover {
+        background: var(--unicef-cyan-dark);
+      }
+      .btn.secondary {
+        background: white;
+        border-color: #d4e5ed;
+        color: #2b4352;
+      }
+      .btn.secondary:hover {
+        border-color: var(--netlinks-purple);
+        color: var(--netlinks-purple);
+      }
+
+      /* Hero summary card */
+      .hero-panel {
+        background: white;
+        border-color: #ddebf1;
+        box-shadow: var(--shadow);
+      }
+      .hero-panel h3 {
+        color: #263a49;
+      }
+      .status {
+        background: var(--netlinks-orange-soft);
+        color: #c45c12;
+      }
+      .metric {
+        background: #f8fbfd;
+        border-color: #ddebf1;
+      }
+      .metric strong {
+        color: var(--unicef-cyan-dark);
+      }
+      .metric:nth-child(2) strong {
+        color: var(--netlinks-purple);
+      }
+      .metric:nth-child(3) strong {
+        color: var(--netlinks-orange);
+      }
+      .metric:nth-child(4) strong {
+        color: #2d869e;
+      }
+      .metric span {
+        color: #748692;
+      }
+      .path-line {
+        background: linear-gradient(90deg, var(--unicef-cyan-soft), #fbf8fd);
+        border-color: #d6eaf2;
+      }
+      .path-line small {
+        color: #718590;
+      }
+      .path b {
+        color: #334c5b;
+      }
+      .arrow {
+        color: var(--netlinks-orange);
+      }
+
+      /* Main cards */
+      .section-head h2 {
+        color: #243847;
+      }
+      .section-head p {
+        color: #6a7e8b;
+      }
+
+      .core-card {
+        background: white;
+        border-color: #deeaf0;
+        box-shadow: 0 8px 28px rgba(39, 80, 101, 0.06);
+      }
+      .core-card:hover {
+        background: white;
+        border-color: rgba(0, 174, 239, 0.38);
+        box-shadow: 0 14px 34px rgba(39, 80, 101, 0.11);
+      }
+      .core-card h3 {
+        color: #293e4c;
+      }
+      .core-card p {
+        color: #687c89;
+      }
+
+      .icon.blue {
+        background: var(--unicef-cyan-soft);
+        color: var(--unicef-cyan-dark);
+      }
+      .icon.green {
+        background: var(--netlinks-orange-soft);
+        color: var(--netlinks-orange);
+      }
+      .icon.purple {
+        background: var(--netlinks-purple-soft);
+        color: var(--netlinks-purple);
+      }
+      .icon.yellow {
+        background: #fff7dc;
+        color: #c29100;
+      }
+
+      .card-link {
+        color: var(--unicef-cyan-dark);
+      }
+      .core-card:nth-child(2) .card-link {
+        color: var(--netlinks-orange);
+      }
+      .core-card:nth-child(3) .card-link {
+        color: var(--netlinks-purple);
+      }
+
+      /* Journey */
+      .journey {
+        background: white;
+        border-color: #dceaf0;
+        box-shadow: 0 8px 28px rgba(39, 80, 101, 0.05);
+      }
+      .module {
+        background: #fafcfd;
+        border-color: #e0eaf0;
+      }
+      .module:hover {
+        background: var(--unicef-cyan-soft);
+        border-color: rgba(0, 174, 239, 0.3);
+      }
+      .module-top strong {
+        color: #314856;
+      }
+      .days {
+        color: var(--unicef-cyan-dark);
+      }
+      .module:nth-child(3n + 2) .days {
+        color: var(--netlinks-purple);
+      }
+      .module:nth-child(3n + 3) .days {
+        color: var(--netlinks-orange);
+      }
+      .module p {
+        color: #71838e;
+      }
+
+      /* Search and filters */
+      .search {
+        background: white;
+        border-color: #d9e8ef;
+      }
+      .search input {
+        color: #293f4d;
+      }
+      .search input::placeholder {
+        color: #8a9ba5;
+      }
+      .filter,
+      .project-filter {
+        background: white !important;
+        border-color: #d8e6ed !important;
+        color: #617783 !important;
+      }
+      .filter.active,
+      .filter:hover,
+      .project-filter.active,
+      .project-filter:hover {
+        background: var(--unicef-cyan-soft) !important;
+        color: var(--unicef-cyan-dark) !important;
+        border-color: rgba(0, 174, 239, 0.32) !important;
+      }
+
+      /* Topic resources */
+      .resource {
+        background: white;
+        border-color: #dfeaf0;
+        box-shadow: 0 5px 20px rgba(39, 80, 101, 0.04);
+      }
+      .resource .tag {
+        background: var(--unicef-cyan-soft);
+        color: var(--unicef-cyan-dark);
+      }
+      .resource:nth-child(3n + 2) .tag {
+        background: var(--netlinks-purple-soft);
+        color: var(--netlinks-purple);
+      }
+      .resource:nth-child(3n + 3) .tag {
+        background: var(--netlinks-orange-soft);
+        color: #c55c11;
+      }
+      .resource h3 {
+        color: #2d4351;
+      }
+      .resource p {
+        color: #70818c;
+      }
+      .resource a {
+        color: var(--unicef-cyan-dark);
+      }
+
+      /* Student projects */
+      .projects-shell {
+        background: white;
+        border-color: #dce9ef;
+        box-shadow: 0 10px 30px rgba(39, 80, 101, 0.05);
+      }
+      .project-hero {
+        background:
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(100, 70, 140, 0.14),
+            transparent 27%
+          ),
+          linear-gradient(
+            135deg,
+            var(--unicef-cyan-soft),
+            #ffffff 58%,
+            var(--netlinks-orange-soft)
+          );
+        border-color: #d7e9f0;
+      }
+      .project-hero::before {
+        color: rgba(100, 70, 140, 0.07);
+      }
+      .project-hero .badge,
+      .project-card .badge {
+        color: var(--unicef-cyan-dark);
+        background: var(--unicef-cyan-soft);
+      }
+      .project-hero h3 {
+        color: #293f4d;
+      }
+      .project-hero p {
+        color: #687d89;
+      }
+      .project-stat {
+        background: #fafcfd;
+        border-color: #deeaf0;
+      }
+      .project-stat:nth-child(1) {
+        border-top: 3px solid var(--unicef-cyan);
+      }
+      .project-stat:nth-child(2) {
+        border-top: 3px solid var(--netlinks-orange);
+      }
+      .project-stat:nth-child(3) {
+        border-top: 3px solid var(--netlinks-purple);
+      }
+      .project-stat:nth-child(4) {
+        border-top: 3px solid var(--brand-yellow);
+      }
+      .project-stat strong {
+        color: #304754;
+      }
+      .project-stat span {
+        color: #71838e;
+      }
+
+      .project-card {
+        background: #fbfdfe;
+        border-color: #dfeaf0;
+      }
+      .project-card:nth-child(3n + 1) {
+        border-top: 3px solid var(--unicef-cyan);
+      }
+      .project-card:nth-child(3n + 2) {
+        border-top: 3px solid var(--netlinks-orange);
+      }
+      .project-card:nth-child(3n + 3) {
+        border-top: 3px solid var(--netlinks-purple);
+      }
+      .project-card h3 {
+        color: #314856;
+      }
+      .project-card p {
+        color: #71828c;
+      }
+      .project-card a {
+        color: var(--unicef-cyan-dark);
+      }
+
+      /* Workflow */
+      .step {
+        background: white;
+        border-color: #dfeaf0;
+      }
+      .step small {
+        color: var(--unicef-cyan-dark);
+      }
+      .step:nth-child(2) small,
+      .step:nth-child(5) small {
+        color: var(--netlinks-purple);
+      }
+      .step:nth-child(3) small,
+      .step:nth-child(4) small {
+        color: var(--netlinks-orange);
+      }
+      .step strong {
+        color: #314856;
+      }
+      .step p {
+        color: #748590;
+      }
+
+      /* Notice and footer */
+      .notice {
+        background: linear-gradient(90deg, #fff9e8, #fff5ed);
+        border-color: rgba(248, 120, 30, 0.3);
+      }
+      .notice strong {
+        color: #b95a18;
+      }
+      .notice p {
+        color: #796d62;
+      }
+      code {
+        background: white;
+        color: var(--netlinks-purple);
+        border: 1px solid #e8dff0;
+      }
+      footer {
+        border-color: #dce8ee;
+        color: #748793;
+      }
+
+      /* Selection + focus */
+      ::selection {
+        background: rgba(0, 174, 239, 0.23);
+        color: #183444;
+      }
+      a:focus-visible,
+      button:focus-visible,
+      input:focus-visible {
+        outline: 3px solid rgba(0, 174, 239, 0.28);
+        outline-offset: 3px;
+      }
+
+      /* Brand stripe subtly combines both organizations' visual language */
+      .topbar::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 3px;
+        background: linear-gradient(
+          90deg,
+          var(--unicef-cyan) 0 55%,
+          var(--netlinks-purple) 55% 78%,
+          var(--netlinks-orange) 78% 100%
+        );
+      }
+
+      @media (max-width: 680px) {
+        .topbar::after {
+          height: 2px;
+        }
+      }
+
+      /* Four-section hub layout */
+      .nav-links {
+        flex-wrap: nowrap;
+      }
+      .nav-links a {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        white-space: nowrap;
+      }
+      .destination-panel {
+        display: grid;
+        grid-template-columns: minmax(0, 1.18fr) minmax(280px, 0.82fr);
+        gap: 18px;
+        padding: 22px;
+        border: 1px solid #dce9ef;
+        border-radius: 26px;
+        background: #ffffff;
+        box-shadow: 0 10px 30px rgba(39, 80, 101, 0.06);
+      }
+      .destination-copy {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        min-height: 250px;
+        padding: 10px 12px;
+      }
+      .destination-number {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 13px;
+        color: var(--unicef-cyan-dark);
+        font-size: 0.74rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      body[dir="rtl"] .destination-number {
+        letter-spacing: 0;
+      }
+      .destination-copy h3 {
+        margin: 0 0 10px;
+        color: #263e4d;
+        font-size: clamp(1.45rem, 3vw, 2.15rem);
+      }
+      .destination-copy p {
+        max-width: 720px;
+        margin: 0 0 20px;
+        color: #687d89;
+        line-height: 1.75;
+      }
+      .destination-preview {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        min-height: 250px;
+        padding: 22px;
+        border: 1px solid #d8eaf1;
+        border-radius: 20px;
+        background:
+          radial-gradient(
+            circle at 85% 15%,
+            rgba(100, 70, 140, 0.14),
+            transparent 28%
+          ),
+          linear-gradient(
+            135deg,
+            var(--unicef-cyan-soft),
+            #ffffff 58%,
+            var(--netlinks-orange-soft)
+          );
+      }
+      .destination-preview::before {
+        content: attr(data-mark);
+        position: absolute;
+        inset-block-start: 10px;
+        inset-inline-end: 18px;
+        color: rgba(100, 70, 140, 0.08);
+        font-size: 4.6rem;
+        font-weight: 900;
+      }
+      .destination-preview small {
+        color: var(--unicef-cyan-dark);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      body[dir="rtl"] .destination-preview small {
+        letter-spacing: 0;
+      }
+      .destination-preview strong {
+        position: relative;
+        display: block;
+        margin: 9px 0 7px;
+        color: #2a4352;
+        font-size: 1.2rem;
+      }
+      .destination-preview span {
+        position: relative;
+        color: #6e818d;
+        font-size: 0.84rem;
+        line-height: 1.6;
+      }
+      .destination-panel.projects .destination-number {
+        color: var(--netlinks-orange);
+      }
+      .destination-panel.projects .destination-preview {
+        background:
+          radial-gradient(
+            circle at 86% 15%,
+            rgba(248, 120, 30, 0.15),
+            transparent 28%
+          ),
+          linear-gradient(
+            135deg,
+            var(--netlinks-orange-soft),
+            #ffffff 58%,
+            var(--netlinks-purple-soft)
+          );
+      }
+      .destination-panel.plan .destination-number {
+        color: var(--netlinks-purple);
+      }
+      .destination-panel.plan .destination-preview {
+        background:
+          radial-gradient(
+            circle at 86% 15%,
+            rgba(255, 199, 44, 0.18),
+            transparent 28%
+          ),
+          linear-gradient(
+            135deg,
+            var(--netlinks-purple-soft),
+            #ffffff 58%,
+            #fff7dc
+          );
+      }
+      .topic-note {
+        margin: -4px 0 18px;
+        color: #728590;
+        font-size: 0.83rem;
+      }
+      .btn.primary {
+        color: #103344;
+      }
+      .external-cue {
+        font-size: 0.78rem;
+        font-weight: 700;
+        opacity: 0.78;
+      }
+
+      @media (max-width: 1050px) {
+        .nav {
+          align-items: flex-start;
+        }
+        .nav-right {
+          min-width: 0;
+          flex: 1;
+          justify-content: flex-end;
+        }
+        .nav-links {
+          display: flex;
+          overflow-x: auto;
+          max-width: min(58vw, 620px);
+          padding-bottom: 4px;
+          scrollbar-width: thin;
+        }
+        .destination-panel {
+          grid-template-columns: 1fr;
+        }
+        .destination-copy,
+        .destination-preview {
+          min-height: auto;
+        }
+        .destination-preview {
+          min-height: 210px;
+        }
+      }
+
+      @media (max-width: 680px) {
+        .nav {
+          align-items: center;
+          flex-wrap: wrap;
+        }
+        .nav-right {
+          flex: 1 1 100%;
+          width: 100%;
+          justify-content: space-between;
+        }
+        .nav-links {
+          display: flex;
+          max-width: calc(100% - 92px);
+          overflow-x: auto;
+          padding-bottom: 2px;
+        }
+        .destination-panel {
+          padding: 14px;
+          border-radius: 20px;
+        }
+        .destination-copy {
+          padding: 8px 4px;
+        }
+        .destination-preview {
+          padding: 18px;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *,
+        *::before,
+        *::after {
+          scroll-behavior: auto !important;
+          transition-duration: 0.01ms !important;
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+        }
+      }
+    </style>
+  </head>
+
+  <body class="lang-en" dir="ltr">
+    <div class="topbar">
+      <nav class="nav" aria-label="Primary navigation">
+        <a class="brand" href="#top">
+          <div class="brand-mark">&lt;/&gt;</div>
+          <div class="brand-text">
+            <strong class="en">Web Development & AI</strong>
+            <strong class="dr">توسعه وب و هوش مصنوعی</strong>
+            <span class="en">60-Day Learning Ecosystem</span>
+            <span class="dr">سیستم آموزشی ۶۰ روزه</span>
+          </div>
+        </a>
+
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="#teaching"
+              ><span class="en">Teaching</span><span class="dr">آموزش</span></a
+            >
+            <a href="#student-projects"
+              ><span class="en">Student Projects</span
+              ><span class="dr">پروژه‌های شاگردان</span></a
+            >
+            <a href="#teaching-plan"
+              ><span class="en">60-Day Plan</span
+              ><span class="dr">پلان ۶۰ روزه</span></a
+            >
+            <a href="#resources"
+              ><span class="en">Random Topics</span
+              ><span class="dr">موضوعات گوناگون</span></a
+            >
+          </div>
+
+          <div class="lang-switch" aria-label="Language switcher">
+            <button
+              class="lang-btn active"
+              id="enBtn"
+              type="button"
+              aria-pressed="true"
+            >
+              EN
+            </button>
+            <button
+              class="lang-btn"
+              id="drBtn"
+              type="button"
+              aria-pressed="false"
+            >
+              دری
+            </button>
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="site-shell" id="top">
+      <header class="hero">
+        <div>
+          <div class="kicker">
+            <span class="pulse"></span>
+            <span class="en">Four connected learning spaces</span>
+            <span class="dr">چهار بخش آموزشی به‌هم‌پیوسته</span>
+          </div>
+
+          <h1 class="en">
+            Everything starts from <span>one clear learning hub.</span>
+          </h1>
+          <h1 class="dr">
+            تمام مسیر از <span>یک پورتال آموزشی روشن</span> آغاز می‌شود.
+          </h1>
+
+          <p class="en">
+            Open the main teaching website, explore student work, follow the
+            complete 60-day teaching plan, or practice with focused topic
+            pages—all from here.
+          </p>
+          <p class="dr">
+            وب‌سایت اصلی آموزش را باز کنید، پروژه‌های شاگردان را ببینید، پلان
+            کامل ۶۰ روزه را دنبال کنید یا با صفحه‌های موضوعی تمرین نمایید—همه از
+            همین‌جا.
+          </p>
+
+          <div class="hero-actions">
+            <a
+              class="btn primary"
+              href="https://omidafghanistan.netlify.app/#m3l1"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open the main teaching website in a new tab"
+            >
+              <span class="en">Start Learning ↗</span
+              ><span class="dr">آغاز آموزش ↗</span>
+            </a>
+            <a class="btn secondary" href="#resources">
+              <span class="en">Browse Random Topics</span
+              ><span class="dr">مشاهده موضوعات گوناگون</span>
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-panel">
+          <div class="hero-panel-head">
+            <h3>
+              <span class="en">Course at a glance</span
+              ><span class="dr">نمای کلی دوره</span>
+            </h3>
+            <span class="status"
+              ><span class="en">ACTIVE</span><span class="dr">فعال</span></span
+            >
+          </div>
+
+          <div class="metric-grid">
+            <div class="metric">
+              <strong>4</strong><span class="en">Connected Sections</span
+              ><span class="dr">بخش متصل</span>
+            </div>
+            <div class="metric">
+              <strong>60</strong><span class="en">Teaching Days</span
+              ><span class="dr">روز آموزشی</span>
+            </div>
+            <div class="metric">
+              <strong>6</strong><span class="en">Topic Pages</span
+              ><span class="dr">صفحه موضوعی</span>
+            </div>
+            <div class="metric">
+              <strong>2</strong><span class="en">Languages</span
+              ><span class="dr">زبان</span>
+            </div>
+          </div>
+
+          <div class="path-line">
+            <small class="en">Recommended student flow</small>
+            <small class="dr">مسیر پیشنهادی شاگرد</small>
+            <div class="path">
+              <b><span class="en">Learn</span><span class="dr">بیاموز</span></b
+              ><span class="arrow">→</span>
+              <b
+                ><span class="en">Explore</span
+                ><span class="dr">کشف کن</span></b
+              ><span class="arrow">→</span>
+              <b><span class="en">Plan</span><span class="dr">پلان کن</span></b
+              ><span class="arrow">→</span>
+              <b
+                ><span class="en">Practice</span
+                ><span class="dr">تمرین کن</span></b
+              >
+            </div>
+          </div>
+        </aside>
+      </header>
+
+      <main>
+        <section class="section" id="teaching" aria-labelledby="teaching-title">
+          <div class="section-head">
+            <div>
+              <h2 class="en" id="teaching-title">Main teaching website</h2>
+              <h2 class="dr">وب‌سایت اصلی آموزش</h2>
+            </div>
+            <p class="en">
+              The central classroom website for lessons, explanations, examples,
+              exercises, and daily learning material.
+            </p>
+            <p class="dr">
+              وب‌سایت مرکزی صنف برای درس‌ها، توضیحات، مثال‌ها، تمرین‌ها و محتوای
+              آموزشی روزانه.
+            </p>
+          </div>
+
+          <div class="destination-panel">
+            <div class="destination-copy">
+              <span class="destination-number"
+                ><span class="en">Section 01 · Learn</span
+                ><span class="dr">بخش ۰۱ · آموزش</span></span
+              >
+              <h3 class="en">Start Module 1 Lesson 1</h3>
+              <h3 class="dr">شروع به کار با ماژول ۱، درس ۱</h3>
+              <p class="en">
+                Use the main teaching site during class to read the lesson,
+                follow demonstrations, and complete the connected activities.
+              </p>
+              <p class="dr">
+                در جریان صنف از وب‌سایت اصلی برای مطالعه درس، دنبال‌کردن
+                نمایش‌های عملی و انجام فعالیت‌های مرتبط استفاده کنید.
+              </p>
+              <a
+                class="btn primary"
+                href="https://omidafghanistan.netlify.app/#"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open the main teaching website in a new tab"
+              >
+                <span class="en">Open Teaching Website ↗</span
+                ><span class="dr">باز کردن وب‌سایت آموزش ↗</span>
+              </a>
+            </div>
+            <div class="destination-preview" data-mark="01">
+              <small class="en">External learning website</small
+              ><small class="dr">وب‌سایت آموزشی بیرونی</small>
+              <strong class="en"
+                >Lessons, examples, and classroom activities</strong
+              ><strong class="dr">درس‌ها، مثال‌ها و فعالیت‌های صنفی</strong>
+              <span class="en"
+                >The primary destination for day-to-day teaching.</span
+              ><span class="dr">مقصد اصلی برای آموزش روزانه.</span>
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="section"
+          id="student-projects"
+          aria-labelledby="projects-title"
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="en" id="projects-title">Student project showcase</h2>
+              <h2 class="dr">نمایشگاه پروژه‌های شاگردان</h2>
+            </div>
+            <p class="en">
+              Explore real student work, completed exercises, class projects,
+              and portfolio-ready submissions in one gallery.
+            </p>
+            <p class="dr">
+              کارهای واقعی شاگردان، تمرین‌های تکمیل‌شده، پروژه‌های صنفی و
+              نمونه‌کارهای آماده Portfolio را در یک گالری ببینید.
+            </p>
+          </div>
+
+          <div class="destination-panel projects">
+            <div class="destination-copy">
+              <span class="destination-number"
+                ><span class="en">Section 02 · Explore</span
+                ><span class="dr">بخش ۰۲ · کشف پروژه‌ها</span></span
+              >
+              <h3 class="en">See what students are building</h3>
+              <h3 class="dr">ببینید شاگردان چه چیزهایی می‌سازند</h3>
+              <p class="en">
+                The showcase collects student projects in a dedicated public
+                gallery, making it easy to review progress and celebrate
+                completed work.
+              </p>
+              <p class="dr">
+                این نمایشگاه پروژه‌های شاگردان را در یک گالری عمومی گردآوری
+                می‌کند تا بررسی پیشرفت و تقدیر از کارهای تکمیل‌شده آسان باشد.
+              </p>
+              <a
+                class="btn primary"
+                href="https://nasarahmadsadid20.github.io/Showcase/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Open the student project showcase in a new tab"
+              >
+                <span class="en">Open Student Showcase ↗</span
+                ><span class="dr">باز کردن نمایشگاه شاگردان ↗</span>
+              </a>
+            </div>
+            <div class="destination-preview" data-mark="02">
+              <small class="en">External project gallery</small
+              ><small class="dr">گالری بیرونی پروژه‌ها</small>
+              <strong class="en">Practice, projects, and portfolios</strong
+              ><strong class="dr">تمرین‌ها، پروژه‌ها و Portfolioها</strong>
+              <span class="en"
+                >A public collection of student progress and finished
+                work.</span
+              ><span class="dr"
+                >مجموعه عمومی پیشرفت و کارهای تکمیل‌شده شاگردان.</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <section
+          class="section"
+          id="teaching-plan"
+          aria-labelledby="plan-title"
+        >
+          <div class="section-head">
+            <div>
+              <h2 class="en" id="plan-title">60-day teaching plan</h2>
+              <h2 class="dr">پلان تدریس ۶۰ روزه</h2>
+            </div>
+            <p class="en">
+              A complete day-by-day guide for teachers, with outcomes,
+              activities, assessment, and portfolio evidence.
+            </p>
+            <p class="dr">
+              راهنمای کامل روزبه‌روز برای استادان، شامل نتایج یادگیری،
+              فعالیت‌ها، ارزیابی و شواهد Portfolio.
+            </p>
+          </div>
+
+          <div class="destination-panel plan">
+            <div class="destination-copy">
+              <span class="destination-number"
+                ><span class="en">Section 03 · Plan</span
+                ><span class="dr">بخش ۰۳ · پلان‌گذاری</span></span
+              >
+              <h3 class="en">Prepare every teaching day with confidence</h3>
+              <h3 class="dr">هر روز تدریس را با اطمینان آماده کنید</h3>
+              <p class="en">
+                Open the local course plan to move directly through all 60 days
+                and keep classroom activities, assessments, employability links,
+                and transferable skills aligned.
+              </p>
+              <p class="dr">
+                پلان محلی دوره را باز کنید تا تمام ۶۰ روز، فعالیت‌های صنفی،
+                ارزیابی‌ها، پیوندهای کاریابی و مهارت‌های انتقال‌پذیر را منظم
+                دنبال نمایید.
+              </p>
+              <a class="btn primary" href="./60DayTechingPlan.html">
+                <span class="en">Open 60-Day Plan →</span
+                ><span class="dr">باز کردن پلان ۶۰ روزه ←</span>
+              </a>
+            </div>
+            <div class="destination-preview" data-mark="03">
+              <small class="en">Local teaching resource</small
+              ><small class="dr">منبع محلی تدریس</small>
+              <strong class="en"
+                >60 days · outcomes · activities · assessment</strong
+              ><strong class="dr">۶۰ روز · نتایج · فعالیت‌ها · ارزیابی</strong>
+              <span class="en"
+                >A structured reference for lesson preparation and
+                delivery.</span
+              ><span class="dr">مرجع منظم برای آمادگی و اجرای درس.</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="section" id="resources" aria-labelledby="topics-title">
+          <div class="section-head">
+            <div>
+              <h2 class="en" id="topics-title">
+                Random topics & practice pages
+              </h2>
+              <h2 class="dr">موضوعات گوناگون و صفحه‌های تمرینی</h2>
+            </div>
+            <p class="en">
+              Open the focused pages already available in this folder for extra
+              demonstrations, practice, and workshop work.
+            </p>
+            <p class="dr">
+              صفحه‌های موضوعی موجود در همین پوشه را برای نمایش‌های بیشتر، تمرین
+              و کارگاه باز کنید.
+            </p>
+          </div>
+
+          <div class="resource-toolbar">
+            <label class="search">
+              <span aria-hidden="true">⌕</span>
+              <input
+                id="resourceSearch"
+                type="search"
+                aria-label="Search random topic pages"
+                data-en-placeholder="Search animations, forms, transitions..."
+                data-dr-placeholder="جستجوی Animation، Forms و Transition..."
+                placeholder="Search animations, forms, transitions..."
+              />
+            </label>
+            <div class="filters" aria-label="Filter topic pages">
+              <button class="filter active" type="button" data-filter="all">
+                <span class="en">All Topics</span
+                ><span class="dr">همه موضوعات</span>
+              </button>
+              <button class="filter" type="button" data-filter="motion">
+                <span class="en">Motion</span><span class="dr">حرکت</span>
+              </button>
+              <button class="filter" type="button" data-filter="forms">
+                Forms
+              </button>
+              <button class="filter" type="button" data-filter="workshop">
+                <span class="en">Workshop</span><span class="dr">کارگاه</span>
+              </button>
+              <button class="filter" type="button" data-filter="demo">
+                <span class="en">Demo</span><span class="dr">نمایش</span>
+              </button>
+            </div>
+          </div>
+          <p class="topic-note en">
+            Six working pages are connected below. Each opens directly from this
+            main hub.
+          </p>
+          <p class="topic-note dr">
+            شش صفحه فعال در پایین متصل شده‌اند. هرکدام مستقیماً از همین پورتال
+            باز می‌شود.
+          </p>
+
+          <div class="resource-grid" id="resourceGrid">
+            <article
+              class="resource"
+              data-category="motion"
+              data-search="css animation keyframes timing transform developer edition"
+            >
+              <span class="tag">CSS Motion</span>
+              <h3 class="en">CSS Animations Lab</h3>
+              <h3 class="dr">لابراتوار CSS Animation</h3>
+              <p class="en">
+                Explore keyframes, timing, transforms, hover effects, and
+                interactive animation examples.
+              </p>
+              <p class="dr">
+                Keyframes، Timing، Transforms، Hover Effects و مثال‌های تعاملی
+                Animation را تمرین کنید.
+              </p>
+              <a href="./index-css-animations.html"
+                ><span class="en">Open Animation Lab →</span
+                ><span class="dr">باز کردن لابراتوار ←</span></a
+              >
+            </article>
+
+            <article
+              class="resource"
+              data-category="forms"
+              data-search="css forms accessible inputs labels validation contact"
+            >
+              <span class="tag">CSS Forms</span>
+              <h3 class="en">CSS Form Design Lab</h3>
+              <h3 class="dr">لابراتوار طراحی Form</h3>
+              <p class="en">
+                Build clear, accessible forms with polished input states,
+                labels, validation, and a complete contact form.
+              </p>
+              <p class="dr">
+                Formهای روشن و دسترس‌پذیر را با Input States، Labels، Validation
+                و Contact Form کامل بسازید.
+              </p>
+              <a href="./index-css-forms.html"
+                ><span class="en">Open Forms Lab →</span
+                ><span class="dr">باز کردن لابراتوار ←</span></a
+              >
+            </article>
+
+            <article
+              class="resource"
+              data-category="motion"
+              data-search="css transition transform light interactive motion"
+            >
+              <span class="tag">Light Theme</span>
+              <h3 class="en">Transitions & Transforms</h3>
+              <h3 class="dr">Transition و Transform</h3>
+              <p class="en">
+                Learn smooth state changes and 2D transforms through an
+                interactive light-theme lesson.
+              </p>
+              <p class="dr">
+                تغییر حالت روان و 2D Transform را در یک درس تعاملی با Theme روشن
+                بیاموزید.
+              </p>
+              <a href="./index-transition-light.html"
+                ><span class="en">Open Light Lab →</span
+                ><span class="dr">باز کردن نسخه روشن ←</span></a
+              >
+            </article>
+
+            <article
+              class="resource"
+              data-category="motion"
+              data-search="css transition transform dark developer edition motion"
+            >
+              <span class="tag">Dark Theme</span>
+              <h3 class="en">Motion Lab — Dark Edition</h3>
+              <h3 class="dr">لابراتوار حرکت — نسخه تاریک</h3>
+              <p class="en">
+                Practice the same transition and transform ideas with glowing,
+                developer-focused demonstrations.
+              </p>
+              <p class="dr">
+                همان مفاهیم Transition و Transform را با نمایش‌های درخشان و
+                Developer-Focused تمرین کنید.
+              </p>
+              <a href="./index-trasittion-dark.html"
+                ><span class="en">Open Dark Lab →</span
+                ><span class="dr">باز کردن نسخه تاریک ←</span></a
+              >
+            </article>
+
+            <article
+              class="resource"
+              data-category="workshop"
+              data-search="end of css workshop academy responsive complete website project"
+            >
+              <span class="tag">Workshop</span>
+              <h3 class="en">End-of-CSS Workshop</h3>
+              <h3 class="dr">کارگاه پایان CSS</h3>
+              <p class="en">
+                Review a complete responsive academy website that brings
+                together the skills covered at the end of CSS.
+              </p>
+              <p class="dr">
+                یک وب‌سایت کامل و Responsive آکادمی را ببینید که مهارت‌های پایان
+                CSS را باهم ترکیب می‌کند.
+              </p>
+              <a href="./WorkShop_endOfCSS.html"
+                ><span class="en">Open Workshop →</span
+                ><span class="dr">باز کردن کارگاه ←</span></a
+              >
+            </article>
+
+            <article
+              class="resource"
+              data-category="demo"
+              data-search="css animation pause resume spinner javascript button demo"
+            >
+              <span class="tag">Mini Demo</span>
+              <h3 class="en">Pause & Resume Spinner</h3>
+              <h3 class="dr">توقف و ادامه Spinner</h3>
+              <p class="en">
+                A compact CSS animation and JavaScript control demo for pausing
+                and resuming a colorful spinner.
+              </p>
+              <p class="dr">
+                نمایش کوچک CSS Animation و JavaScript برای توقف و ادامه یک
+                Spinner رنگی.
+              </p>
+              <a href="./test.html"
+                ><span class="en">Open Spinner Demo →</span
+                ><span class="dr">باز کردن نمایش Spinner ←</span></a
+              >
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <span class="en">Web Development & AI — 60-Day Learning Hub</span>
+        <span class="dr">توسعه وب و هوش مصنوعی — پورتال آموزشی ۶۰ روزه</span>
+        <span>Learn → Explore → Plan → Practice</span>
+      </footer>
+    </div>
+
+    <script>
+      const body = document.body;
+      const enBtn = document.getElementById("enBtn");
+      const drBtn = document.getElementById("drBtn");
+      const resourceSearch = document.getElementById("resourceSearch");
+
+      function setLanguage(lang) {
+        const isDr = lang === "dr";
+        body.classList.toggle("lang-dr", isDr);
+        body.classList.toggle("lang-en", !isDr);
+        body.setAttribute("dir", isDr ? "rtl" : "ltr");
+        document.documentElement.setAttribute("lang", isDr ? "fa-AF" : "en");
+        document.documentElement.setAttribute("dir", isDr ? "rtl" : "ltr");
+
+        enBtn.classList.toggle("active", !isDr);
+        drBtn.classList.toggle("active", isDr);
+        enBtn.setAttribute("aria-pressed", String(!isDr));
+        drBtn.setAttribute("aria-pressed", String(isDr));
+
+        resourceSearch.placeholder = isDr
+          ? resourceSearch.dataset.drPlaceholder
+          : resourceSearch.dataset.enPlaceholder;
+
+        localStorage.setItem("hubLanguage", lang);
+      }
+
+      enBtn.addEventListener("click", () => setLanguage("en"));
+      drBtn.addEventListener("click", () => setLanguage("dr"));
+
+      const savedLang = localStorage.getItem("hubLanguage");
+      if (savedLang === "dr") setLanguage("dr");
+
+      const resources = [...document.querySelectorAll(".resource")];
+      const filterButtons = [...document.querySelectorAll(".filter")];
+      let activeFilter = "all";
+
+      function filterResources() {
+        const term = resourceSearch.value.trim().toLowerCase();
+        resources.forEach((card) => {
+          const category = card.dataset.category;
+          const content = (
+            card.dataset.search +
+            " " +
+            card.innerText
+          ).toLowerCase();
+          const categoryMatch =
+            activeFilter === "all" || category === activeFilter;
+          const searchMatch = !term || content.includes(term);
+          card.style.display = categoryMatch && searchMatch ? "flex" : "none";
+        });
+      }
+
+      resourceSearch.addEventListener("input", filterResources);
+      filterButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          filterButtons.forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          activeFilter = btn.dataset.filter;
+          filterResources();
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,2552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>60-Day Front-End Web Development & AI Teaching Plan</title>
+<style>
+  :root {
+    --bg: #f4f7fb;
+    --paper: #ffffff;
+    --ink: #172033;
+    --muted: #5d6a7d;
+    --line: #dfe6ef;
+    --accent: #2458d3;
+    --accent-soft: #eaf0ff;
+    --success: #167c5a;
+    --shadow: 0 12px 30px rgba(31, 47, 77, .08);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Inter, "Segoe UI", Arial, sans-serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.62;
+  }
+  header {
+    background: linear-gradient(135deg, #14213d, #2458d3);
+    color: white;
+    padding: 56px 24px 48px;
+  }
+  .hero {
+    max-width: 1180px;
+    margin: auto;
+  }
+  .eyebrow {
+    display: inline-block;
+    padding: 6px 12px;
+    border: 1px solid rgba(255,255,255,.25);
+    border-radius: 999px;
+    background: rgba(255,255,255,.08);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+  h1 {
+    max-width: 900px;
+    margin: 14px 0 10px;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    line-height: 1.08;
+  }
+  .subtitle {
+    max-width: 850px;
+    color: rgba(255,255,255,.84);
+    font-size: 1.05rem;
+  }
+  .stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 24px;
+  }
+  .stat {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 14px;
+    padding: 10px 14px;
+  }
+  .container {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 28px 20px 70px;
+  }
+  .intro {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 22px;
+    margin: -22px 0 26px;
+    box-shadow: var(--shadow);
+  }
+  .intro h2 { margin: 0 0 6px; }
+  .intro p { margin: 0; color: var(--muted); }
+  .toc {
+    margin: 24px 0 36px;
+  }
+  .toc h2 {
+    margin-bottom: 14px;
+  }
+  .toc-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 9px;
+  }
+  .toc-grid a {
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: .2s ease;
+  }
+  .toc-grid a:hover {
+    transform: translateY(-2px);
+    border-color: #b9c9ef;
+    box-shadow: 0 8px 22px rgba(36,88,211,.09);
+  }
+  .toc-grid a strong {
+    min-width: 34px;
+    color: var(--accent);
+    font-size: .82rem;
+  }
+  .toc-grid a span {
+    font-size: .9rem;
+  }
+  .day-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 20px;
+    padding: 24px;
+    margin: 0 0 24px;
+    box-shadow: 0 8px 26px rgba(31,47,77,.05);
+    scroll-margin-top: 18px;
+  }
+  .day-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    border-bottom: 1px solid var(--line);
+    padding-bottom: 17px;
+    margin-bottom: 18px;
+  }
+  .day-number {
+    color: var(--accent);
+    font-weight: 800;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+    font-size: .84rem;
+  }
+  .day-header h2 {
+    margin: 3px 0 0;
+    font-size: 1.55rem;
+    line-height: 1.25;
+  }
+  .module {
+    font-size: .78rem;
+    font-weight: 700;
+    color: var(--success);
+    background: #eaf8f3;
+    border: 1px solid #cfeee2;
+    border-radius: 999px;
+    padding: 7px 11px;
+    white-space: nowrap;
+  }
+  .six-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .item {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px;
+    background: #fbfcfe;
+  }
+  .item h3 {
+    margin: 0 0 7px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .item h3 span {
+    width: 26px;
+    height: 26px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 8px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-size: .78rem;
+    font-weight: 800;
+  }
+  .item p {
+    margin: 0;
+    color: #3e4a5e;
+  }
+  footer {
+    text-align: center;
+    color: var(--muted);
+    padding: 28px;
+    border-top: 1px solid var(--line);
+    background: white;
+  }
+  .back-top {
+    display: inline-block;
+    margin-top: 8px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  @media (max-width: 760px) {
+    .six-grid { grid-template-columns: 1fr; }
+    .day-header { flex-direction: column; }
+    .module { white-space: normal; }
+    header { padding-top: 38px; }
+  }
+  @media print {
+    body { background: white; font-size: 10.5pt; }
+    header {
+      background: white !important;
+      color: black;
+      padding: 20px 0;
+      border-bottom: 2px solid #333;
+    }
+    .subtitle, .stat { color: #333; }
+    .stats, .toc, .back-top { display: none; }
+    .container { max-width: none; padding: 0; }
+    .intro { box-shadow: none; margin: 16px 0; }
+    .day-card {
+      box-shadow: none;
+      break-inside: avoid;
+      page-break-inside: avoid;
+      margin-bottom: 14px;
+    }
+    .item { background: white; }
+  }
+</style>
+</head>
+<body id="top">
+<header>
+  <div class="hero">
+    <span class="eyebrow">Teaching & Assessment Plan</span>
+    <h1>60-Day Front-End Web Development & AI Course Plan</h1>
+    <p class="subtitle">Each day follows the same six-part teaching template: Learning Outcome, Learning Activities, Assessment, Employability Link, Portfolio Evidence, and Transferable Skills.</p>
+    <div class="stats">
+      <div class="stat"><strong>60</strong> teaching days</div>
+      <div class="stat"><strong>11</strong> modules</div>
+      <div class="stat"><strong>6</strong> planning elements per day</div>
+    </div>
+  </div>
+</header>
+
+<main class="container">
+  <section class="intro">
+    <h2>How to use this plan</h2>
+    <p>This document expands the supplied 60-day course outline into a consistent classroom planning format. Teachers can use each day as a lesson-plan summary, assessment guide, employability reference, and portfolio-evidence checklist.</p>
+  </section>
+
+  <nav class="toc" aria-label="60 day course navigation">
+    <h2>Course Days</h2>
+    <div class="toc-grid">
+      <a href="#day-1"><strong>01</strong><span>Foundations &amp; Orientation</span></a>
+<a href="#day-2"><strong>02</strong><span>Dev Setup &amp; HTML Basics</span></a>
+<a href="#day-3"><strong>03</strong><span>Text, Lists &amp; Comments</span></a>
+<a href="#day-4"><strong>04</strong><span>Links, Tables &amp; Media</span></a>
+<a href="#day-5"><strong>05</strong><span>Semantic HTML &amp; Page Structure</span></a>
+<a href="#day-6"><strong>06</strong><span>Introduction to CSS</span></a>
+<a href="#day-7"><strong>07</strong><span>Layout Fundamentals</span></a>
+<a href="#day-8"><strong>08</strong><span>Flexbox in Depth</span></a>
+<a href="#day-9"><strong>09</strong><span>CSS Grid</span></a>
+<a href="#day-10"><strong>10</strong><span>Images &amp; Backgrounds</span></a>
+<a href="#day-11"><strong>11</strong><span>Responsive Design &amp; Media Queries</span></a>
+<a href="#day-12"><strong>12</strong><span>Typography</span></a>
+<a href="#day-13"><strong>13</strong><span>Forms</span></a>
+<a href="#day-14"><strong>14</strong><span>Transitions, Transforms &amp; Animations</span></a>
+<a href="#day-15"><strong>15</strong><span>Maintainable, Modern CSS</span></a>
+<a href="#day-16"><strong>16</strong><span>HTML &amp; CSS Module Project Bootcamp</span></a>
+<a href="#day-17"><strong>17</strong><span>Tailwind CSS Fundamentals</span></a>
+<a href="#day-18"><strong>18</strong><span>Reusable Components &amp; Command Line</span></a>
+<a href="#day-19"><strong>19</strong><span>Git Fundamentals</span></a>
+<a href="#day-20"><strong>20</strong><span>Collaborating with Git &amp; GitHub</span></a>
+<a href="#day-21"><strong>21</strong><span>JavaScript Fundamentals</span></a>
+<a href="#day-22"><strong>22</strong><span>Operators &amp; Conditionals</span></a>
+<a href="#day-23"><strong>23</strong><span>Loops</span></a>
+<a href="#day-24"><strong>24</strong><span>Functions</span></a>
+<a href="#day-25"><strong>25</strong><span>Arrays &amp; Objects</span></a>
+<a href="#day-26"><strong>26</strong><span>Modern JavaScript (ES6+)</span></a>
+<a href="#day-27"><strong>27</strong><span>Clean Code: Refactoring &amp; Debugging</span></a>
+<a href="#day-28"><strong>28</strong><span>The DOM</span></a>
+<a href="#day-29"><strong>29</strong><span>Events</span></a>
+<a href="#day-30"><strong>30</strong><span>Object-Oriented JavaScript</span></a>
+<a href="#day-31"><strong>31</strong><span>JSON &amp; JavaScript Project Bootcamp</span></a>
+<a href="#day-32"><strong>32</strong><span>React Fundamentals</span></a>
+<a href="#day-33"><strong>33</strong><span>JSX, Components &amp; Styling</span></a>
+<a href="#day-34"><strong>34</strong><span>Components Project Bootcamp</span></a>
+<a href="#day-35"><strong>35</strong><span>Props &amp; Data Flow</span></a>
+<a href="#day-36"><strong>36</strong><span>State Management</span></a>
+<a href="#day-37"><strong>37</strong><span>React Hooks</span></a>
+<a href="#day-38"><strong>38</strong><span>Rendering &amp; the React DOM</span></a>
+<a href="#day-39"><strong>39</strong><span>Routing &amp; Navigation</span></a>
+<a href="#day-40"><strong>40</strong><span>React Project Bootcamp</span></a>
+<a href="#day-41"><strong>41</strong><span>Testing Foundations &amp; Tools</span></a>
+<a href="#day-42"><strong>42</strong><span>TDD &amp; Practical Testing</span></a>
+<a href="#day-43"><strong>43</strong><span>Figma Basics</span></a>
+<a href="#day-44"><strong>44</strong><span>Layout &amp; Auto Layout</span></a>
+<a href="#day-45"><strong>45</strong><span>Components &amp; Variants</span></a>
+<a href="#day-46"><strong>46</strong><span>Design Systems</span></a>
+<a href="#day-47"><strong>47</strong><span>Real Project: Design</span></a>
+<a href="#day-48"><strong>48</strong><span>UI/UX Bootcamp</span></a>
+<a href="#day-49"><strong>49</strong><span>AI in the Front-End</span></a>
+<a href="#day-50"><strong>50</strong><span>Working with AI APIs</span></a>
+<a href="#day-51"><strong>51</strong><span>Prompt Engineering &amp; Chat UI</span></a>
+<a href="#day-52"><strong>52</strong><span>Responses &amp; Streaming</span></a>
+<a href="#day-53"><strong>53</strong><span>AI UX &amp; Interaction Design</span></a>
+<a href="#day-54"><strong>54</strong><span>Multimodal AI &amp; Bootcamp</span></a>
+<a href="#day-55"><strong>55</strong><span>Framer Basics</span></a>
+<a href="#day-56"><strong>56</strong><span>Publish &amp; Showcase</span></a>
+<a href="#day-57"><strong>57</strong><span>LinkedIn Profile &amp; Personal Branding</span></a>
+<a href="#day-58"><strong>58</strong><span>Networking &amp; Content</span></a>
+<a href="#day-59"><strong>59</strong><span>Freelancing Foundations</span></a>
+<a href="#day-60"><strong>60</strong><span>Platforms, Clients &amp; Working Globally</span></a>
+    </div>
+  </nav>
+
+  
+    <article class="day-card" id="day-1">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 1</span>
+          <h2>Foundations &amp; Orientation</h2>
+        </div>
+        <span class="module">Module 0 — Getting Started</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use basic computer, internet, email, and online-safety skills; explain how websites work; and identify the roles of HTML, CSS, and JavaScript.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates computer fundamentals, browsers, effective searching, Gmail, online safety, client/server concepts, and the front-end development path. Students practice file/folder management, web searching, email use, and identifying front-end vs back-end examples.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students safely use the computer and internet, send a professional email, and explain in simple terms how a website works?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Digital literacy, safe online behavior, and understanding the web are basic requirements for study, office work, and entry-level technology jobs.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a one-page learning map showing the web-development path, key tools, and basic online-safety rules.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Digital literacy, communication, problem-solving, self-directed learning</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-2">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 2</span>
+          <h2>Dev Setup &amp; HTML Basics</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to prepare a front-end development environment and create a correctly structured HTML5 page using elements, tags, and attributes.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates VS Code setup, Live Server, formatting tools, HTML5 document structure, elements, tags, attributes, and indentation. Students reproduce the setup and build their first HTML page.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create, save, run, and correctly structure a valid HTML5 page in VS Code?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Developers must be able to configure their tools and create clean, readable HTML files for real web projects.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a first personal HTML page with title, headings, paragraphs, and correct HTML5 structure.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Attention to detail, digital organization, independent learning</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-3">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 3</span>
+          <h2>Text, Lists &amp; Comments</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to structure written content with headings, paragraphs, line breaks, formatting, ordered/unordered lists, nested lists, and HTML comments.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher designs a sample content page and demonstrates text elements, list types, nesting, and comments. Students correct a poorly structured page and create a new content example.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students choose suitable text and list elements, nest lists correctly, and use comments without affecting page output?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Clear content structure is essential for blogs, product pages, documentation, and accessible business websites.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a structured article or course-information page using headings, paragraphs, lists, and helpful comments.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Written communication, organization, attention to detail</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-4">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 4</span>
+          <h2>Links, Tables &amp; Media</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to create external/internal links, email and phone links, tables with spanning cells, and embedded audio/video content.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates hyperlink types, anchors, table structure, colspan/rowspan, and media controls. Students build an information page that combines links, a table, and media.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create working links, a correctly structured table, and playable audio/video content?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>These skills are used in company websites, contact pages, schedules, pricing tables, product details, and media-rich pages.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an information page with navigation links, a data table, embedded video or audio, and contact links.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Information organization, accuracy, digital communication</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-5">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 5</span>
+          <h2>Semantic HTML &amp; Page Structure</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to structure a complete page with semantic HTML5 elements and explain why semantic structure improves accessibility and SEO.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher compares non-semantic and semantic layouts and demonstrates header, nav, main, section, article, footer, div, and span. Students convert a basic div-based page into semantic HTML5.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students select appropriate semantic elements and organize a full page correctly?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Semantic HTML improves maintainability, accessibility, search visibility, and teamwork in professional web development.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a complete semantic webpage layout for a small organization or personal website.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Logical thinking, accessibility awareness, structured communication</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-6">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 6</span>
+          <h2>Introduction to CSS</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to apply CSS using inline, internal, and external methods; use selectors, properties, colors, fonts, classes, IDs, and basic cascade/specificity rules.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher styles the Day 5 page and demonstrates CSS syntax, selectors, classes, IDs, colors, fonts, cascade, and specificity. Students apply styles and compare different CSS methods.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students correctly target elements, resolve simple style conflicts, and produce a visually consistent page?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>CSS is required for nearly every front-end role because it controls the visual presentation and branding of websites.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Style the semantic page from Day 5 with a consistent color palette, typography, spacing, and reusable classes.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Visual communication, attention to detail, troubleshooting</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-7">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 7</span>
+          <h2>Layout Fundamentals</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to control page layout using display modes, positioning, basic Flexbox, and centering techniques.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates block, inline, inline-block, relative, absolute, fixed, sticky, and basic Flexbox. Students recreate a multi-section layout and experiment with positioning.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students choose a suitable display/positioning method and create a stable multi-section layout?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Layout skills are central to converting designs into usable interfaces for websites and web applications.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a multi-section webpage with a header, content area, sidebar or cards, and correctly positioned elements.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Spatial reasoning, problem-solving, design interpretation</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-8">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 8</span>
+          <h2>Flexbox in Depth</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to build responsive one-dimensional layouts with Flexbox using direction, wrap, justify-content, align-items, and gap.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates a responsive component and image gallery. Students generate alternative layouts by changing Flexbox direction, alignment, wrapping, and spacing.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students build a flexible layout that adapts cleanly to different screen widths?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Flexbox is widely used for navigation bars, card rows, galleries, forms, and responsive UI components.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a responsive Flexbox image gallery or service-card section.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Problem-solving, visual organization, iteration</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-9">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 9</span>
+          <h2>CSS Grid</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to create responsive two-dimensional layouts using grid columns/rows, gaps, grid-column, and grid-row.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher builds a sample blog/portfolio grid and explains grid tracks and placement. Students create new layouts with different column structures and spanning items.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students design a responsive Grid layout and correctly place or span items?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>CSS Grid is valuable for dashboards, portfolios, product pages, magazines, and complex business layouts.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a responsive blog, dashboard, or portfolio layout using CSS Grid.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Spatial reasoning, planning, design thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-10">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 10</span>
+          <h2>Images &amp; Backgrounds</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to size and crop images, use object-fit, create responsive images with srcset/sizes, and apply optimized background images.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates image sizing, borders, object-fit, responsive-image attributes, and background positioning. Students create a hero section with responsive media.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students keep images visually correct across screen sizes and select suitable image/background techniques?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Professional websites require responsive, optimized imagery for performance, branding, and visual quality.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a responsive hero/banner section with optimized foreground and background images.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Visual judgment, performance awareness, attention to detail</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-11">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 11</span>
+          <h2>Responsive Design &amp; Media Queries</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to apply a mobile-first approach, use breakpoints and media queries, and combine them with Flexbox and Grid.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher converts a desktop layout into a mobile-first responsive design. Students begin a personal portfolio and test layouts at several viewport sizes.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students make the same page usable and readable on mobile, tablet, and desktop screens?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Responsive design is a standard requirement for client projects, employment tests, and modern production websites.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Start a responsive personal portfolio with mobile, tablet, and desktop layouts.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>User empathy, testing, problem-solving</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-12">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 12</span>
+          <h2>Typography</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to create a consistent type system using font families, web fonts, size, line-height, letter-spacing, responsive units, and text styling.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates font stacks, Google Fonts, @font-face, FOUT/FOIT, and font-display. Students apply a coherent typography system to their portfolio.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create readable hierarchy and consistent typography without harming page performance?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Good typography improves usability, brand quality, accessibility, and the professional appearance of client websites.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Add a documented typography system to the portfolio, including headings, body text, links, and responsive sizes.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Visual communication, readability awareness, consistency</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-13">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 13</span>
+          <h2>Forms</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to build and style user-friendly forms with inputs, labels, buttons, checkboxes, radio buttons, select boxes, focus/hover states, and validation styling.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher creates a sample contact form and demonstrates form controls, labels, states, and validation styles. Students create a new form and test keyboard interaction.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create a clear, styled, accessible form with visible interaction and validation states?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Forms are essential for lead generation, registration, login, checkout, surveys, and data collection.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a polished responsive contact or registration form.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>User empathy, communication, accessibility awareness</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-14">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 14</span>
+          <h2>Transitions, Transforms &amp; Animations</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to create smooth interface motion using transform, transition properties, timing functions, and keyframe animations.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher designs animated buttons and cards, then demonstrates translate, scale, rotate, skew, transitions, and keyframes. Students create new motion samples and compare tasteful vs distracting animation.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create smooth, purposeful animations that improve rather than reduce usability?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Motion skills help developers create modern landing pages, interactive components, product showcases, and engaging user experiences.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a smooth animated page containing interactive buttons, cards, hover effects, and at least one keyframe animation.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Creativity, user-experience awareness, visual communication</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-15">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 15</span>
+          <h2>Maintainable, Modern CSS</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to refactor CSS into cleaner reusable code using DRY principles, CSS variables, BEM naming, modular structure, and understand when frameworks may help.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher shows a messy stylesheet and refactors it with variables, reusable classes, BEM, and modular thinking. Students refactor earlier work and compare custom CSS, Tailwind, and Bootstrap at a high level.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students reduce duplication, use meaningful naming, and organize CSS so another developer can understand it?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Maintainable CSS reduces development time, bugs, and team friction in real software projects.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Refactor an earlier project using CSS variables, reusable classes, and BEM-style naming.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Code quality, teamwork, organization, critical thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-16">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 16</span>
+          <h2>HTML &amp; CSS Module Project Bootcamp</h2>
+        </div>
+        <span class="module">Module 1 — HTML &amp; CSS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to plan, build, present, and review a complete responsive landing page using HTML5 and modern CSS.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher gives project briefs and review criteria. Student teams choose a lead-generation, product-promotion, or event-registration page, build it end-to-end, then present and peer-review.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can teams deliver a responsive, semantic, visually coherent page and explain their design and coding decisions?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Simulates a real client project where developers must interpret a brief, build to requirements, collaborate, and present results.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Complete responsive landing page with source files and a short presentation.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Teamwork, presentation, project planning, peer feedback</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-17">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 17</span>
+          <h2>Tailwind CSS Fundamentals</h2>
+        </div>
+        <span class="module">Module 2 — Tailwind CSS &amp; GitHub</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to build responsive interfaces with Tailwind utility classes and understand how utility-first styling differs from custom CSS and component libraries.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates Tailwind setup, Play CDN, CLI/build concepts, configuration, IntelliSense, core utilities, responsive prefixes, Flexbox, and Grid classes. Students rebuild an earlier layout in Tailwind.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students reproduce an existing layout with correct responsive Tailwind utilities?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Tailwind is widely used in modern front-end teams for fast, consistent interface development.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Rebuild one earlier responsive section or page using Tailwind CSS.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Adaptability, pattern recognition, efficiency</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-18">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 18</span>
+          <h2>Reusable Components &amp; Command Line</h2>
+        </div>
+        <span class="module">Module 2 — Tailwind CSS &amp; GitHub</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to create reusable Tailwind UI components, reduce utility repetition, use icons, and perform basic file/project tasks in the command line.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates buttons, cards, navbars, reusable styling, @apply, icon libraries, and terminal navigation. Students build a Tailwind landing page and manage project files from the CLI.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create reusable components and confidently navigate/manage a small project from the terminal?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Reusable components and command-line skills are expected in real development workflows and framework-based projects.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a Tailwind landing page with reusable buttons, cards, navbar, icons, and documented terminal commands used.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Efficiency, organization, technical confidence</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-19">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 19</span>
+          <h2>Git Fundamentals</h2>
+        </div>
+        <span class="module">Module 2 — Tailwind CSS &amp; GitHub</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to track project history with Git using staging, commits, branches, merges, and basic conflict resolution.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates repository creation, status, add, commit, log, branching, merging, and conflict examples. Students track a small project and create at least one branch.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students make meaningful commits, create/merge a branch, and recover from a simple conflict?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Version control is a core employability requirement for professional software development teams.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a Git-tracked mini project with a clean commit history and at least one feature branch.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Responsibility, documentation, problem-solving</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-20">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 20</span>
+          <h2>Collaborating with Git &amp; GitHub</h2>
+        </div>
+        <span class="module">Module 2 — Tailwind CSS &amp; GitHub</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use remote repositories, clone, push, pull, create pull requests, review code, and follow basic collaboration practices.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates GitHub workflow from clone to pull request. Students push a project, exchange repositories, review changes, and open a pull request.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students successfully synchronize code with GitHub and complete a basic pull-request workflow?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>GitHub collaboration is common in internships, remote work, open-source projects, and professional development teams.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Publish a project repository on GitHub with README, commits, branches, and a pull request.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Collaboration, written feedback, professional workflow</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-21">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 21</span>
+          <h2>JavaScript Fundamentals</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to explain how JavaScript runs in the browser and write simple programs using variables, constants, data types, and type conversion.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates browser JavaScript, console output, var/let/const, primitive values, and type conversion. Students write small programs and inspect results in the console.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students declare values correctly, identify data types, convert types, and predict simple outputs?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>JavaScript is a core front-end skill used to add logic and interactivity to websites and web applications.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a JavaScript fundamentals practice file containing variables, type examples, conversions, and output.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Logical thinking, precision, debugging mindset</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-22">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 22</span>
+          <h2>Operators &amp; Conditionals</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use arithmetic, comparison, logical, assignment operators, if/else, else-if, and switch to control program decisions.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates decision-making examples such as grading or pricing. Students create multiple conditional logic exercises.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students select correct operators and write conditions that produce the expected result?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Conditional logic is used in validation, permissions, menus, pricing, workflows, and interactive web applications.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a small decision-based JavaScript program such as grade calculator, discount checker, or menu selector.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Analytical thinking, decision-making, accuracy</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-23">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 23</span>
+          <h2>Loops</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use for, while, and do-while loops, control loop execution with break/continue, and solve simple repetition problems.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher explains loop structure and demonstrates counting, filtering, and FizzBuzz-style examples. Students solve increasingly complex loop tasks, including nesting.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students choose an appropriate loop and avoid common errors such as infinite loops?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Loops automate repetitive processing in data handling, UI generation, validation, and business logic.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a JavaScript loop exercise set including counting, totals, patterns, and FizzBuzz.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Problem-solving, persistence, algorithmic thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-24">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 24</span>
+          <h2>Functions</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to write reusable JavaScript functions using declarations, expressions, parameters, returns, arrow functions, and proper scope.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher refactors repeated code into functions and explains parameters, return values, scope, and arrow syntax. Students build reusable logic exercises such as a number guessing helper.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students break a problem into reusable functions and correctly pass/return values?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Functions are fundamental for maintainable applications, team development, testing, and reusable components.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a small JavaScript mini-app organized into several reusable functions.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Decomposition, abstraction, code organization</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-25">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 25</span>
+          <h2>Arrays &amp; Objects</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to store, access, update, and iterate collections with arrays and represent real-world data with objects, properties, methods, and scope.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher models products/students with arrays and objects and demonstrates common array methods and iteration. Students create and process their own datasets.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students choose arrays or objects appropriately and retrieve/update values correctly?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Modern web apps depend heavily on arrays and objects for API data, products, users, settings, and interface state.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a small dataset such as products or students and display calculated or filtered information using arrays and objects.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Data organization, modeling, logical thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-26">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 26</span>
+          <h2>Modern JavaScript (ES6+)</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to write cleaner modern JavaScript using block scope, arrow functions, template literals, spread/rest, destructuring, modules, optional chaining, and nullish coalescing.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher converts older-style JavaScript into modern ES6+ syntax and explains each feature with small examples. Students rewrite earlier exercises using modern syntax and split code into modules.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students correctly refactor older JavaScript and choose suitable ES6+ features without changing program behavior?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Modern JavaScript syntax is expected in React, Node.js, front-end frameworks, and current professional codebases.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an ES6+ refactoring portfolio page showing before/after examples and a small modular script.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Adaptability, code readability, analytical thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-27">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 27</span>
+          <h2>Clean Code: Refactoring &amp; Debugging</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to improve messy JavaScript code, use the browser console and debugging techniques, and systematically find and fix defects.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher presents intentionally messy/buggy code and demonstrates naming, decomposition, console tools, breakpoints, and tracing. Students refactor and debug the script.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students locate the cause of bugs, explain the fix, and improve code readability?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Debugging and clean code directly affect productivity, maintenance cost, and reliability in professional development.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Submit a before/after refactoring example with a short bug log explaining problems found and fixed.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Problem-solving, resilience, attention to detail</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-28">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 28</span>
+          <h2>The DOM</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to understand the DOM tree, select page elements, manipulate content/attributes, and change styles dynamically with JavaScript.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher maps HTML to the DOM tree and demonstrates querySelector, getElementById, element updates, and dynamic styling. Students create live page changes from buttons or data.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students select the correct elements and update the page safely using JavaScript?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>DOM manipulation powers dynamic dashboards, forms, menus, filters, notifications, and many interactive websites.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an interactive DOM demo page that changes text, attributes, classes, and styles.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Systems thinking, visual feedback, debugging</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-29">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 29</span>
+          <h2>Events</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to handle mouse, keyboard, form, and window events; use the event object; and understand propagation and delegation.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates listeners, event objects, bubbling, and delegation. Students build an interactive UI such as tabs or a to-do list.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students connect user actions to correct application responses and use event delegation where appropriate?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Event-driven programming is essential for responsive interfaces, forms, navigation, and interactive business applications.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an interactive to-do list, tabs, or similar event-driven interface.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>User empathy, logical thinking, interaction design</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-30">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 30</span>
+          <h2>Object-Oriented JavaScript</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to apply basic OOP concepts and create JavaScript classes with constructors, methods, inheritance, this, and prototype awareness.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher models a real-world entity using classes and demonstrates encapsulation, inheritance, polymorphism, abstraction, constructors, methods, and extends. Students create their own class model.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students represent a real-world problem with classes and explain why methods/data belong together?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>OOP supports structured code in larger applications, reusable business models, and framework-based development.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a small class-based model such as Product, Student, Employee, or BankAccount with inheritance or reusable methods.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Abstraction, modeling, structured problem-solving</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-31">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 31</span>
+          <h2>JSON &amp; JavaScript Project Bootcamp</h2>
+        </div>
+        <span class="module">Module 3 — JavaScript</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to parse/stringify JSON, work with structured browser data, and combine JavaScript fundamentals into a small team application.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates JSON format and conversion, then gives a project brief. Teams build a small interactive app using data, functions, DOM/events, and JSON.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can teams correctly process JSON and deliver a working interactive JavaScript application?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>JSON is central to APIs, web services, configuration, and front-end/back-end data exchange.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Complete small JavaScript app using JSON data, with source code and team presentation.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Teamwork, project planning, presentation, integration thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-32">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 32</span>
+          <h2>React Fundamentals</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to explain React, Virtual DOM vs real DOM, create a Vite React project, understand project structure, and run the application.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates React architecture and Vite setup. Students create a project, inspect folders/files, run the dev server, and make a first visible change.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students independently create and run a React project and explain the purpose of its main files?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>React is a major employability skill for modern front-end and full-stack roles.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create and publish a basic React starter project with a short project-structure note.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Technical confidence, self-directed learning, systems thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-33">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 33</span>
+          <h2>JSX, Components &amp; Styling</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to write JSX, build reusable components, understand functional vs class components, and style React components with Tailwind.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher breaks a static interface into components and demonstrates JSX rules and Tailwind in Vite. Students recreate the interface as reusable components.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students convert a static design into correctly structured reusable React components?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Component-based UI development is central to modern front-end teams and scalable applications.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a small reusable component library with button, card, navbar, and content components.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Modular thinking, reusability, visual consistency</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-34">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 34</span>
+          <h2>Components Project Bootcamp</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to collaborate to build, style, present, and review a reusable React UI/component set.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher gives a component brief and review checklist. Teams plan components, implement them with JSX and Tailwind, then present and critique.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can teams create reusable, consistent components and explain component boundaries and styling decisions?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Mirrors design-system and front-end teamwork used in software companies.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Team-built reusable UI kit/component set in React.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Teamwork, presentation, peer review, component planning</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-35">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 35</span>
+          <h2>Props &amp; Data Flow</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to pass and validate data with props and explain one-way parent-to-child data flow.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher creates a parent component that sends different data to reusable children. Students build repeated cards/lists from props and practice parent-child communication.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students pass the correct values, reuse components with different data, and trace one-way data flow?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Props are essential for reusable UI, dashboards, data-driven applications, and maintainable React projects.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a data-driven component page such as product cards, team members, or course cards using props.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Data communication, abstraction, reuse</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-36">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 36</span>
+          <h2>State Management</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use useState, distinguish state from props, update UI state correctly, and lift state to share data between components.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates counters, toggles, and shared state. Students create components that update state from user actions and move shared state to a common parent.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students update state without direct mutation and decide where shared state should live?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>State management is required for forms, carts, filters, dashboards, authentication flows, and interactive applications.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an interactive React feature such as counter, cart quantity, theme switcher, or filter using state.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>State reasoning, problem-solving, user interaction</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-37">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 37</span>
+          <h2>React Hooks</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use useState, useEffect, useRef, useContext, and understand the purpose of custom hooks.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates lifecycle-like effects, DOM references, shared context, and reusable hook logic. Students implement small examples and extract one custom hook.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students choose the correct hook for a given problem and avoid obvious hook misuse?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Hooks are standard in modern React and appear in almost every production React codebase.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a Hooks lab demonstrating state, effect, ref, context, and one simple custom hook.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Abstraction, reuse, debugging, lifecycle reasoning</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-38">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 38</span>
+          <h2>Rendering &amp; the React DOM</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use conditional rendering, show/hide components, and explain how state changes cause React re-renders.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates if/else, ternary, logical AND, and component visibility. Students create role/status-based UI and observe re-render behavior.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students display the correct UI for different states and explain what triggers a re-render?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Conditional rendering is used for loading states, permissions, empty states, dashboards, authentication, and dynamic content.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a React page with multiple UI states such as loading, success, empty, logged-in/logged-out, or role-based content.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Decision-making, state reasoning, user empathy</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-39">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 39</span>
+          <h2>Routing &amp; Navigation</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to configure React Router, create routes, navigation links, programmatic navigation, nested routes, and understand protected-route patterns.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher turns a single-page React app into a multi-page experience. Students create route definitions, links, nested pages, and a simple protected-route simulation.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students navigate between pages without reloads and organize a logical route structure?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Routing is necessary for multi-page dashboards, admin panels, e-commerce sites, portals, and SaaS applications.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a multi-page React site with navigation, nested routes, and at least one protected-route example.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Information architecture, planning, user navigation</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-40">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 40</span>
+          <h2>React Project Bootcamp</h2>
+        </div>
+        <span class="module">Module 4 — React JS</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to integrate components, props, state, hooks, routing, and Tailwind into a small multi-page React application.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher provides project scope and milestones. Teams build a multi-page React app, test the main flows, present the result, and receive peer feedback.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can teams deliver a working React app whose components, state, hooks, and routes work together coherently?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Provides realistic portfolio evidence for front-end internships, junior roles, and client projects.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Complete multi-page React application with repository and presentation.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Teamwork, integration, presentation, project ownership</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-41">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 41</span>
+          <h2>Testing Foundations &amp; Tools</h2>
+        </div>
+        <span class="module">Module 5 — Testing</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to explain why testing matters, distinguish manual/automated and unit/integration/end-to-end testing, create test cases, and write basic Jest tests.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher compares testing levels, test planning, debugging vs testing, and demonstrates Jest. Students write simple test cases for earlier JavaScript functions.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students choose a suitable test type and write a basic Jest test with clear expected results?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Testing improves software quality and is an important skill for professional developers and QA-aware teams.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a small test plan plus Jest unit tests for an earlier JavaScript module.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Quality mindset, precision, risk awareness</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-42">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 42</span>
+          <h2>TDD &amp; Practical Testing</h2>
+        </div>
+        <span class="module">Module 5 — Testing</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to apply basic test-driven development, write effective test cases, understand CI at an introductory level, and add tests to an existing project.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates red-green-refactor and introduces CI concepts. Teams choose an earlier project, define tests first where practical, and add unit tests.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students explain TDD and demonstrate at least one feature developed or improved through tests?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Test-first thinking and automated checks support reliable team development and continuous integration workflows.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Updated earlier project containing new unit tests and a short TDD/CI reflection.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Discipline, collaboration, quality assurance</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-43">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 43</span>
+          <h2>Figma Basics</h2>
+        </div>
+        <span class="module">Module 6 — UI/UX with Figma</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to navigate Figma and create basic interface elements using frames, layers, shapes, text, colors, and the pen tool.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher gives an interface tour and builds a simple screen. Students reproduce the screen and create a second variation.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students organize layers and frames and create a clean basic UI composition?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Figma is widely used for communication between designers, clients, and front-end developers.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a simple web or mobile screen in Figma with organized layers and frames.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Visual communication, tool fluency, organization</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-44">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 44</span>
+          <h2>Layout &amp; Auto Layout</h2>
+        </div>
+        <span class="module">Module 6 — UI/UX with Figma</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to apply spacing, alignment, grids, Auto Layout, and responsive design principles in Figma.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates a responsive card and explains constraints through Auto Layout. Students build a card layout that adapts as content or frame size changes.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create a layout that maintains spacing and alignment when resized or when content changes?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Auto Layout is a core professional Figma skill used in scalable interface and design-system work.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a responsive card/list section using Figma Auto Layout.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Spatial reasoning, consistency, design systems thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-45">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 45</span>
+          <h2>Components &amp; Variants</h2>
+        </div>
+        <span class="module">Module 6 — UI/UX with Figma</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to build reusable Figma components, variants, and component properties for multiple interface states.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher creates a button component with default, hover, active, and other variants. Students build their own reusable component set.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students use one component system to produce consistent states without duplicating independent elements?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Components and variants reduce design inconsistencies and improve designer-developer handoff.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a Figma button/component system with multiple states and properties.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Consistency, reuse, design-system thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-46">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 46</span>
+          <h2>Design Systems</h2>
+        </div>
+        <span class="module">Module 6 — UI/UX with Figma</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to define and apply a simple design system for typography, color, spacing, and reusable UI elements.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates a small design-system page. Students define tokens/styles and apply them to a sample interface.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students maintain consistent colors, spacing, typography, and components across multiple screens?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Design systems are used by product teams to scale interfaces and keep branding consistent.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a mini design system page in Figma with typography, colors, spacing, and reusable UI elements.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Consistency, documentation, systems thinking</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-47">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 47</span>
+          <h2>Real Project: Design</h2>
+        </div>
+        <span class="module">Module 6 — UI/UX with Figma</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to design a practical landing page, dashboard UI, or mobile-app screen using the Figma skills learned.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher reviews a real project brief and demonstrates design planning. Students choose a landing page, dashboard, or mobile-screen task and build a polished solution.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students turn a brief into a coherent, usable, visually consistent interface?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Portfolio-ready UI design improves opportunities in front-end, UI/UX, freelancing, and client work.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Design a portfolio landing page, dashboard, or mobile-app screen in Figma.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Creativity, user empathy, project interpretation</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-48">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 48</span>
+          <h2>UI/UX Bootcamp</h2>
+        </div>
+        <span class="module">Module 6 — UI/UX with Figma</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to collaborate on a complete screen flow, present design decisions, and provide constructive design critique.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher assigns a flow-based design challenge and critique criteria. Teams create linked screens, present the flow, and review each other&#x27;s work.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can teams produce a logical screen flow and defend decisions based on usability and consistency?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Simulates collaborative product-design work, stakeholder presentation, and design review.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Complete Figma screen flow with team presentation and peer feedback notes.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Teamwork, critique, presentation, empathy</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-49">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 49</span>
+          <h2>AI in the Front-End</h2>
+        </div>
+        <span class="module">Module 7 — AI for Front-End Development</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to identify chat, image, and voice AI features, explain the role of AI APIs, and describe how an AI service connects to a front-end app.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates examples of AI-enabled interfaces and sketches the data flow between user, front-end, API, and AI service. Students map possible AI features for a web project.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students correctly explain the integration flow and match an AI feature to an appropriate front-end use case?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>AI-enabled user experiences are increasingly relevant in modern web products and client projects.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an AI feature concept sheet and integration diagram for a front-end application.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Systems thinking, innovation, responsible technology awareness</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-50">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 50</span>
+          <h2>Working with AI APIs</h2>
+        </div>
+        <span class="module">Module 7 — AI for Front-End Development</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to understand an AI API call, send prompts, receive/parse responses, and handle basic errors.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates a simple request/response flow and common error cases. Students connect a prepared front-end example to an AI API workflow or simulate the flow with structured data.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students send input, process a successful response, and display a clear error state when the request fails?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>API integration is a key front-end skill for AI products, SaaS applications, and external services.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a small front-end AI API interaction demo with loading, success, and error handling.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Problem-solving, data handling, resilience</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-51">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 51</span>
+          <h2>Prompt Engineering &amp; Chat UI</h2>
+        </div>
+        <span class="module">Module 7 — AI for Front-End Development</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to write clearer prompts, distinguish system vs user instructions, control output expectations, and build a basic chat interface.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher compares weak and strong prompts and demonstrates chat UI structure. Students improve prompts and create a chat form that captures and displays user input.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students produce a prompt that reliably asks for a desired output and connect it to a usable chat interface?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Prompt design and chat UI development support AI assistants, customer service tools, learning apps, and productivity products.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a front-end chat interface plus a small library of tested prompts for different tasks.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Communication, critical thinking, user-centered design</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-52">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 52</span>
+          <h2>Responses &amp; Streaming</h2>
+        </div>
+        <span class="module">Module 7 — AI for Front-End Development</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to display AI responses, manage chat history, show typing/loading states, and understand token-by-token streaming and interruption handling.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates static response vs streamed response behavior and chat-history management. Students add loading/typing indicators and a streaming-style display to a chat UI.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students keep the interface responsive and communicate clearly when AI output is loading, streaming, completed, or interrupted?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Streaming improves perceived speed and usability in production AI chat and assistant interfaces.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Enhance the chat project with response history, loading/typing state, and streaming-style output.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>User empathy, asynchronous thinking, interaction design</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-53">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 53</span>
+          <h2>AI UX &amp; Interaction Design</h2>
+        </div>
+        <span class="module">Module 7 — AI for Front-End Development</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to design trustworthy AI experiences with clear feedback, loading indicators, error states, transparency, and appropriate multimodal interaction patterns.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher reviews good and poor AI UX examples. Students redesign an AI screen to improve feedback, trust, and error recovery.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students identify confusing AI interactions and redesign them with clear states and user guidance?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Good AI UX is important for customer trust, product quality, support tools, and responsible AI interfaces.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an AI UX state board covering empty, loading, success, error, retry, and feedback states.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Empathy, ethical awareness, communication, design judgment</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-54">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 54</span>
+          <h2>Multimodal AI &amp; Bootcamp</h2>
+        </div>
+        <span class="module">Module 7 — AI for Front-End Development</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to combine text, image, voice, or file input concepts with performance, validation, safe key handling, and a small AI-powered front-end project.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates multimodal input patterns, lazy loading, rendering optimization, validation, and why API keys must be protected. Teams build a small AI-powered chat/interface project.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can teams deliver a usable AI interface with clear input validation, performance awareness, and safe handling of secrets?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Combines AI, front-end, UX, and security awareness into a portfolio-ready modern application.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Team-built AI-powered front-end app with text plus at least one additional input modality concept.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Teamwork, security awareness, integration, presentation</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-55">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 55</span>
+          <h2>Framer Basics</h2>
+        </div>
+        <span class="module">Module 8 — No-Code / Design-to-Code</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to convert a design into a working no-code website, build interactive UI, and create landing/mobile layouts in Framer.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates Framer interface and converts a simple design into an interactive page. Students rebuild a small landing page and add interactions.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students turn a visual design into a functional, responsive Framer page?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>No-code tools help freelancers, designers, and small teams launch client websites quickly.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create an interactive Framer landing page from an existing or self-made design.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Rapid prototyping, creativity, client focus</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-56">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 56</span>
+          <h2>Publish &amp; Showcase</h2>
+        </div>
+        <span class="module">Module 8 — No-Code / Design-to-Code</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to publish a live Framer website and present their design work on public portfolio platforms such as Behance and Dribbble.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates publishing and portfolio presentation. Teams finalize a Framer site, publish it, prepare showcase images/text, and present the result.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students publish a working live site and present the project clearly to an external audience?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Publicly showcased work helps learners attract clients, internships, and employment opportunities.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Published Framer site plus a prepared Behance/Dribbble-style project showcase.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Presentation, personal branding, project completion</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-57">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 57</span>
+          <h2>LinkedIn Profile &amp; Personal Branding</h2>
+        </div>
+        <span class="module">Module 9 — LinkedIn &amp; Professional Branding</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to explain the value of LinkedIn, define basic personal branding, and optimize key profile sections for job seeking.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher reviews example profiles and demonstrates headline, about section, skills, experience, projects, and profile presentation. Students improve their own profile content.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students create a complete professional profile that clearly communicates skills, projects, and career direction?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>A strong LinkedIn profile supports job search, networking, credibility, and freelance lead generation.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Complete an optimized LinkedIn profile draft with professional headline, summary, skills, projects, and experience.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Professional communication, self-presentation, career planning</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-58">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 58</span>
+          <h2>Networking &amp; Content</h2>
+        </div>
+        <span class="module">Module 9 — LinkedIn &amp; Professional Branding</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to use a simple LinkedIn growth strategy, conduct professional outreach, and create useful content for career and freelancing visibility.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher demonstrates networking etiquette, connection messages, professional outreach, and content ideas. Students write outreach messages and prepare one educational/project post.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students contact professionals respectfully and create content that represents their skills accurately?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Networking and visible expertise can lead to referrals, interviews, partnerships, and freelance clients.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Prepare a networking plan, two professional outreach messages, and one LinkedIn project/learning post.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Networking, writing, confidence, relationship building</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-59">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 59</span>
+          <h2>Freelancing Foundations</h2>
+        </div>
+        <span class="module">Module 10 — Freelancing</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to explain freelancing vs full-time work, identify benefits/challenges and in-demand skills, describe the client-project-payment cycle, and set realistic expectations.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher walks through a sample freelance project from lead to payment and discusses mindset, scope, risk, and expectations. Students map their own service offering and workflow.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students describe the full freelance cycle and identify realistic services they can offer based on their portfolio?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>Freelancing provides a pathway to self-employment and remote income using the technical skills developed in the course.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a one-page freelancing service plan including target services, sample client, workflow, and realistic first goals.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Entrepreneurship, planning, client awareness, self-management</p>
+        </section>
+      </div>
+    </article>
+    
+    <article class="day-card" id="day-60">
+      <div class="day-header">
+        <div>
+          <span class="day-number">Day 60</span>
+          <h2>Platforms, Clients &amp; Working Globally</h2>
+        </div>
+        <span class="module">Module 10 — Freelancing</span>
+      </div>
+
+      <div class="six-grid">
+        <section class="item">
+          <h3><span>1</span> Learning Outcome</h3>
+          <p>Students will be able to create stronger freelancing profiles, write proposals, price services, seek a first client, communicate across cultures/time zones, and recognize safer payment/scam-avoidance practices.</p>
+        </section>
+        <section class="item">
+          <h3><span>2</span> Learning Activities</h3>
+          <p>Teacher reviews Upwork, Fiverr, Freelancer, and Toptal profile principles; demonstrates proposal structure, pricing, client communication, reviews, and safe payment awareness. Students draft a profile and proposal for a realistic job.</p>
+        </section>
+        <section class="item">
+          <h3><span>3</span> Assessment</h3>
+          <p>Can students present a credible freelance profile, write a tailored proposal, suggest a reasonable price approach, and explain how they would communicate and get paid safely?</p>
+        </section>
+        <section class="item">
+          <h3><span>4</span> Employability Link</h3>
+          <p>These skills directly support international freelancing, remote work, client acquisition, and long-term professional relationships.</p>
+        </section>
+        <section class="item">
+          <h3><span>5</span> Portfolio Evidence</h3>
+          <p>Create a complete freelance starter pack: profile text, service offer, sample proposal, pricing approach, portfolio links, and client-communication checklist.</p>
+        </section>
+        <section class="item">
+          <h3><span>6</span> Transferable Skills</h3>
+          <p>Professional communication, negotiation, cultural awareness, entrepreneurship</p>
+        </section>
+      </div>
+    </article>
+    
+
+  <a class="back-top" href="#top">↑ Back to top</a>
+</main>
+
+<footer>
+  60-Day Front-End Web Development & AI Teaching Plan
+</footer>
+</body>
+</html>

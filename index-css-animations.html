@@ -1,0 +1,2870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A complete interactive CSS animations lesson with live code samples and results.">
+  <title>CSS Animation Lab — Developer Edition</title>
+
+  <style>
+
+
+    :root {
+      color-scheme: dark;
+      --bg: #070a10;
+      --panel: #0e141e;
+      --panel-2: #141b27;
+      --panel-3: #192231;
+      --line: #29354a;
+      --line-bright: #3e506d;
+      --text: #f4f8ff;
+      --muted: #96a5bb;
+      --cyan: #39e7ff;
+      --cyan-2: #74f2ff;
+      --violet: #8e62ff;
+      --magenta: #d45dff;
+      --lime: #c8ff5a;
+      --orange: #ff9a4d;
+      --red: #ff625c;
+      --green: #54e3a4;
+      --code: #05080d;
+      --radius-sm: 10px;
+      --radius-md: 17px;
+      --radius-lg: 26px;
+      --content: 1200px;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.44);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(57, 231, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 231, 255, 0.022) 1px, transparent 1px),
+        radial-gradient(circle at 12% 5%, rgba(57, 231, 255, 0.12), transparent 29rem),
+        radial-gradient(circle at 92% 14%, rgba(142, 98, 255, 0.14), transparent 34rem),
+        var(--bg);
+      background-size: 40px 40px, 40px 40px, auto, auto, auto;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: -1;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+      filter: blur(115px);
+      opacity: 0.13;
+    }
+
+    body::before {
+      top: 34%;
+      left: -190px;
+      background: var(--cyan);
+    }
+
+    body::after {
+      right: -200px;
+      bottom: 5%;
+      background: var(--violet);
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a,
+    input,
+    select,
+    summary {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid rgba(57, 231, 255, 0.35);
+      outline-offset: 3px;
+    }
+
+    code,
+    pre,
+    .mono {
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .progress {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet), var(--magenta));
+      box-shadow: 0 0 18px rgba(57, 231, 255, 0.75);
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 50;
+      top: 0;
+      border-bottom: 1px solid rgba(74, 94, 126, 0.34);
+      background: rgba(7, 10, 16, 0.84);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      width: min(calc(100% - 32px), var(--content));
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: #f7fbff;
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.7);
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--cyan), #7384ff);
+      color: #041017;
+      box-shadow:
+        0 0 0 1px rgba(57, 231, 255, 0.12),
+        0 0 24px rgba(57, 231, 255, 0.3);
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .top-nav a {
+      padding: 8px 11px;
+      border-radius: 999px;
+      color: #8f9db2;
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 750;
+      text-decoration: none;
+      transition: color 180ms ease, background-color 180ms ease;
+    }
+
+    .top-nav a:hover {
+      color: var(--cyan);
+      background: rgba(57, 231, 255, 0.07);
+    }
+
+    .page {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--cyan);
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      text-shadow: 0 0 14px rgba(57, 231, 255, 0.28);
+    }
+
+    .eyebrow::before {
+      width: 25px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+      content: "";
+    }
+
+    .hero {
+      min-height: 670px;
+      padding: 82px 0 72px;
+      display: grid;
+      grid-template-columns: 0.92fr 1.08fr;
+      align-items: center;
+      gap: 58px;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: clamp(3.2rem, 7.5vw, 7rem);
+      line-height: 0.9;
+      letter-spacing: -0.078em;
+    }
+
+    h1 .glow {
+      color: var(--cyan);
+      text-shadow:
+        0 0 12px rgba(57, 231, 255, 0.65),
+        0 0 46px rgba(57, 231, 255, 0.2);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin-bottom: 32px;
+      color: #a5b3c7;
+      font-size: clamp(1.04rem, 1.5vw, 1.22rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      min-height: 44px;
+      padding: 10px 17px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid #3b485e;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(25, 33, 46, 0.98), rgba(12, 17, 25, 0.98));
+      color: #eaf2ff;
+      cursor: pointer;
+      font-weight: 850;
+      text-decoration: none;
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.04),
+        0 9px 24px rgba(0, 0, 0, 0.28);
+      transition:
+        border-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+    }
+
+    .button:hover {
+      border-color: rgba(57, 231, 255, 0.58);
+      box-shadow:
+        0 0 0 1px rgba(57, 231, 255, 0.11),
+        0 0 24px rgba(57, 231, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      background: linear-gradient(120deg, #22d5eb, #687cff 55%, #9463ff);
+      color: #04080d;
+      box-shadow:
+        0 0 0 1px rgba(116, 242, 255, 0.2),
+        0 10px 30px rgba(57, 231, 255, 0.18);
+    }
+
+    .button.primary:hover {
+      background: linear-gradient(120deg, #7cf4ff, #8c99ff 55%, #af8bff);
+      box-shadow:
+        0 0 20px rgba(57, 231, 255, 0.3),
+        0 0 40px rgba(142, 98, 255, 0.14);
+    }
+
+    .button.small {
+      min-height: 34px;
+      padding: 6px 11px;
+      font-size: 0.78rem;
+      box-shadow: none;
+    }
+
+    .hero-stage {
+      position: relative;
+      min-height: 500px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #354258;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(rgba(57, 231, 255, 0.07) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 231, 255, 0.07) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(142, 98, 255, 0.13), transparent 15rem),
+        #0c121b;
+      background-size: 26px 26px, 26px 26px, auto, auto;
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.035),
+        inset 0 0 70px rgba(57, 231, 255, 0.02),
+        var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-stage::before {
+      position: absolute;
+      inset: 24px;
+      border: 1px dashed rgba(57, 231, 255, 0.2);
+      border-radius: 19px;
+      content: "";
+    }
+
+    .orbit {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      border: 1px solid rgba(57, 231, 255, 0.18);
+      border-radius: 50%;
+      animation: orbit-spin 9s linear infinite;
+    }
+
+    .orbit::before {
+      position: absolute;
+      inset: 52px;
+      border: 1px solid rgba(142, 98, 255, 0.22);
+      border-radius: 50%;
+      content: "";
+    }
+
+    .orbit-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 112px;
+      height: 112px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.65);
+      border-radius: 26px;
+      background: linear-gradient(145deg, #1a2431, #0a0f17);
+      box-shadow:
+        0 0 25px rgba(57, 231, 255, 0.25),
+        0 0 65px rgba(142, 98, 255, 0.13);
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-weight: 900;
+      transform: translate(-50%, -50%);
+      animation: center-counter-spin 9s linear infinite;
+    }
+
+    .orbit-dot {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #d8fbff;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow:
+        0 0 16px rgba(57, 231, 255, 0.9),
+        0 0 42px rgba(57, 231, 255, 0.45);
+      transform: translateX(-50%);
+    }
+
+    .orbit-dot.two {
+      top: auto;
+      right: 10px;
+      bottom: 30px;
+      left: auto;
+      background: var(--violet);
+      box-shadow:
+        0 0 16px rgba(142, 98, 255, 0.9),
+        0 0 42px rgba(142, 98, 255, 0.4);
+      transform: none;
+    }
+
+    .hero-code {
+      position: absolute;
+      z-index: 3;
+      padding: 9px 12px;
+      border: 1px solid rgba(57, 231, 255, 0.3);
+      border-radius: 8px;
+      background: rgba(4, 8, 13, 0.94);
+      color: var(--lime);
+      box-shadow: 0 0 24px rgba(57, 231, 255, 0.12);
+      font-size: clamp(0.66rem, 1vw, 0.8rem);
+    }
+
+    .hero-code.one {
+      top: 48px;
+      left: 25px;
+      animation: float-one 4s ease-in-out infinite alternate;
+    }
+
+    .hero-code.two {
+      right: 23px;
+      bottom: 52px;
+      color: #9cdfff;
+      animation: float-two 4.8s ease-in-out infinite alternate;
+    }
+
+    @keyframes orbit-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes center-counter-spin {
+      from { transform: translate(-50%, -50%) rotate(0); }
+      to { transform: translate(-50%, -50%) rotate(-360deg); }
+    }
+
+    @keyframes float-one {
+      from { transform: translateY(0) rotate(-4deg); }
+      to { transform: translateY(-10px) rotate(-2deg); }
+    }
+
+    @keyframes float-two {
+      from { transform: translateY(0) rotate(3deg); }
+      to { transform: translateY(10px) rotate(1deg); }
+    }
+
+    .lesson-layout {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      align-items: start;
+      gap: 40px;
+    }
+
+    .side-nav {
+      position: sticky;
+      top: 98px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(11, 16, 24, 0.88);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(16px);
+    }
+
+    .side-nav strong {
+      display: block;
+      padding: 8px 10px 11px;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .side-nav a {
+      padding: 8px 10px;
+      display: block;
+      border-radius: 7px;
+      color: #8492a8;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.78rem;
+      font-weight: 750;
+      text-decoration: none;
+      transition: color 160ms ease, background-color 160ms ease;
+    }
+
+    .side-nav a:hover,
+    .side-nav a.active {
+      color: var(--cyan);
+      background: rgba(57, 231, 255, 0.065);
+      box-shadow: inset 2px 0 var(--cyan);
+    }
+
+    .lesson-content {
+      min-width: 0;
+    }
+
+    .lesson-section {
+      padding: 78px 0 28px;
+      scroll-margin-top: 82px;
+    }
+
+    .lesson-number {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.58);
+      border-radius: 11px;
+      background: #101923;
+      color: var(--cyan);
+      box-shadow:
+        0 0 0 1px rgba(57, 231, 255, 0.07),
+        0 0 20px rgba(57, 231, 255, 0.16);
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-weight: 950;
+      transform: rotate(-3deg);
+    }
+
+    .lesson-section h2 {
+      margin-bottom: 16px;
+      font-size: clamp(2.15rem, 4.4vw, 3.9rem);
+      line-height: 1.03;
+      letter-spacing: -0.057em;
+    }
+
+    .lead {
+      max-width: 800px;
+      margin-bottom: 30px;
+      color: #a5b2c4;
+      font-size: 1.07rem;
+    }
+
+    .two-col,
+    .three-col,
+    .four-col {
+      display: grid;
+      gap: 17px;
+    }
+
+    .two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .three-col {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .four-col {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card,
+    .sample,
+    .lab,
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background:
+        linear-gradient(150deg, rgba(21, 28, 40, 0.97), rgba(11, 16, 24, 0.98));
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.034),
+        0 16px 42px rgba(0, 0, 0, 0.24);
+    }
+
+    .card {
+      padding: 23px;
+    }
+
+    .card h3 {
+      margin-bottom: 7px;
+      font-size: 1.15rem;
+    }
+
+    .card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .concept-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.42);
+      border-radius: 13px;
+      background: linear-gradient(135deg, rgba(57, 231, 255, 0.17), rgba(142, 98, 255, 0.15));
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(57, 231, 255, 0.1);
+      font-size: 1.3rem;
+    }
+
+    .definition {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 11px 11px 0;
+      background: rgba(57, 231, 255, 0.055);
+      color: #dbe8f8;
+    }
+
+    .sample {
+      margin: 24px 0;
+      overflow: hidden;
+    }
+
+    .sample-head {
+      min-height: 48px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(17, 23, 34, 0.96);
+    }
+
+    .sample-head strong {
+      font-size: 0.88rem;
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.78fr);
+    }
+
+    .code-panel {
+      position: relative;
+      min-width: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 70px),
+        var(--code);
+    }
+
+    .code-panel::before,
+    .generated-code::before {
+      position: absolute;
+      z-index: 2;
+      top: 17px;
+      left: 18px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ff5f57;
+      box-shadow: 14px 0 #febc2e, 28px 0 #28c840;
+      content: "";
+    }
+
+    .code-label,
+    .result-label {
+      position: absolute;
+      z-index: 3;
+      top: 12px;
+      right: 14px;
+      color: #6f8099;
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      padding: 46px 22px 24px;
+      overflow-x: auto;
+      color: #e5edf9;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      tab-size: 2;
+      white-space: pre;
+    }
+
+    .result-panel,
+    .mini-stage,
+    .playground-stage {
+      position: relative;
+      min-height: 270px;
+      padding: 46px 24px 24px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(rgba(57, 231, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 231, 255, 0.06) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(142, 98, 255, 0.1), transparent 13rem),
+        #0c1119;
+      background-size: 22px 22px, 22px 22px, auto, auto;
+      overflow: hidden;
+    }
+
+    .hint {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    .note {
+      margin: 22px 0;
+      padding: 17px 19px;
+      display: flex;
+      gap: 12px;
+      border: 1px solid rgba(200, 255, 90, 0.22);
+      border-radius: 12px;
+      background: rgba(200, 255, 90, 0.05);
+      color: #d8e5f4;
+    }
+
+    .note-icon {
+      flex: 0 0 auto;
+      font-size: 1.2rem;
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .syntax {
+      margin: 24px 0;
+      padding: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      border: 1px solid var(--line-bright);
+      border-radius: 14px;
+      background: #0b1018;
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+    }
+
+    .syntax span {
+      padding: 8px 10px;
+      border: 1px solid rgba(57, 231, 255, 0.16);
+      border-radius: 7px;
+      background: rgba(57, 231, 255, 0.07);
+      color: #7aefff;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .syntax span:nth-child(2n) {
+      border-color: rgba(142, 98, 255, 0.2);
+      background: rgba(142, 98, 255, 0.09);
+      color: #bda8ff;
+    }
+
+    .syntax span:nth-child(3n) {
+      border-color: rgba(200, 255, 90, 0.18);
+      background: rgba(200, 255, 90, 0.07);
+      color: #d9ff8f;
+    }
+
+    .basic-box {
+      width: 105px;
+      height: 105px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.65);
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--cyan), #697bff);
+      color: #041017;
+      box-shadow:
+        0 0 24px rgba(57, 231, 255, 0.3),
+        0 0 58px rgba(142, 98, 255, 0.14);
+      font-weight: 950;
+      animation: basic-bounce 1.4s ease-in-out infinite alternate;
+    }
+
+    @keyframes basic-bounce {
+      from { transform: translateY(30px) rotate(-4deg); }
+      to { transform: translateY(-30px) rotate(4deg); }
+    }
+
+    .keyframe-track {
+      position: relative;
+      width: min(330px, 100%);
+      height: 120px;
+      border-bottom: 1px dashed rgba(57, 231, 255, 0.24);
+    }
+
+    .keyframe-object {
+      position: absolute;
+      bottom: 8px;
+      left: 0;
+      width: 58px;
+      height: 58px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #d9fbff;
+      border-radius: 16px;
+      background: var(--cyan);
+      color: #041017;
+      box-shadow: 0 0 18px rgba(57, 231, 255, 0.6);
+      font-size: 0.72rem;
+      font-weight: 950;
+      animation: three-stage 2.4s ease-in-out infinite;
+    }
+
+    @keyframes three-stage {
+      0% {
+        left: 0;
+        bottom: 8px;
+        background: var(--cyan);
+        transform: rotate(0) scale(1);
+      }
+      50% {
+        left: calc(50% - 29px);
+        bottom: 56px;
+        background: var(--lime);
+        transform: rotate(180deg) scale(1.25);
+      }
+      100% {
+        left: calc(100% - 58px);
+        bottom: 8px;
+        background: var(--violet);
+        transform: rotate(360deg) scale(1);
+      }
+    }
+
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .property {
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      background: #0c121b;
+    }
+
+    .property code {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--cyan);
+      font-size: 0.78rem;
+      font-weight: 850;
+    }
+
+    .property p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.83rem;
+    }
+
+    .race-lab {
+      padding: 22px;
+    }
+
+    .lab-head {
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+    }
+
+    .lab-head h3 {
+      margin-bottom: 2px;
+    }
+
+    .race-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .race-row {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      align-items: center;
+      gap: 12px;
+    }
+
+    .race-row code {
+      color: #93a2b9;
+      font-size: 0.74rem;
+      font-weight: 800;
+    }
+
+    .race-track {
+      position: relative;
+      height: 36px;
+      border-radius: 999px;
+      background: #090e15;
+      box-shadow: inset 0 0 0 1px #202b3c;
+      overflow: hidden;
+    }
+
+    .race-dot {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 24px;
+      height: 24px;
+      border: 1px solid #d9fbff;
+      border-radius: 50%;
+      background: var(--cyan);
+      box-shadow: 0 0 15px rgba(57, 231, 255, 0.7);
+    }
+
+    .race-list.running .race-dot {
+      animation-name: race-move;
+      animation-duration: 2s;
+      animation-fill-mode: forwards;
+    }
+
+    .race-dot.linear { animation-timing-function: linear; }
+    .race-dot.ease { animation-timing-function: ease; background: #7182ff; }
+    .race-dot.ease-in { animation-timing-function: ease-in; background: var(--lime); }
+    .race-dot.ease-out { animation-timing-function: ease-out; background: var(--violet); }
+    .race-dot.steps { animation-timing-function: steps(5, end); background: var(--magenta); }
+
+    @keyframes race-move {
+      to { transform: translateX(var(--race-distance, 0px)); }
+    }
+
+    .direction-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .direction-card {
+      min-height: 180px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #0c121b;
+      overflow: hidden;
+    }
+
+    .direction-card code {
+      display: block;
+      margin-bottom: 24px;
+      color: var(--cyan);
+      font-size: 0.72rem;
+      text-align: center;
+    }
+
+    .direction-track {
+      height: 70px;
+      display: flex;
+      align-items: center;
+      border-radius: 10px;
+      background: #080d14;
+      box-shadow: inset 0 0 0 1px #1f2a3a;
+      overflow: hidden;
+    }
+
+    .direction-box {
+      width: 40px;
+      height: 40px;
+      margin-left: 8px;
+      border: 1px solid #cff9ff;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--cyan), #7080ff);
+      box-shadow: 0 0 14px rgba(57, 231, 255, 0.4);
+      animation-name: direction-move;
+      animation-duration: 1.5s;
+      animation-timing-function: ease-in-out;
+      animation-iteration-count: infinite;
+    }
+
+    .direction-box.normal { animation-direction: normal; }
+    .direction-box.reverse { animation-direction: reverse; }
+    .direction-box.alternate { animation-direction: alternate; }
+    .direction-box.alternate-reverse { animation-direction: alternate-reverse; }
+
+    @keyframes direction-move {
+      to { transform: translateX(105px) rotate(180deg); }
+    }
+
+    .fill-lab {
+      padding: 22px;
+    }
+
+    .fill-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .fill-card {
+      min-height: 175px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0a1018;
+    }
+
+    .fill-card code {
+      display: block;
+      margin-bottom: 19px;
+      color: var(--cyan);
+      font-size: 0.72rem;
+      text-align: center;
+    }
+
+    .fill-stage {
+      height: 95px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: #070b11;
+      overflow: hidden;
+    }
+
+    .fill-box {
+      width: 46px;
+      height: 46px;
+      border: 1px solid #d8fbff;
+      border-radius: 12px;
+      background: #2d3a4f;
+    }
+
+    .fill-grid.playing .fill-box {
+      animation-name: fill-demo;
+      animation-duration: 1.2s;
+      animation-delay: 0.7s;
+      animation-timing-function: ease;
+    }
+
+    .fill-box.none { animation-fill-mode: none; }
+    .fill-box.forwards { animation-fill-mode: forwards; }
+    .fill-box.backwards { animation-fill-mode: backwards; }
+    .fill-box.both { animation-fill-mode: both; }
+
+    @keyframes fill-demo {
+      from {
+        background: var(--cyan);
+        transform: translateX(-28px) scale(0.75);
+      }
+      to {
+        background: var(--violet);
+        box-shadow: 0 0 20px rgba(142, 98, 255, 0.55);
+        transform: translateX(28px) rotate(180deg) scale(1.15);
+      }
+    }
+
+    .play-state-demo {
+      width: 150px;
+      height: 150px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.6);
+      border-radius: 50%;
+      background:
+        conic-gradient(from 0deg, var(--cyan), var(--violet), var(--magenta), var(--cyan));
+      box-shadow:
+        0 0 26px rgba(57, 231, 255, 0.25),
+        0 0 65px rgba(142, 98, 255, 0.14);
+      color: #05090e;
+      font-weight: 950;
+      animation: play-spin 2.5s linear infinite;
+    }
+
+    .play-state-demo.paused {
+      animation-play-state: paused;
+    }
+
+    @keyframes play-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .playground {
+      display: grid;
+      grid-template-columns: minmax(300px, 0.86fr) minmax(340px, 1.14fr);
+      border: 1px solid #3a485e;
+      border-radius: 21px;
+      background: #0d131c;
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.04),
+        0 28px 80px rgba(0, 0, 0, 0.45);
+      overflow: hidden;
+    }
+
+    .controls {
+      padding: 24px;
+      border-right: 1px solid #354157;
+      background: linear-gradient(155deg, rgba(23, 31, 44, 0.98), rgba(11, 16, 24, 0.98));
+    }
+
+    .controls h3 {
+      margin-bottom: 20px;
+    }
+
+    .control {
+      margin-bottom: 16px;
+    }
+
+    .control-row {
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .control label {
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .control output {
+      padding: 2px 7px;
+      border: 1px solid rgba(57, 231, 255, 0.18);
+      border-radius: 6px;
+      background: rgba(57, 231, 255, 0.07);
+      color: var(--cyan);
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.73rem;
+      font-weight: 850;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--cyan);
+      cursor: pointer;
+    }
+
+    select {
+      width: 100%;
+      min-height: 40px;
+      padding: 8px 10px;
+      border: 1px solid #3a465b;
+      border-radius: 8px;
+      background: #090e15;
+      color: #e5edf9;
+    }
+
+    .control-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .playground-output {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: minmax(350px, 1fr) auto;
+    }
+
+    .playground-stage {
+      min-height: 350px;
+    }
+
+    .play-object {
+      position: relative;
+      z-index: 2;
+      width: 128px;
+      height: 128px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.75);
+      border-radius: 27px;
+      background: linear-gradient(135deg, var(--cyan), #7482ff);
+      color: #041017;
+      box-shadow:
+        0 0 25px rgba(57, 231, 255, 0.32),
+        0 0 62px rgba(142, 98, 255, 0.16);
+      font-weight: 950;
+      text-align: center;
+    }
+
+    .generated-code {
+      position: relative;
+      min-height: 215px;
+      border-top: 1px solid #354157;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 70px),
+        var(--code);
+    }
+
+    .generated-code pre {
+      padding-top: 42px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    @keyframes preset-bounce {
+      0%, 100% { transform: translateY(28px) scale(1); }
+      50% { transform: translateY(-55px) scale(1.08); }
+    }
+
+    @keyframes preset-spin {
+      from { transform: rotate(0) scale(0.82); border-radius: 22%; }
+      to { transform: rotate(360deg) scale(1.15); border-radius: 50%; }
+    }
+
+    @keyframes preset-pulse {
+      0%, 100% { transform: scale(0.86); filter: brightness(0.85); }
+      50% { transform: scale(1.22); filter: brightness(1.25); }
+    }
+
+    @keyframes preset-slide {
+      0% { transform: translateX(-105px) rotate(-12deg); opacity: 0.25; }
+      50% { opacity: 1; }
+      100% { transform: translateX(105px) rotate(12deg); opacity: 0.8; }
+    }
+
+    @keyframes preset-shake {
+      0%, 100% { transform: translateX(0) rotate(0); }
+      20% { transform: translateX(-22px) rotate(-5deg); }
+      40% { transform: translateX(20px) rotate(4deg); }
+      60% { transform: translateX(-14px) rotate(-3deg); }
+      80% { transform: translateX(10px) rotate(2deg); }
+    }
+
+    .patterns {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .pattern-card {
+      min-height: 310px;
+      padding: 21px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: linear-gradient(150deg, #151c28, #0b1018);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+    }
+
+    .pattern-card h3 {
+      margin-bottom: 5px;
+    }
+
+    .pattern-card > code {
+      color: var(--cyan);
+      font-size: 0.74rem;
+    }
+
+    .pattern-result {
+      min-height: 190px;
+      margin-top: auto;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background:
+        linear-gradient(rgba(57, 231, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 231, 255, 0.04) 1px, transparent 1px),
+        #090e15;
+      background-size: 18px 18px;
+      overflow: hidden;
+    }
+
+    .loader {
+      width: 72px;
+      height: 72px;
+      border: 6px solid #202c3d;
+      border-top-color: var(--cyan);
+      border-right-color: var(--violet);
+      border-radius: 50%;
+      filter: drop-shadow(0 0 10px rgba(57, 231, 255, 0.35));
+      animation: loader-spin 900ms linear infinite;
+    }
+
+    @keyframes loader-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .skeleton {
+      width: min(290px, 88%);
+      display: grid;
+      gap: 10px;
+    }
+
+    .skeleton span {
+      position: relative;
+      height: 15px;
+      border-radius: 999px;
+      background: #1c2635;
+      overflow: hidden;
+    }
+
+    .skeleton span:first-child {
+      width: 58%;
+      height: 23px;
+    }
+
+    .skeleton span:last-child {
+      width: 78%;
+    }
+
+    .skeleton span::after {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(116, 242, 255, 0.25), transparent);
+      content: "";
+      transform: translateX(-100%);
+      animation: shimmer 1.45s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      to { transform: translateX(100%); }
+    }
+
+    .notification {
+      width: min(285px, 90%);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      border: 1px solid rgba(84, 227, 164, 0.38);
+      border-radius: 12px;
+      background: #101b1b;
+      box-shadow: 0 0 24px rgba(84, 227, 164, 0.1);
+      animation: notification-enter 3.4s ease-in-out infinite;
+    }
+
+    .notification-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 9px;
+      background: var(--green);
+      color: #04100b;
+      font-weight: 950;
+    }
+
+    @keyframes notification-enter {
+      0%, 12% { transform: translateY(50px); opacity: 0; }
+      28%, 78% { transform: translateY(0); opacity: 1; }
+      100% { transform: translateY(-22px); opacity: 0; }
+    }
+
+    .typing {
+      width: 21ch;
+      overflow: hidden;
+      border-right: 3px solid var(--cyan);
+      color: var(--cyan);
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: clamp(0.9rem, 2vw, 1.2rem);
+      white-space: nowrap;
+      animation:
+        typing-effect 3s steps(21, end) infinite alternate,
+        cursor-blink 700ms steps(1, end) infinite;
+    }
+
+    @keyframes typing-effect {
+      from { width: 0; }
+      to { width: 21ch; }
+    }
+
+    @keyframes cursor-blink {
+      50% { border-color: transparent; }
+    }
+
+    .multi-animation {
+      width: 90px;
+      height: 90px;
+      border: 1px solid rgba(57, 231, 255, 0.8);
+      border-radius: 24px;
+      background: linear-gradient(135deg, var(--cyan), var(--violet));
+      box-shadow: 0 0 26px rgba(57, 231, 255, 0.25);
+      animation:
+        multi-float 2s ease-in-out infinite alternate,
+        multi-color 4s linear infinite,
+        multi-radius 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes multi-float {
+      to { transform: translateY(-55px) rotate(30deg); }
+    }
+
+    @keyframes multi-color {
+      50% { filter: hue-rotate(100deg) brightness(1.25); }
+    }
+
+    @keyframes multi-radius {
+      to { border-radius: 50%; }
+    }
+
+    .event-box {
+      width: 105px;
+      height: 105px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(200, 255, 90, 0.7);
+      border-radius: 22px;
+      background: linear-gradient(135deg, var(--lime), var(--green));
+      color: #05100b;
+      font-weight: 950;
+    }
+
+    .event-box.running {
+      animation: event-demo 1s ease 3;
+    }
+
+    @keyframes event-demo {
+      50% { transform: translateY(-50px) rotate(180deg) scale(1.15); }
+    }
+
+    .event-log {
+      min-height: 66px;
+      margin-top: 14px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #060a0f;
+      color: #a8b8cc;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.73rem;
+      white-space: pre-line;
+    }
+
+    .mistakes {
+      display: grid;
+      gap: 13px;
+    }
+
+    .mistake {
+      padding: 17px;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: linear-gradient(150deg, #141b27, #0a0f17);
+    }
+
+    .mistake-number {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(142, 98, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(142, 98, 255, 0.1);
+      color: #beaaff;
+      font-weight: 950;
+    }
+
+    .mistake h3 {
+      margin-bottom: 4px;
+    }
+
+    .mistake p {
+      margin-bottom: 6px;
+      color: var(--muted);
+    }
+
+    .mistake code {
+      color: var(--cyan);
+      font-size: 0.79rem;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #0e141e;
+      overflow: hidden;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .compare-table th {
+      background: #151d29;
+      color: #b9c7d9;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .compare-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    details {
+      margin-bottom: 11px;
+    }
+
+    summary {
+      padding: 15px 17px;
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    details > div {
+      padding: 0 17px 17px;
+      color: var(--muted);
+    }
+
+    details code {
+      color: var(--cyan);
+    }
+
+    .cheatsheet {
+      margin-top: 28px;
+      padding: 25px;
+      border: 1px solid rgba(57, 231, 255, 0.36);
+      border-radius: 19px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(142, 98, 255, 0.22), transparent 18rem),
+        linear-gradient(135deg, rgba(57, 231, 255, 0.08), rgba(142, 98, 255, 0.075)),
+        #101720;
+      box-shadow:
+        0 0 38px rgba(57, 231, 255, 0.07),
+        0 24px 60px rgba(0, 0, 0, 0.38);
+    }
+
+    .cheatsheet h3 {
+      margin-bottom: 15px;
+    }
+
+    .cheat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .cheat-grid code {
+      padding: 11px;
+      border: 1px solid #2d3a4e;
+      border-radius: 8px;
+      background: rgba(5, 9, 15, 0.78);
+      color: #c9f6ff;
+      font-size: 0.75rem;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 42px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1000px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-nav {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .side-nav strong {
+        grid-column: 1 / -1;
+      }
+
+      .sample-grid,
+      .playground {
+        grid-template-columns: 1fr;
+      }
+
+      .controls {
+        border-right: 0;
+        border-bottom: 1px solid #354157;
+      }
+
+      .direction-grid,
+      .fill-grid,
+      .four-col {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 680px) {
+      .top-nav {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 52px;
+      }
+
+      h1 {
+        font-size: clamp(3.2rem, 18vw, 5.5rem);
+      }
+
+      .hero-stage {
+        min-height: 390px;
+      }
+
+      .orbit {
+        width: 230px;
+        height: 230px;
+      }
+
+      .side-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .two-col,
+      .three-col,
+      .patterns,
+      .property-grid,
+      .cheat-grid,
+      .direction-grid,
+      .fill-grid,
+      .four-col {
+        grid-template-columns: 1fr;
+      }
+
+      .race-row {
+        grid-template-columns: 86px minmax(0, 1fr);
+      }
+
+      .lesson-section {
+        padding-top: 56px;
+      }
+
+      .compare-table {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .progress,
+      .side-nav,
+      .hero-actions,
+      .copy-button,
+      .control-actions {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+        color: black;
+      }
+
+      .page,
+      .lesson-layout {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="CSS Animation Lab home">
+        <span class="brand-mark" aria-hidden="true">▶</span>
+        <span>Animation.Lab</span>
+      </a>
+
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="#keyframes">Keyframes</a>
+        <a href="#properties">Properties</a>
+        <a href="#playground">Playground</a>
+        <a href="#patterns">Patterns</a>
+        <a href="#practice">Practice</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="page">
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">Developer edition // Interactive CSS course</p>
+          <h1 id="hero-title">CSS <span class="glow">Animations.</span></h1>
+          <p class="hero-copy">
+            Learn how to create automatic, repeating, paused, reversed, and
+            multi-stage motion with <code>@keyframes</code>. Every concept includes
+            code, a live result, and an experiment you can run.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#foundations">Start learning <span aria-hidden="true">↓</span></a>
+            <a class="button" href="#playground">Open generator</a>
+          </div>
+        </div>
+
+        <div class="hero-stage" aria-label="Animated orbit demonstration">
+          <code class="hero-code one">@keyframes orbit { to { rotate: 360deg; } }</code>
+          <div class="orbit">
+            <div class="orbit-dot"></div>
+            <div class="orbit-dot two"></div>
+            <div class="orbit-center">CSS<br>LOOP</div>
+          </div>
+          <code class="hero-code two">animation: orbit 9s linear infinite;</code>
+        </div>
+      </section>
+
+      <div class="lesson-layout">
+        <aside class="side-nav" aria-label="Lesson sections">
+          <strong>Course map</strong>
+          <a href="#foundations">1. Foundations</a>
+          <a href="#keyframes">2. Keyframes</a>
+          <a href="#properties">3. Properties</a>
+          <a href="#timing">4. Timing</a>
+          <a href="#direction">5. Direction</a>
+          <a href="#control">6. Control</a>
+          <a href="#playground">7. Generator</a>
+          <a href="#patterns">8. Patterns</a>
+          <a href="#advanced">9. Advanced</a>
+          <a href="#mistakes">10. Mistakes</a>
+          <a href="#practice">11. Practice</a>
+        </aside>
+
+        <article class="lesson-content">
+          <!-- 1. FOUNDATIONS -->
+          <section class="lesson-section" id="foundations">
+            <div class="lesson-number">1</div>
+            <p class="eyebrow">The big idea</p>
+            <h2>Animations run through defined stages</h2>
+            <p class="lead">
+              A CSS animation connects an element to a named set of keyframes. Unlike
+              a transition, it can start automatically, contain many stages, repeat,
+              reverse, pause, and continue without another state change.
+            </p>
+
+            <div class="two-col">
+              <div class="card">
+                <div class="concept-icon" aria-hidden="true">↔</div>
+                <h3>Transition</h3>
+                <p>Usually needs a property change such as hover, focus, or a class added with JavaScript.</p>
+              </div>
+              <div class="card">
+                <div class="concept-icon" aria-hidden="true">∞</div>
+                <h3>Animation</h3>
+                <p>Can run automatically, repeat forever, and move through any number of keyframe stages.</p>
+              </div>
+            </div>
+
+            <div class="definition">
+              <strong>Mental model:</strong> <code>@keyframes</code> describes the
+              timeline. The <code>animation</code> properties describe how the
+              element plays that timeline.
+            </div>
+
+            <table class="compare-table">
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>Transition</th>
+                  <th>Animation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Needs a trigger?</td>
+                  <td>Usually yes</td>
+                  <td>No; it can start on page load</td>
+                </tr>
+                <tr>
+                  <td>Number of stages</td>
+                  <td>Usually start and end</td>
+                  <td>Any number from 0% to 100%</td>
+                </tr>
+                <tr>
+                  <td>Can repeat?</td>
+                  <td>Only after another state change</td>
+                  <td>Yes, with a count or <code>infinite</code></td>
+                </tr>
+                <tr>
+                  <td>Can pause?</td>
+                  <td>Not with a dedicated property</td>
+                  <td>Yes, using <code>animation-play-state</code></td>
+                </tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 2. KEYFRAMES -->
+          <section class="lesson-section" id="keyframes">
+            <div class="lesson-number">2</div>
+            <p class="eyebrow">Create the timeline</p>
+            <h2>Define motion with <code>@keyframes</code></h2>
+            <p class="lead">
+              Give the animation a name, define its visual stages, then assign that
+              name to an element.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Your first CSS animation</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">CSS</span>
+                  <pre><code>@keyframes bounce {
+  from {
+    transform:
+      translateY(30px)
+      rotate(-4deg);
+  }
+
+  to {
+    transform:
+      translateY(-30px)
+      rotate(4deg);
+  }
+}
+
+.box {
+  animation:
+    bounce 1.4s
+    ease-in-out infinite alternate;
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Live result</span>
+                  <div class="basic-box">BOUNCE</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">💡</span>
+              <div>
+                <strong><code>from</code> and <code>to</code> are aliases</strong>
+                <span><code>from</code> means <code>0%</code>; <code>to</code> means <code>100%</code>.</span>
+              </div>
+            </div>
+
+            <h3>Use percentages for multiple stages</h3>
+            <p>
+              Percentages show where each state occurs during one animation cycle.
+              You do not need to list every percentage; the browser calculates the
+              values between keyframes.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Three-stage timeline</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">CSS</span>
+                  <pre><code>@keyframes journey {
+  0% {
+    left: 0;
+    transform: rotate(0) scale(1);
+  }
+
+  50% {
+    left: 50%;
+    transform: rotate(180deg) scale(1.25);
+  }
+
+  100% {
+    left: 100%;
+    transform: rotate(360deg) scale(1);
+  }
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">0% → 50% → 100%</span>
+                  <div class="keyframe-track">
+                    <div class="keyframe-object">3 STEP</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. PROPERTIES -->
+          <section class="lesson-section" id="properties">
+            <div class="lesson-number">3</div>
+            <p class="eyebrow">Control playback</p>
+            <h2>The eight main animation properties</h2>
+            <p class="lead">
+              These properties select the timeline and control its speed, repetition,
+              direction, delay, final state, and playback status.
+            </p>
+
+            <div class="property-grid">
+              <div class="property">
+                <code>animation-name</code>
+                <p>The name written after <code>@keyframes</code>.</p>
+              </div>
+              <div class="property">
+                <code>animation-duration</code>
+                <p>How long one complete cycle takes.</p>
+              </div>
+              <div class="property">
+                <code>animation-timing-function</code>
+                <p>How the speed changes during each segment.</p>
+              </div>
+              <div class="property">
+                <code>animation-delay</code>
+                <p>How long to wait before beginning. It can be negative.</p>
+              </div>
+              <div class="property">
+                <code>animation-iteration-count</code>
+                <p>Number of cycles: <code>1</code>, <code>3</code>, or <code>infinite</code>.</p>
+              </div>
+              <div class="property">
+                <code>animation-direction</code>
+                <p>Normal, reverse, alternate, or alternate-reverse.</p>
+              </div>
+              <div class="property">
+                <code>animation-fill-mode</code>
+                <p>Styles applied before and after the active animation.</p>
+              </div>
+              <div class="property">
+                <code>animation-play-state</code>
+                <p>Switches playback between <code>running</code> and <code>paused</code>.</p>
+              </div>
+            </div>
+
+            <h3 style="margin-top:34px;">Animation shorthand</h3>
+            <div class="syntax" aria-label="Animation shorthand parts">
+              <span>name</span>
+              <span>duration</span>
+              <span>timing-function</span>
+              <span>delay</span>
+              <span>iteration-count</span>
+              <span>direction</span>
+              <span>fill-mode</span>
+              <span>play-state</span>
+            </div>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Shorthand and longhand</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="code-panel">
+                <span class="code-label">CSS</span>
+                <pre><code>/* Shorthand */
+.box {
+  animation:
+    bounce 1.5s ease-in-out
+    200ms 3 alternate both running;
+}
+
+/* Equivalent longhand */
+.box {
+  animation-name: bounce;
+  animation-duration: 1.5s;
+  animation-timing-function: ease-in-out;
+  animation-delay: 200ms;
+  animation-iteration-count: 3;
+  animation-direction: alternate;
+  animation-fill-mode: both;
+  animation-play-state: running;
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">⏱</span>
+              <div>
+                <strong>A duration is required for visible motion</strong>
+                <span>The default <code>animation-duration</code> is <code>0s</code>, so an animation with only a name appears not to run.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. TIMING -->
+          <section class="lesson-section" id="timing">
+            <div class="lesson-number">4</div>
+            <p class="eyebrow">Timing functions</p>
+            <h2>Change the feeling of movement</h2>
+            <p class="lead">
+              Each racer below runs for exactly two seconds. Only its timing function
+              changes.
+            </p>
+
+            <div class="lab race-lab">
+              <div class="lab-head">
+                <div>
+                  <h3>Easing race</h3>
+                  <p class="hint">Notice acceleration, deceleration, and stepped movement.</p>
+                </div>
+                <button class="button primary" id="run-race" type="button">Run race</button>
+              </div>
+
+              <div class="race-list" id="race-list" aria-live="polite">
+                <div class="race-row">
+                  <code>linear</code>
+                  <div class="race-track"><div class="race-dot linear"></div></div>
+                </div>
+                <div class="race-row">
+                  <code>ease</code>
+                  <div class="race-track"><div class="race-dot ease"></div></div>
+                </div>
+                <div class="race-row">
+                  <code>ease-in</code>
+                  <div class="race-track"><div class="race-dot ease-in"></div></div>
+                </div>
+                <div class="race-row">
+                  <code>ease-out</code>
+                  <div class="race-track"><div class="race-dot ease-out"></div></div>
+                </div>
+                <div class="race-row">
+                  <code>steps(5)</code>
+                  <div class="race-track"><div class="race-dot steps"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="three-col" style="margin-top:18px;">
+              <div class="card">
+                <h3><code>linear</code></h3>
+                <p>Constant speed. Useful for spinners, marquees, and mechanical motion.</p>
+              </div>
+              <div class="card">
+                <h3><code>ease-out</code></h3>
+                <p>Fast response with a soft ending. Useful for elements entering a screen.</p>
+              </div>
+              <div class="card">
+                <h3><code>steps()</code></h3>
+                <p>Jumps between fixed states. Useful for sprite sheets and typing cursors.</p>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">⏪</span>
+              <div>
+                <strong>Negative delays begin partway through</strong>
+                <span><code>animation-delay: -2s</code> makes the animation appear as if it started two seconds earlier.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. DIRECTION AND FILL -->
+          <section class="lesson-section" id="direction">
+            <div class="lesson-number">5</div>
+            <p class="eyebrow">Iteration, direction, fill</p>
+            <h2>Repeat, reverse, and preserve states</h2>
+
+            <h3>Animation direction</h3>
+            <p class="lead">
+              The same keyframes can run forward, backward, or alternate direction on
+              every cycle.
+            </p>
+
+            <div class="direction-grid">
+              <div class="direction-card">
+                <code>normal</code>
+                <div class="direction-track"><div class="direction-box normal"></div></div>
+              </div>
+              <div class="direction-card">
+                <code>reverse</code>
+                <div class="direction-track"><div class="direction-box reverse"></div></div>
+              </div>
+              <div class="direction-card">
+                <code>alternate</code>
+                <div class="direction-track"><div class="direction-box alternate"></div></div>
+              </div>
+              <div class="direction-card">
+                <code>alternate-reverse</code>
+                <div class="direction-track"><div class="direction-box alternate-reverse"></div></div>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">🔁</span>
+              <div>
+                <strong>Iteration count may be fractional</strong>
+                <span><code>animation-iteration-count: 2.5</code> runs two full cycles and half of the third cycle.</span>
+              </div>
+            </div>
+
+            <h3 style="margin-top:36px;">Animation fill mode</h3>
+            <p>
+              Fill mode controls whether the first and last keyframe styles apply
+              outside the animation’s active time. Press replay and observe the delay
+              and ending.
+            </p>
+
+            <div class="lab fill-lab">
+              <div class="lab-head">
+                <div>
+                  <h3>Fill-mode comparison</h3>
+                  <p class="hint">Each animation has a 700ms delay.</p>
+                </div>
+                <button class="button primary" id="replay-fill" type="button">Replay</button>
+              </div>
+
+              <div class="fill-grid playing" id="fill-grid">
+                <div class="fill-card">
+                  <code>none</code>
+                  <div class="fill-stage"><div class="fill-box none"></div></div>
+                </div>
+                <div class="fill-card">
+                  <code>forwards</code>
+                  <div class="fill-stage"><div class="fill-box forwards"></div></div>
+                </div>
+                <div class="fill-card">
+                  <code>backwards</code>
+                  <div class="fill-stage"><div class="fill-box backwards"></div></div>
+                </div>
+                <div class="fill-card">
+                  <code>both</code>
+                  <div class="fill-stage"><div class="fill-box both"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <table class="compare-table" style="margin-top:20px;">
+              <thead>
+                <tr>
+                  <th>Fill mode</th>
+                  <th>Before animation</th>
+                  <th>After animation</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>none</code></td><td>Normal element styles</td><td>Normal element styles</td></tr>
+                <tr><td><code>forwards</code></td><td>Normal element styles</td><td>Last keyframe</td></tr>
+                <tr><td><code>backwards</code></td><td>First keyframe during delay</td><td>Normal element styles</td></tr>
+                <tr><td><code>both</code></td><td>First keyframe during delay</td><td>Last keyframe</td></tr>
+              </tbody>
+            </table>
+          </section>
+
+          <!-- 6. CONTROL -->
+          <section class="lesson-section" id="control">
+            <div class="lesson-number">6</div>
+            <p class="eyebrow">Pause and restart</p>
+            <h2>Control animations with CSS and JavaScript</h2>
+            <p class="lead">
+              Use <code>animation-play-state</code> to pause without losing the
+              animation’s current position.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Pause and resume</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">CSS + JavaScript</span>
+                  <pre><code>.spinner {
+  animation: spin 2.5s linear infinite;
+}
+
+.spinner.paused {
+  animation-play-state: paused;
+}
+
+button.addEventListener("click", () =&gt; {
+  spinner.classList.toggle("paused");
+});</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Live control</span>
+                  <div style="display:grid;place-items:center;gap:18px;">
+                    <div class="play-state-demo" id="play-state-demo">RUN</div>
+                    <button class="button primary" id="toggle-play-state" type="button">Pause</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <h3>Restart an animation</h3>
+            <p>
+              Remove the animation class, force the browser to recalculate layout, then
+              add the class again.
+            </p>
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Reliable replay pattern</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="code-panel">
+                <span class="code-label">JavaScript</span>
+                <pre><code>element.classList.remove("animate");
+void element.offsetWidth; // force reflow
+element.classList.add("animate");</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7. PLAYGROUND -->
+          <section class="lesson-section" id="playground">
+            <div class="lesson-number">7</div>
+            <p class="eyebrow">Interactive generator</p>
+            <h2>Build an animation and copy the CSS</h2>
+            <p class="lead">
+              Select an animation, change its playback properties, and press replay.
+              The generated CSS updates immediately.
+            </p>
+
+            <div class="playground">
+              <div class="controls">
+                <h3>Animation controls</h3>
+
+                <div class="control">
+                  <label for="preset">Keyframe preset</label>
+                  <select id="preset">
+                    <option value="preset-bounce">Bounce</option>
+                    <option value="preset-spin">Spin and morph</option>
+                    <option value="preset-pulse">Pulse</option>
+                    <option value="preset-slide">Slide</option>
+                    <option value="preset-shake">Shake</option>
+                  </select>
+                </div>
+
+                <div class="control">
+                  <div class="control-row">
+                    <label for="duration">Duration</label>
+                    <output id="duration-output" for="duration">1200ms</output>
+                  </div>
+                  <input id="duration" type="range" min="100" max="4000" step="100" value="1200">
+                </div>
+
+                <div class="control">
+                  <div class="control-row">
+                    <label for="delay">Delay</label>
+                    <output id="delay-output" for="delay">0ms</output>
+                  </div>
+                  <input id="delay" type="range" min="-2000" max="2000" step="100" value="0">
+                </div>
+
+                <div class="control">
+                  <div class="control-row">
+                    <label for="iterations">Iterations</label>
+                    <output id="iterations-output" for="iterations">infinite</output>
+                  </div>
+                  <input id="iterations" type="range" min="1" max="6" value="6">
+                </div>
+
+                <div class="control">
+                  <label for="easing">Timing function</label>
+                  <select id="easing">
+                    <option value="ease">ease</option>
+                    <option value="linear">linear</option>
+                    <option value="ease-in">ease-in</option>
+                    <option value="ease-out">ease-out</option>
+                    <option value="ease-in-out">ease-in-out</option>
+                    <option value="steps(5, end)">steps(5, end)</option>
+                    <option value="cubic-bezier(0.22, 1, 0.36, 1)">custom cubic-bezier</option>
+                  </select>
+                </div>
+
+                <div class="control">
+                  <label for="direction-select">Direction</label>
+                  <select id="direction-select">
+                    <option value="normal">normal</option>
+                    <option value="reverse">reverse</option>
+                    <option value="alternate" selected>alternate</option>
+                    <option value="alternate-reverse">alternate-reverse</option>
+                  </select>
+                </div>
+
+                <div class="control">
+                  <label for="fill-mode">Fill mode</label>
+                  <select id="fill-mode">
+                    <option value="none">none</option>
+                    <option value="forwards">forwards</option>
+                    <option value="backwards">backwards</option>
+                    <option value="both" selected>both</option>
+                  </select>
+                </div>
+
+                <div class="control-actions">
+                  <button class="button primary" id="replay-animation" type="button">Replay</button>
+                  <button class="button" id="pause-animation" type="button">Pause</button>
+                </div>
+              </div>
+
+              <div class="playground-output">
+                <div class="playground-stage">
+                  <div class="play-object" id="play-object">CSS<br>ANIMATE</div>
+                </div>
+                <div class="generated-code">
+                  <span class="code-label">Generated CSS</span>
+                  <pre><code id="generated-code"></code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 8. PATTERNS -->
+          <section class="lesson-section" id="patterns">
+            <div class="lesson-number">8</div>
+            <p class="eyebrow">Practical patterns</p>
+            <h2>Animations used in real interfaces</h2>
+            <p class="lead">
+              These examples combine keyframes with timing, iteration, direction, and
+              fill settings.
+            </p>
+
+            <div class="patterns">
+              <article class="pattern-card">
+                <h3>Loading spinner</h3>
+                <code>900ms linear infinite</code>
+                <div class="pattern-result"><div class="loader" aria-label="Loading"></div></div>
+              </article>
+
+              <article class="pattern-card">
+                <h3>Skeleton shimmer</h3>
+                <code>translateX(-100% → 100%)</code>
+                <div class="pattern-result">
+                  <div class="skeleton" aria-label="Loading content placeholder">
+                    <span></span><span></span><span></span><span></span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pattern-card">
+                <h3>Notification entrance</h3>
+                <code>translate + opacity keyframes</code>
+                <div class="pattern-result">
+                  <div class="notification">
+                    <span class="notification-icon">✓</span>
+                    <span><strong>Saved successfully</strong><br><small style="color:var(--muted);">Your changes are secure.</small></span>
+                  </div>
+                </div>
+              </article>
+
+              <article class="pattern-card">
+                <h3>Typing effect</h3>
+                <code>steps() + width + cursor blink</code>
+                <div class="pattern-result">
+                  <div class="typing">CSS animations rock!</div>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- 9. ADVANCED -->
+          <section class="lesson-section" id="advanced">
+            <div class="lesson-number">9</div>
+            <p class="eyebrow">Multiple animations and events</p>
+            <h2>Combine timelines and detect lifecycle events</h2>
+
+            <h3>Multiple animations</h3>
+            <p>
+              Separate animations with commas. The first name uses the first duration,
+              timing function, and other values; the second uses the second values.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Three animations on one element</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">CSS</span>
+                  <pre><code>.box {
+  animation:
+    float 2s ease-in-out infinite alternate,
+    color-change 4s linear infinite,
+    morph 3s ease-in-out infinite alternate;
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Live result</span>
+                  <div class="multi-animation"></div>
+                </div>
+              </div>
+            </div>
+
+            <h3>Animation events</h3>
+            <p>
+              JavaScript can listen for <code>animationstart</code>,
+              <code>animationiteration</code>, <code>animationend</code>, and
+              <code>animationcancel</code>.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Watch lifecycle events</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">JavaScript</span>
+                  <pre><code>box.addEventListener(
+  "animationstart",
+  () =&gt; log("started")
+);
+
+box.addEventListener(
+  "animationiteration",
+  () =&gt; log("iteration")
+);
+
+box.addEventListener(
+  "animationend",
+  () =&gt; log("finished")
+);</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Event console</span>
+                  <div style="width:min(320px,100%);display:grid;place-items:center;">
+                    <div class="event-box" id="event-box">EVENT</div>
+                    <div class="event-log" id="event-log">Press Run events.</div>
+                    <button class="button primary" id="run-events" type="button" style="margin-top:12px;">Run events</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 10. MISTAKES -->
+          <section class="lesson-section" id="mistakes">
+            <div class="lesson-number">10</div>
+            <p class="eyebrow">Performance and accessibility</p>
+            <h2>Common mistakes to avoid</h2>
+
+            <div class="mistakes">
+              <article class="mistake">
+                <div class="mistake-number">1</div>
+                <div>
+                  <h3>Forgetting the duration</h3>
+                  <p>The default duration is zero seconds, making the change invisible.</p>
+                  <code>animation: bounce 1s ease;</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">2</div>
+                <div>
+                  <h3>Using the wrong keyframe name</h3>
+                  <p><code>animation-name</code> must exactly match the name after <code>@keyframes</code>.</p>
+                  <code>@keyframes pulse { ... } → animation-name: pulse;</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">3</div>
+                <div>
+                  <h3>Animating expensive layout properties</h3>
+                  <p>Prefer <code>transform</code> and <code>opacity</code> for smooth interface motion.</p>
+                  <code>transform: translateX(100px); opacity: 0;</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">4</div>
+                <div>
+                  <h3>Too many infinite animations</h3>
+                  <p>Constant movement can distract users, consume resources, and weaken visual hierarchy.</p>
+                  <code>Use infinite only when continuous motion communicates status.</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">5</div>
+                <div>
+                  <h3>Expecting the last keyframe to remain automatically</h3>
+                  <p>Use <code>animation-fill-mode: forwards</code> or set the final state in the base class.</p>
+                  <code>animation: enter 500ms ease-out forwards;</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">6</div>
+                <div>
+                  <h3>Ignoring reduced-motion preferences</h3>
+                  <p>Provide a low-motion experience for users who request it.</p>
+                  <code>@media (prefers-reduced-motion: reduce) { ... }</code>
+                </div>
+              </article>
+            </div>
+
+            <h3 style="margin-top:36px;">Accessible reduced-motion pattern</h3>
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Reduce non-essential motion</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="code-panel">
+                <span class="code-label">CSS</span>
+                <pre><code>@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- 11. PRACTICE -->
+          <section class="lesson-section" id="practice">
+            <div class="lesson-number">11</div>
+            <p class="eyebrow">Practice and review</p>
+            <h2>Test your understanding</h2>
+            <p class="lead">
+              Try each exercise before opening its answer. Then edit this file and
+              create your own variation.
+            </p>
+
+            <details>
+              <summary>Exercise 1: Rotate an element continuously once per second.</summary>
+              <div>
+                <code>@keyframes spin { to { transform: rotate(360deg); } } .box { animation: spin 1s linear infinite; }</code>
+              </div>
+            </details>
+
+            <details>
+              <summary>Exercise 2: Run an animation forward, then backward, forever.</summary>
+              <div>
+                Use <code>animation-iteration-count: infinite</code> and <code>animation-direction: alternate</code>.
+              </div>
+            </details>
+
+            <details>
+              <summary>Exercise 3: Keep the final keyframe after a one-time entrance animation.</summary>
+              <div>
+                Use <code>animation-fill-mode: forwards</code>, or the shorthand <code>animation: enter 500ms ease-out forwards;</code>.
+              </div>
+            </details>
+
+            <details>
+              <summary>Exercise 4: Start an animation halfway through its cycle.</summary>
+              <div>
+                Use a negative delay. For a four-second animation, <code>animation-delay: -2s</code> starts at approximately the halfway point.
+              </div>
+            </details>
+
+            <details>
+              <summary>Exercise 5: Why is <code>steps()</code> different from <code>linear</code>?</summary>
+              <div>
+                <code>linear</code> changes continuously at a constant speed. <code>steps()</code> jumps between a fixed number of discrete states.
+              </div>
+            </details>
+
+            <details>
+              <summary>Exercise 6: Pause an animation without resetting its current position.</summary>
+              <div>
+                Set <code>animation-play-state: paused</code>. Return it to <code>running</code> to continue from the same point.
+              </div>
+            </details>
+
+            <div class="cheatsheet">
+              <h3>CSS animation cheat sheet</h3>
+              <div class="cheat-grid">
+                <code>@keyframes name { from { ... } to { ... } }</code>
+                <code>animation: name 1s ease 0s 1 normal none running;</code>
+                <code>animation-iteration-count: infinite;</code>
+                <code>animation-direction: alternate;</code>
+                <code>animation-fill-mode: both;</code>
+                <code>animation-play-state: paused;</code>
+                <code>animation-delay: -500ms;</code>
+                <code>animation-timing-function: steps(5, end);</code>
+              </div>
+            </div>
+          </section>
+        </article>
+      </div>
+
+      <footer>
+        <strong>CSS Animation Lab // Developer Edition</strong>
+        <p>One self-contained lesson. No frameworks, libraries, or internet connection required.</p>
+      </footer>
+    </div>
+  </main>
+
+  <div class="sr-only" id="copy-status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const byId = (id) => document.getElementById(id);
+
+      /* Reading progress */
+      const progress = byId("progress");
+      const updateProgress = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const percentage = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progress.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
+      };
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      /* Active navigation */
+      const sections = [...document.querySelectorAll(".lesson-section")];
+      const navLinks = [...document.querySelectorAll(".side-nav a")];
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (!visible) return;
+
+          navLinks.forEach((link) => {
+            link.classList.toggle("active", link.hash === `#${visible.target.id}`);
+          });
+        }, {
+          rootMargin: "-18% 0px -68% 0px",
+          threshold: [0, 0.2, 0.5]
+        });
+
+        sections.forEach((section) => observer.observe(section));
+      }
+
+      /* Copy code */
+      const copyStatus = byId("copy-status");
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const sample = button.closest(".sample");
+          const code = sample?.querySelector("pre code")?.textContent.trim() || "";
+          const oldText = button.textContent;
+
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {
+            const textarea = document.createElement("textarea");
+            textarea.value = code;
+            textarea.setAttribute("readonly", "");
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          }
+
+          button.textContent = "Copied!";
+          copyStatus.textContent = "Code copied to clipboard.";
+          window.setTimeout(() => {
+            button.textContent = oldText;
+          }, 1400);
+        });
+      });
+
+      /* Timing race */
+      const raceList = byId("race-list");
+      const runRace = byId("run-race");
+
+      runRace.addEventListener("click", () => {
+        raceList.classList.remove("running");
+        raceList.querySelectorAll(".race-track").forEach((track) => {
+          const dot = track.querySelector(".race-dot");
+          const distance = Math.max(0, track.clientWidth - dot.offsetWidth - 12);
+          dot.style.setProperty("--race-distance", `${distance}px`);
+        });
+        void raceList.offsetWidth;
+        raceList.classList.add("running");
+        runRace.textContent = "Replay race";
+      });
+
+      /* Fill mode replay */
+      const fillGrid = byId("fill-grid");
+      byId("replay-fill").addEventListener("click", () => {
+        fillGrid.classList.remove("playing");
+        void fillGrid.offsetWidth;
+        fillGrid.classList.add("playing");
+      });
+
+      /* Play-state example */
+      const playStateDemo = byId("play-state-demo");
+      const playStateButton = byId("toggle-play-state");
+
+      playStateButton.addEventListener("click", () => {
+        const paused = playStateDemo.classList.toggle("paused");
+        playStateDemo.textContent = paused ? "PAUSED" : "RUN";
+        playStateButton.textContent = paused ? "Resume" : "Pause";
+      });
+
+      /* Interactive animation generator */
+      const controls = {
+        preset: byId("preset"),
+        duration: byId("duration"),
+        delay: byId("delay"),
+        iterations: byId("iterations"),
+        easing: byId("easing"),
+        direction: byId("direction-select"),
+        fill: byId("fill-mode")
+      };
+
+      const outputs = {
+        duration: byId("duration-output"),
+        delay: byId("delay-output"),
+        iterations: byId("iterations-output")
+      };
+
+      const playObject = byId("play-object");
+      const generatedCode = byId("generated-code");
+      const replayButton = byId("replay-animation");
+      const pauseButton = byId("pause-animation");
+      let paused = false;
+
+      const presetCode = {
+        "preset-bounce":
+`@keyframes bounce {
+  0%, 100% { transform: translateY(28px); }
+  50% { transform: translateY(-55px) scale(1.08); }
+}`,
+        "preset-spin":
+`@keyframes spin {
+  from { transform: rotate(0) scale(0.82); }
+  to { transform: rotate(360deg) scale(1.15); }
+}`,
+        "preset-pulse":
+`@keyframes pulse {
+  0%, 100% { transform: scale(0.86); }
+  50% { transform: scale(1.22); }
+}`,
+        "preset-slide":
+`@keyframes slide {
+  from { transform: translateX(-105px); opacity: 0.25; }
+  to { transform: translateX(105px); opacity: 0.8; }
+}`,
+        "preset-shake":
+`@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-22px) rotate(-5deg); }
+  40% { transform: translateX(20px) rotate(4deg); }
+  60% { transform: translateX(-14px) rotate(-3deg); }
+  80% { transform: translateX(10px) rotate(2deg); }
+}`
+      };
+
+      const readableName = (preset) => preset.replace("preset-", "");
+
+      const readGenerator = () => {
+        const iterationValue = Number(controls.iterations.value);
+        return {
+          preset: controls.preset.value,
+          duration: Number(controls.duration.value),
+          delay: Number(controls.delay.value),
+          iterations: iterationValue === 6 ? "infinite" : String(iterationValue),
+          easing: controls.easing.value,
+          direction: controls.direction.value,
+          fill: controls.fill.value
+        };
+      };
+
+      const updateGenerator = () => {
+        const value = readGenerator();
+        const name = readableName(value.preset);
+
+        outputs.duration.textContent = `${value.duration}ms`;
+        outputs.delay.textContent = `${value.delay}ms`;
+        outputs.iterations.textContent = value.iterations;
+
+        generatedCode.textContent =
+`${presetCode[value.preset]}
+
+.box {
+  animation:
+    ${name}
+    ${value.duration}ms
+    ${value.easing}
+    ${value.delay}ms
+    ${value.iterations}
+    ${value.direction}
+    ${value.fill};
+}`;
+      };
+
+      const applyGenerator = () => {
+        const value = readGenerator();
+
+        playObject.style.animation = "none";
+        void playObject.offsetWidth;
+        playObject.style.animationName = value.preset;
+        playObject.style.animationDuration = `${value.duration}ms`;
+        playObject.style.animationTimingFunction = value.easing;
+        playObject.style.animationDelay = `${value.delay}ms`;
+        playObject.style.animationIterationCount = value.iterations;
+        playObject.style.animationDirection = value.direction;
+        playObject.style.animationFillMode = value.fill;
+        playObject.style.animationPlayState = "running";
+        paused = false;
+        pauseButton.textContent = "Pause";
+      };
+
+      Object.values(controls).forEach((control) => {
+        control.addEventListener("input", updateGenerator);
+      });
+
+      replayButton.addEventListener("click", applyGenerator);
+
+      pauseButton.addEventListener("click", () => {
+        paused = !paused;
+        playObject.style.animationPlayState = paused ? "paused" : "running";
+        pauseButton.textContent = paused ? "Resume" : "Pause";
+      });
+
+      updateGenerator();
+      applyGenerator();
+
+      /* Animation lifecycle event lab */
+      const eventBox = byId("event-box");
+      const eventLog = byId("event-log");
+      const eventLines = [];
+
+      const addEventLine = (message) => {
+        eventLines.push(message);
+        eventLog.textContent = eventLines.slice(-4).join("\n");
+      };
+
+      eventBox.addEventListener("animationstart", () => addEventLine("animationstart → cycle 1"));
+      eventBox.addEventListener("animationiteration", () => addEventLine("animationiteration → next cycle"));
+      eventBox.addEventListener("animationend", () => addEventLine("animationend → finished"));
+
+      byId("run-events").addEventListener("click", () => {
+        eventLines.length = 0;
+        eventLog.textContent = "Restarting…";
+        eventBox.classList.remove("running");
+        void eventBox.offsetWidth;
+        eventBox.classList.add("running");
+      });
+    })();
+  </script>
+</body>
+</html>

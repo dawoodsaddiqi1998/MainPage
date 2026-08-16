@@ -1,0 +1,2743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="An interactive lesson on designing accessible forms with CSS, including a complete contact form.">
+  <title>CSS Form Design Lab — Developer Edition</title>
+
+  <style>
+    /* =========================================================
+       CSS FORM DESIGN LAB
+       One offline-ready file containing the lesson and examples.
+       ========================================================= */
+
+    :root {
+      color-scheme: dark;
+      --bg: #070a10;
+      --panel: #0e141e;
+      --panel-2: #151c28;
+      --panel-3: #192333;
+      --line: #2a364a;
+      --line-bright: #42536e;
+      --text: #f4f8ff;
+      --muted: #96a5ba;
+      --cyan: #39e7ff;
+      --cyan-2: #78f2ff;
+      --violet: #8e62ff;
+      --magenta: #d25eff;
+      --lime: #c8ff5b;
+      --green: #55e2a5;
+      --red: #ff6862;
+      --orange: #ff9d51;
+      --code: #05080d;
+      --radius-sm: 9px;
+      --radius-md: 17px;
+      --radius-lg: 26px;
+      --content: 1200px;
+      --shadow: 0 25px 75px rgba(0, 0, 0, 0.46);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(57, 231, 255, 0.022) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 231, 255, 0.022) 1px, transparent 1px),
+        radial-gradient(circle at 10% 4%, rgba(57, 231, 255, 0.12), transparent 28rem),
+        radial-gradient(circle at 93% 13%, rgba(142, 98, 255, 0.14), transparent 34rem),
+        var(--bg);
+      background-size: 40px 40px, 40px 40px, auto, auto, auto;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+    }
+
+    body::before,
+    body::after {
+      position: fixed;
+      z-index: -1;
+      width: 330px;
+      height: 330px;
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+      filter: blur(120px);
+      opacity: 0.13;
+    }
+
+    body::before {
+      top: 34%;
+      left: -210px;
+      background: var(--cyan);
+    }
+
+    body::after {
+      right: -210px;
+      bottom: 4%;
+      background: var(--violet);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    input,
+    textarea,
+    select,
+    a,
+    summary {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible,
+    select:focus-visible,
+    a:focus-visible,
+    summary:focus-visible {
+      outline: 3px solid rgba(57, 231, 255, 0.34);
+      outline-offset: 3px;
+    }
+
+    code,
+    pre,
+    .mono {
+      font-family: "Cascadia Code", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    .progress {
+      position: fixed;
+      z-index: 100;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--violet), var(--magenta));
+      box-shadow: 0 0 18px rgba(57, 231, 255, 0.75);
+    }
+
+    .topbar {
+      position: sticky;
+      z-index: 50;
+      top: 0;
+      border-bottom: 1px solid rgba(74, 94, 126, 0.34);
+      background: rgba(7, 10, 16, 0.84);
+      box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(18px);
+    }
+
+    .topbar-inner {
+      width: min(calc(100% - 32px), var(--content));
+      min-height: 72px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      color: #f7fbff;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-weight: 900;
+      letter-spacing: -0.045em;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.7);
+      border-radius: 11px;
+      background: linear-gradient(135deg, var(--cyan), #7484ff);
+      color: #041017;
+      box-shadow:
+        0 0 0 1px rgba(57, 231, 255, 0.12),
+        0 0 24px rgba(57, 231, 255, 0.3);
+    }
+
+    .top-nav {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .top-nav a {
+      padding: 8px 11px;
+      border-radius: 999px;
+      color: #8f9db2;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 750;
+      text-decoration: none;
+      transition: color 180ms ease, background-color 180ms ease;
+    }
+
+    .top-nav a:hover {
+      color: var(--cyan);
+      background: rgba(57, 231, 255, 0.07);
+    }
+
+    .page {
+      width: min(calc(100% - 32px), var(--content));
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-bottom: 20px;
+      color: var(--cyan);
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 900;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      text-shadow: 0 0 14px rgba(57, 231, 255, 0.28);
+    }
+
+    .eyebrow::before {
+      width: 25px;
+      height: 2px;
+      border-radius: 999px;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+      content: "";
+    }
+
+    .hero {
+      min-height: 670px;
+      padding: 82px 0 72px;
+      display: grid;
+      grid-template-columns: 0.94fr 1.06fr;
+      align-items: center;
+      gap: 58px;
+    }
+
+    h1 {
+      margin-bottom: 24px;
+      font-size: clamp(3.1rem, 7.3vw, 6.8rem);
+      line-height: 0.91;
+      letter-spacing: -0.078em;
+    }
+
+    h1 .glow {
+      color: var(--cyan);
+      text-shadow:
+        0 0 12px rgba(57, 231, 255, 0.65),
+        0 0 46px rgba(57, 231, 255, 0.2);
+    }
+
+    .hero-copy {
+      max-width: 620px;
+      margin-bottom: 32px;
+      color: #a5b3c7;
+      font-size: clamp(1.04rem, 1.5vw, 1.22rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      min-height: 44px;
+      padding: 10px 17px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid #3b485e;
+      border-radius: 10px;
+      background: linear-gradient(180deg, rgba(25, 33, 46, 0.98), rgba(12, 17, 25, 0.98));
+      color: #eaf2ff;
+      cursor: pointer;
+      font-weight: 850;
+      text-decoration: none;
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.04),
+        0 9px 24px rgba(0, 0, 0, 0.28);
+      transition:
+        border-color 180ms ease,
+        transform 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+    }
+
+    .button:hover {
+      border-color: rgba(57, 231, 255, 0.58);
+      box-shadow:
+        0 0 0 1px rgba(57, 231, 255, 0.11),
+        0 0 24px rgba(57, 231, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .button:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    .button.primary {
+      border-color: transparent;
+      background: linear-gradient(120deg, #22d5eb, #687cff 55%, #9463ff);
+      color: #04080d;
+      box-shadow:
+        0 0 0 1px rgba(116, 242, 255, 0.2),
+        0 10px 30px rgba(57, 231, 255, 0.18);
+    }
+
+    .button.primary:hover {
+      background: linear-gradient(120deg, #7cf4ff, #8c99ff 55%, #af8bff);
+      box-shadow:
+        0 0 20px rgba(57, 231, 255, 0.3),
+        0 0 40px rgba(142, 98, 255, 0.14);
+    }
+
+    .button.small {
+      min-height: 34px;
+      padding: 6px 11px;
+      font-size: 0.78rem;
+      box-shadow: none;
+    }
+
+    .hero-stage {
+      position: relative;
+      min-height: 520px;
+      padding: 38px;
+      display: grid;
+      place-items: center;
+      border: 1px solid #354258;
+      border-radius: var(--radius-lg);
+      background:
+        linear-gradient(rgba(57, 231, 255, 0.065) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 231, 255, 0.065) 1px, transparent 1px),
+        radial-gradient(circle at 50% 44%, rgba(142, 98, 255, 0.12), transparent 15rem),
+        #0c121b;
+      background-size: 26px 26px, 26px 26px, auto, auto;
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.035),
+        inset 0 0 70px rgba(57, 231, 255, 0.02),
+        var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-stage::before {
+      position: absolute;
+      inset: 23px;
+      border: 1px dashed rgba(57, 231, 255, 0.2);
+      border-radius: 19px;
+      content: "";
+    }
+
+    .hero-form {
+      position: relative;
+      z-index: 2;
+      width: min(370px, 92%);
+      padding: 24px;
+      border: 1px solid #3a475e;
+      border-radius: 18px;
+      background: linear-gradient(150deg, rgba(24, 32, 45, 0.97), rgba(9, 14, 21, 0.98));
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.04),
+        0 22px 58px rgba(0, 0, 0, 0.44),
+        0 0 36px rgba(57, 231, 255, 0.055);
+    }
+
+    .window-dots {
+      width: 7px;
+      height: 7px;
+      margin-bottom: 22px;
+      border-radius: 50%;
+      background: #ff5f57;
+      box-shadow: 14px 0 #febc2e, 28px 0 #28c840;
+    }
+
+    .hero-field {
+      margin-bottom: 15px;
+    }
+
+    .hero-field label {
+      display: block;
+      margin-bottom: 6px;
+      color: #b9c7d9;
+      font-size: 0.76rem;
+      font-weight: 800;
+    }
+
+    .hero-field input,
+    .hero-field textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 10px 12px;
+      border: 1px solid #35445b;
+      border-radius: 9px;
+      background: #080d14;
+      color: white;
+      outline: none;
+      transition: border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .hero-field textarea {
+      min-height: 78px;
+      resize: none;
+    }
+
+    .hero-field input:focus,
+    .hero-field textarea:focus {
+      border-color: var(--cyan);
+      box-shadow:
+        0 0 0 3px rgba(57, 231, 255, 0.11),
+        0 0 20px rgba(57, 231, 255, 0.08);
+    }
+
+    .hero-submit {
+      width: 100%;
+      min-height: 44px;
+      border: 0;
+      border-radius: 9px;
+      background: linear-gradient(120deg, var(--cyan), #7182ff);
+      color: #041017;
+      font-weight: 900;
+    }
+
+    .hero-code {
+      position: absolute;
+      z-index: 3;
+      padding: 8px 11px;
+      border: 1px solid rgba(57, 231, 255, 0.28);
+      border-radius: 8px;
+      background: rgba(4, 8, 13, 0.94);
+      color: var(--lime);
+      box-shadow: 0 0 24px rgba(57, 231, 255, 0.12);
+      font-size: clamp(0.66rem, 1vw, 0.78rem);
+    }
+
+    .hero-code.one {
+      top: 44px;
+      left: 22px;
+      transform: rotate(-3deg);
+    }
+
+    .hero-code.two {
+      right: 20px;
+      bottom: 45px;
+      color: #9fe4ff;
+      transform: rotate(3deg);
+    }
+
+    .lesson-layout {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 1fr);
+      align-items: start;
+      gap: 40px;
+    }
+
+    .side-nav {
+      position: sticky;
+      top: 98px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: rgba(11, 16, 24, 0.88);
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(16px);
+    }
+
+    .side-nav strong {
+      display: block;
+      padding: 8px 10px 11px;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .side-nav a {
+      padding: 8px 10px;
+      display: block;
+      border-radius: 7px;
+      color: #8492a8;
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.78rem;
+      font-weight: 750;
+      text-decoration: none;
+      transition: color 160ms ease, background-color 160ms ease;
+    }
+
+    .side-nav a:hover,
+    .side-nav a.active {
+      color: var(--cyan);
+      background: rgba(57, 231, 255, 0.065);
+      box-shadow: inset 2px 0 var(--cyan);
+    }
+
+    .lesson-content {
+      min-width: 0;
+    }
+
+    .lesson-section {
+      padding: 78px 0 28px;
+      scroll-margin-top: 82px;
+    }
+
+    .lesson-number {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.58);
+      border-radius: 11px;
+      background: #101923;
+      color: var(--cyan);
+      box-shadow:
+        0 0 0 1px rgba(57, 231, 255, 0.07),
+        0 0 20px rgba(57, 231, 255, 0.16);
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-weight: 950;
+      transform: rotate(-3deg);
+    }
+
+    .lesson-section h2 {
+      margin-bottom: 16px;
+      font-size: clamp(2.15rem, 4.4vw, 3.9rem);
+      line-height: 1.03;
+      letter-spacing: -0.057em;
+    }
+
+    .lead {
+      max-width: 800px;
+      margin-bottom: 30px;
+      color: #a5b2c4;
+      font-size: 1.07rem;
+    }
+
+    .two-col,
+    .three-col,
+    .four-col {
+      display: grid;
+      gap: 17px;
+    }
+
+    .two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .three-col {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .four-col {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .card,
+    .sample,
+    .lab,
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: linear-gradient(150deg, rgba(21, 28, 40, 0.97), rgba(11, 16, 24, 0.98));
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.034),
+        0 16px 42px rgba(0, 0, 0, 0.24);
+    }
+
+    .card {
+      padding: 23px;
+    }
+
+    .card h3 {
+      margin-bottom: 7px;
+      font-size: 1.14rem;
+    }
+
+    .card p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .concept-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 18px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.42);
+      border-radius: 13px;
+      background: linear-gradient(135deg, rgba(57, 231, 255, 0.17), rgba(142, 98, 255, 0.15));
+      color: var(--cyan);
+      box-shadow: 0 0 20px rgba(57, 231, 255, 0.1);
+      font-size: 1.25rem;
+    }
+
+    .definition {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border-left: 4px solid var(--cyan);
+      border-radius: 0 11px 11px 0;
+      background: rgba(57, 231, 255, 0.055);
+      color: #dbe8f8;
+    }
+
+    .note {
+      margin: 22px 0;
+      padding: 17px 19px;
+      display: flex;
+      gap: 12px;
+      border: 1px solid rgba(200, 255, 91, 0.22);
+      border-radius: 12px;
+      background: rgba(200, 255, 91, 0.05);
+      color: #d8e5f4;
+    }
+
+    .note-icon {
+      flex: 0 0 auto;
+      font-size: 1.2rem;
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .sample {
+      margin: 24px 0;
+      overflow: hidden;
+    }
+
+    .sample-head {
+      min-height: 48px;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(17, 23, 34, 0.96);
+    }
+
+    .sample-head strong {
+      font-size: 0.88rem;
+    }
+
+    .sample-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+    }
+
+    .code-panel {
+      position: relative;
+      min-width: 0;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 70px),
+        var(--code);
+    }
+
+    .code-panel::before,
+    .generated-code::before {
+      position: absolute;
+      z-index: 2;
+      top: 17px;
+      left: 18px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ff5f57;
+      box-shadow: 14px 0 #febc2e, 28px 0 #28c840;
+      content: "";
+    }
+
+    .code-label,
+    .result-label {
+      position: absolute;
+      z-index: 3;
+      top: 12px;
+      right: 14px;
+      color: #6f8099;
+      font-size: 0.67rem;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      padding: 46px 22px 24px;
+      overflow-x: auto;
+      color: #e5edf9;
+      font-size: 0.82rem;
+      line-height: 1.7;
+      tab-size: 2;
+      white-space: pre;
+    }
+
+    .result-panel,
+    .mini-stage,
+    .form-stage {
+      position: relative;
+      min-height: 285px;
+      padding: 48px 24px 24px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(rgba(57, 231, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(57, 231, 255, 0.06) 1px, transparent 1px),
+        radial-gradient(circle at 50% 50%, rgba(142, 98, 255, 0.1), transparent 13rem),
+        #0c1119;
+      background-size: 22px 22px, 22px 22px, auto, auto;
+      overflow: hidden;
+    }
+
+    .hint {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    /* Reusable teaching-form styles */
+    .demo-form {
+      width: min(360px, 100%);
+    }
+
+    .field {
+      margin-bottom: 17px;
+    }
+
+    .field label,
+    .fieldset-label {
+      display: block;
+      margin-bottom: 7px;
+      color: #c5d1e1;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .required {
+      color: var(--orange);
+    }
+
+    .field-help {
+      margin: 6px 0 0;
+      color: #75859c;
+      font-size: 0.75rem;
+    }
+
+    .text-control,
+    .select-control {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 12px;
+      border: 1px solid #36455d;
+      border-radius: 10px;
+      background: #080d14;
+      color: #eef5ff;
+      caret-color: var(--cyan);
+      outline: none;
+      transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+    }
+
+    textarea.text-control {
+      min-height: 108px;
+      line-height: 1.5;
+      resize: vertical;
+    }
+
+    .text-control::placeholder {
+      color: #63738a;
+      opacity: 1;
+    }
+
+    .text-control:hover,
+    .select-control:hover {
+      border-color: #546783;
+      background: #0a1018;
+    }
+
+    .text-control:focus,
+    .select-control:focus {
+      border-color: var(--cyan);
+      background: #091119;
+      box-shadow:
+        0 0 0 3px rgba(57, 231, 255, 0.11),
+        0 0 20px rgba(57, 231, 255, 0.075);
+    }
+
+    .text-control:disabled,
+    .select-control:disabled {
+      cursor: not-allowed;
+      opacity: 0.52;
+    }
+
+    .text-control[readonly] {
+      border-style: dashed;
+      color: #98a6ba;
+    }
+
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap::after {
+      position: absolute;
+      top: 50%;
+      right: 14px;
+      color: var(--cyan);
+      content: "⌄";
+      pointer-events: none;
+      transform: translateY(-58%);
+    }
+
+    .select-control {
+      padding-right: 42px;
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .demo-submit {
+      width: 100%;
+      min-height: 46px;
+      border: 0;
+      border-radius: 10px;
+      background: linear-gradient(120deg, var(--cyan), #7282ff);
+      color: #041017;
+      cursor: pointer;
+      font-weight: 900;
+      box-shadow:
+        0 9px 25px rgba(57, 231, 255, 0.15),
+        0 0 0 1px rgba(116, 242, 255, 0.15);
+      transition: transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
+    }
+
+    .demo-submit:hover {
+      filter: brightness(1.12);
+      box-shadow:
+        0 0 22px rgba(57, 231, 255, 0.26),
+        0 13px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .demo-submit:active {
+      transform: translateY(1px) scale(0.985);
+    }
+
+    .demo-submit:disabled {
+      cursor: not-allowed;
+      filter: grayscale(0.7);
+      opacity: 0.55;
+      transform: none;
+    }
+
+    .choice-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .choice {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #c1cede;
+      cursor: pointer;
+      font-size: 0.86rem;
+    }
+
+    .choice input {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      margin: 2px 0 0;
+      display: grid;
+      place-content: center;
+      border: 1px solid #53647e;
+      background: #080d14;
+      cursor: pointer;
+      appearance: none;
+      transition:
+        border-color 160ms ease,
+        background-color 160ms ease,
+        box-shadow 160ms ease,
+        transform 160ms ease;
+    }
+
+    .choice input[type="checkbox"] {
+      border-radius: 6px;
+    }
+
+    .choice input[type="radio"] {
+      border-radius: 50%;
+    }
+
+    .choice input::before {
+      width: 10px;
+      height: 10px;
+      content: "";
+      transform: scale(0);
+      transition: transform 150ms ease;
+    }
+
+    .choice input[type="checkbox"]::before {
+      border-radius: 3px;
+      background: #041017;
+      clip-path: polygon(14% 44%, 0 59%, 40% 100%, 100% 18%, 84% 4%, 38% 70%);
+    }
+
+    .choice input[type="radio"]::before {
+      border-radius: 50%;
+      background: #041017;
+    }
+
+    .choice input:checked {
+      border-color: var(--cyan);
+      background: linear-gradient(135deg, var(--cyan), #7382ff);
+      box-shadow: 0 0 14px rgba(57, 231, 255, 0.3);
+    }
+
+    .choice input:checked::before {
+      transform: scale(1);
+    }
+
+    .choice input:focus-visible {
+      outline: 3px solid rgba(57, 231, 255, 0.25);
+      outline-offset: 3px;
+    }
+
+    fieldset {
+      min-width: 0;
+      margin: 0 0 18px;
+      padding: 0;
+      border: 0;
+    }
+
+    legend {
+      width: 100%;
+      margin-bottom: 8px;
+      color: #c5d1e1;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .state-card {
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: #0b1119;
+    }
+
+    .state-card code {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--cyan);
+      font-size: 0.74rem;
+    }
+
+    .state-control {
+      width: 100%;
+      min-height: 42px;
+      padding: 9px 11px;
+      border: 1px solid #394960;
+      border-radius: 8px;
+      background: #070c12;
+      color: white;
+    }
+
+    .state-control.focus-example {
+      border-color: var(--cyan);
+      box-shadow: 0 0 0 3px rgba(57, 231, 255, 0.11);
+    }
+
+    .state-control.invalid-example {
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(255, 104, 98, 0.1);
+    }
+
+    .state-control.valid-example {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(85, 226, 165, 0.1);
+    }
+
+    .validation-form.was-validated .text-control:invalid,
+    .validation-form .text-control.touched:invalid,
+    .contact-form.was-validated .form-control:invalid,
+    .contact-form .form-control.touched:invalid {
+      border-color: var(--red);
+      box-shadow:
+        0 0 0 3px rgba(255, 104, 98, 0.09),
+        0 0 18px rgba(255, 104, 98, 0.07);
+    }
+
+    .validation-form.was-validated .text-control:valid,
+    .validation-form .text-control.touched:valid,
+    .contact-form.was-validated .form-control:valid,
+    .contact-form .form-control.touched:valid {
+      border-color: var(--green);
+      box-shadow: 0 0 0 3px rgba(85, 226, 165, 0.075);
+    }
+
+    .error-message {
+      display: none;
+      margin: 6px 0 0;
+      color: #ff8b86;
+      font-size: 0.75rem;
+    }
+
+    .validation-form.was-validated .text-control:invalid + .error-message,
+    .validation-form .text-control.touched:invalid + .error-message,
+    .contact-form.was-validated .form-control:invalid ~ .error-message,
+    .contact-form .form-control.touched:invalid ~ .error-message {
+      display: block;
+    }
+
+    .contact-form .form-group.invalid > .error-message {
+      display: block;
+    }
+
+    .validation-summary {
+      display: none;
+      margin-bottom: 18px;
+      padding: 13px 14px;
+      border: 1px solid rgba(255, 104, 98, 0.3);
+      border-radius: 10px;
+      background: rgba(255, 104, 98, 0.07);
+      color: #ffaaa6;
+      font-size: 0.83rem;
+    }
+
+    .validation-summary.visible {
+      display: block;
+    }
+
+    .design-lab {
+      display: grid;
+      grid-template-columns: minmax(280px, 0.85fr) minmax(340px, 1.15fr);
+      border: 1px solid #3a485e;
+      border-radius: 20px;
+      background: #0d131c;
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.04),
+        0 28px 80px rgba(0, 0, 0, 0.44);
+      overflow: hidden;
+    }
+
+    .design-controls {
+      padding: 24px;
+      border-right: 1px solid #354157;
+      background: linear-gradient(155deg, rgba(23, 31, 44, 0.98), rgba(11, 16, 24, 0.98));
+    }
+
+    .design-controls h3 {
+      margin-bottom: 20px;
+    }
+
+    .control {
+      margin-bottom: 17px;
+    }
+
+    .control-row {
+      margin-bottom: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .control label {
+      font-size: 0.82rem;
+      font-weight: 850;
+    }
+
+    .control output {
+      padding: 2px 7px;
+      border: 1px solid rgba(57, 231, 255, 0.18);
+      border-radius: 6px;
+      background: rgba(57, 231, 255, 0.07);
+      color: var(--cyan);
+      font-family: "Cascadia Code", Consolas, monospace;
+      font-size: 0.73rem;
+      font-weight: 850;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      accent-color: var(--cyan);
+      cursor: pointer;
+    }
+
+    .design-output {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: minmax(380px, 1fr) auto;
+    }
+
+    .design-preview {
+      --preview-hue: 188;
+      --preview-radius: 10px;
+      --preview-height: 46px;
+      min-height: 380px;
+      padding: 34px;
+      display: grid;
+      place-items: center;
+      background:
+        linear-gradient(hsla(var(--preview-hue), 90%, 60%, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, hsla(var(--preview-hue), 90%, 60%, 0.06) 1px, transparent 1px),
+        #0a0f17;
+      background-size: 22px 22px;
+    }
+
+    .preview-form {
+      width: min(340px, 100%);
+      padding: 22px;
+      border: 1px solid #334158;
+      border-radius: calc(var(--preview-radius) + 7px);
+      background: #101720;
+      box-shadow: 0 18px 48px rgba(0, 0, 0, 0.36);
+    }
+
+    .preview-form h3 {
+      margin-bottom: 17px;
+    }
+
+    .preview-form label {
+      display: block;
+      margin-bottom: 6px;
+      color: #c8d3e2;
+      font-size: 0.77rem;
+      font-weight: 800;
+    }
+
+    .preview-form input {
+      width: 100%;
+      height: var(--preview-height);
+      margin-bottom: 14px;
+      padding: 9px 11px;
+      border: 1px solid #3a4960;
+      border-radius: var(--preview-radius);
+      background: #080d14;
+      color: white;
+    }
+
+    .preview-form input:focus {
+      border-color: hsl(var(--preview-hue), 90%, 62%);
+      outline: none;
+      box-shadow: 0 0 0 3px hsla(var(--preview-hue), 90%, 60%, 0.12);
+    }
+
+    .preview-form button {
+      width: 100%;
+      height: var(--preview-height);
+      border: 0;
+      border-radius: var(--preview-radius);
+      background: linear-gradient(120deg, hsl(var(--preview-hue), 90%, 60%), hsl(calc(var(--preview-hue) + 65), 85%, 67%));
+      color: #041017;
+      font-weight: 900;
+    }
+
+    .generated-code {
+      position: relative;
+      min-height: 175px;
+      border-top: 1px solid #354157;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.018), transparent 70px),
+        var(--code);
+    }
+
+    .generated-code pre {
+      padding-top: 42px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* Complete contact form */
+    .contact-shell {
+      --form-accent: #39e7ff;
+      display: grid;
+      grid-template-columns: 0.75fr 1.25fr;
+      border: 1px solid #3a485e;
+      border-radius: 22px;
+      background: #0d131c;
+      box-shadow:
+        inset 0 1px rgba(255, 255, 255, 0.04),
+        0 30px 90px rgba(0, 0, 0, 0.48);
+      overflow: hidden;
+    }
+
+    .contact-info {
+      position: relative;
+      padding: 38px;
+      background:
+        radial-gradient(circle at 10% 0, rgba(57, 231, 255, 0.15), transparent 18rem),
+        radial-gradient(circle at 100% 100%, rgba(142, 98, 255, 0.16), transparent 20rem),
+        #101722;
+      overflow: hidden;
+    }
+
+    .contact-info::after {
+      position: absolute;
+      right: -70px;
+      bottom: -70px;
+      width: 200px;
+      height: 200px;
+      border: 1px solid rgba(57, 231, 255, 0.2);
+      border-radius: 50%;
+      content: "";
+      box-shadow:
+        0 0 0 28px rgba(57, 231, 255, 0.025),
+        0 0 0 58px rgba(142, 98, 255, 0.02);
+    }
+
+    .contact-info h3 {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 12px;
+      font-size: 1.8rem;
+      letter-spacing: -0.04em;
+    }
+
+    .contact-info > p {
+      position: relative;
+      z-index: 2;
+      color: #a3b1c4;
+    }
+
+    .contact-points {
+      position: relative;
+      z-index: 2;
+      margin: 28px 0 0;
+      padding: 0;
+      display: grid;
+      gap: 14px;
+      list-style: none;
+    }
+
+    .contact-points li {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #c4d0df;
+      font-size: 0.88rem;
+    }
+
+    .contact-point-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(57, 231, 255, 0.24);
+      border-radius: 9px;
+      background: rgba(57, 231, 255, 0.07);
+      color: var(--cyan);
+    }
+
+    .contact-form {
+      padding: 38px;
+      background: linear-gradient(150deg, #151c28, #0b1018);
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 17px;
+    }
+
+    .form-group {
+      min-width: 0;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      color: #c7d2e1;
+      font-size: 0.8rem;
+      font-weight: 850;
+    }
+
+    .form-control {
+      width: 100%;
+      min-height: 47px;
+      padding: 10px 12px;
+      border: 1px solid #36455d;
+      border-radius: 10px;
+      background: #080d14;
+      color: #eef5ff;
+      caret-color: var(--form-accent);
+      outline: none;
+      transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+    }
+
+    textarea.form-control {
+      min-height: 126px;
+      line-height: 1.5;
+      resize: vertical;
+    }
+
+    .form-control::placeholder {
+      color: #62738a;
+    }
+
+    .form-control:hover {
+      border-color: #52657f;
+      background: #0a1018;
+    }
+
+    .form-control:focus {
+      border-color: var(--form-accent);
+      background: #091119;
+      box-shadow:
+        0 0 0 3px rgba(57, 231, 255, 0.105),
+        0 0 20px rgba(57, 231, 255, 0.07);
+    }
+
+    .contact-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 18px;
+    }
+
+    .contact-form .choice {
+      font-size: 0.8rem;
+    }
+
+    .terms-row {
+      padding: 13px;
+      border: 1px solid #2f3c50;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .contact-submit {
+      width: 100%;
+      min-height: 48px;
+      margin-top: 2px;
+      border: 0;
+      border-radius: 10px;
+      background: linear-gradient(120deg, var(--form-accent), #7583ff);
+      color: #041017;
+      cursor: pointer;
+      font-weight: 950;
+      box-shadow:
+        0 10px 28px rgba(57, 231, 255, 0.16),
+        0 0 0 1px rgba(116, 242, 255, 0.14);
+      transition: transform 180ms ease, filter 180ms ease, box-shadow 180ms ease;
+    }
+
+    .contact-submit:hover {
+      filter: brightness(1.12);
+      box-shadow:
+        0 0 22px rgba(57, 231, 255, 0.25),
+        0 14px 34px rgba(0, 0, 0, 0.34);
+      transform: translateY(-2px);
+    }
+
+    .success-message {
+      display: none;
+      margin-bottom: 18px;
+      padding: 14px;
+      border: 1px solid rgba(85, 226, 165, 0.3);
+      border-radius: 10px;
+      background: rgba(85, 226, 165, 0.07);
+      color: #88efbf;
+      font-size: 0.84rem;
+    }
+
+    .success-message.visible {
+      display: block;
+    }
+
+    .mistakes {
+      display: grid;
+      gap: 13px;
+    }
+
+    .mistake {
+      padding: 17px;
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 14px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: linear-gradient(150deg, #141b27, #0a0f17);
+    }
+
+    .mistake-number {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(142, 98, 255, 0.3);
+      border-radius: 10px;
+      background: rgba(142, 98, 255, 0.1);
+      color: #beaaff;
+      font-weight: 950;
+    }
+
+    .mistake h3 {
+      margin-bottom: 4px;
+    }
+
+    .mistake p {
+      margin-bottom: 6px;
+      color: var(--muted);
+    }
+
+    .mistake code {
+      color: var(--cyan);
+      font-size: 0.79rem;
+    }
+
+    .compare-table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: #0e141e;
+      overflow: hidden;
+    }
+
+    .compare-table th,
+    .compare-table td {
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .compare-table th {
+      background: #151d29;
+      color: #b9c7d9;
+      font-size: 0.76rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .compare-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    details {
+      margin-bottom: 11px;
+    }
+
+    summary {
+      padding: 15px 17px;
+      cursor: pointer;
+      font-weight: 850;
+    }
+
+    details > div {
+      padding: 0 17px 17px;
+      color: var(--muted);
+    }
+
+    details code {
+      color: var(--cyan);
+    }
+
+    .cheatsheet {
+      margin-top: 28px;
+      padding: 25px;
+      border: 1px solid rgba(57, 231, 255, 0.36);
+      border-radius: 19px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(142, 98, 255, 0.22), transparent 18rem),
+        linear-gradient(135deg, rgba(57, 231, 255, 0.08), rgba(142, 98, 255, 0.075)),
+        #101720;
+      box-shadow:
+        0 0 38px rgba(57, 231, 255, 0.07),
+        0 24px 60px rgba(0, 0, 0, 0.38);
+    }
+
+    .cheatsheet h3 {
+      margin-bottom: 15px;
+    }
+
+    .cheat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 11px;
+    }
+
+    .cheat-grid code {
+      padding: 11px;
+      border: 1px solid #2d3a4e;
+      border-radius: 8px;
+      background: rgba(5, 9, 15, 0.78);
+      color: #c9f6ff;
+      font-size: 0.75rem;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 42px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    @media (max-width: 1000px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side-nav {
+        position: static;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .side-nav strong {
+        grid-column: 1 / -1;
+      }
+
+      .sample-grid,
+      .design-lab,
+      .contact-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .design-controls {
+        border-right: 0;
+        border-bottom: 1px solid #354157;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .top-nav {
+        display: none;
+      }
+
+      .hero {
+        min-height: auto;
+        padding-top: 52px;
+      }
+
+      h1 {
+        font-size: clamp(3.15rem, 18vw, 5.4rem);
+      }
+
+      .hero-stage {
+        min-height: 440px;
+        padding: 25px;
+      }
+
+      .side-nav {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .two-col,
+      .three-col,
+      .four-col,
+      .states-grid,
+      .form-grid,
+      .cheat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .contact-info,
+      .contact-form {
+        padding: 26px;
+      }
+
+      .lesson-section {
+        padding-top: 56px;
+      }
+
+      .compare-table {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .progress,
+      .side-nav,
+      .hero-actions,
+      .copy-button,
+      .design-controls {
+        display: none !important;
+      }
+
+      body {
+        background: white;
+        color: black;
+      }
+
+      .page,
+      .lesson-layout {
+        width: 100%;
+        display: block;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#top" aria-label="CSS Form Design Lab home">
+        <span class="brand-mark" aria-hidden="true">⌨</span>
+        <span>Form.Design</span>
+      </a>
+
+      <nav class="top-nav" aria-label="Primary navigation">
+        <a href="#inputs">Inputs</a>
+        <a href="#choices">Choices</a>
+        <a href="#states">States</a>
+        <a href="#validation">Validation</a>
+        <a href="#contact-form">Contact form</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="page">
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <p class="eyebrow">Developer edition // Interactive CSS course</p>
+          <h1 id="hero-title">Design better <span class="glow">forms.</span></h1>
+          <p class="hero-copy">
+            Learn how to style labels, inputs, textareas, buttons, checkboxes,
+            radio buttons, select boxes, focus states, and validation feedback.
+            Finish by building a clean, responsive contact form.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="#foundations">Start learning <span aria-hidden="true">↓</span></a>
+            <a class="button" href="#contact-form">View practice form</a>
+          </div>
+        </div>
+
+        <div class="hero-stage" aria-label="Styled form preview">
+          <code class="hero-code one">input:focus { border-color: cyan; }</code>
+          <div class="hero-form">
+            <div class="window-dots" aria-hidden="true"></div>
+            <div class="hero-field">
+              <label for="hero-name">Your name</label>
+              <input id="hero-name" type="text" placeholder="Jane Smith">
+            </div>
+            <div class="hero-field">
+              <label for="hero-message">Message</label>
+              <textarea id="hero-message" placeholder="How can we help?"></textarea>
+            </div>
+            <button class="hero-submit" type="button">Send message</button>
+          </div>
+          <code class="hero-code two">button:hover { transform: translateY(-2px); }</code>
+        </div>
+      </section>
+
+      <div class="lesson-layout">
+        <aside class="side-nav" aria-label="Lesson sections">
+          <strong>Course map</strong>
+          <a href="#foundations">1. Foundations</a>
+          <a href="#inputs">2. Inputs &amp; labels</a>
+          <a href="#buttons">3. Buttons</a>
+          <a href="#choices">4. Choice controls</a>
+          <a href="#selects">5. Select boxes</a>
+          <a href="#states">6. UI states</a>
+          <a href="#validation">7. Validation</a>
+          <a href="#design-lab">8. Design lab</a>
+          <a href="#contact-form">9. Contact form</a>
+          <a href="#mistakes">10. Mistakes</a>
+          <a href="#practice">11. Practice</a>
+        </aside>
+
+        <article class="lesson-content">
+          <!-- 1. FOUNDATIONS -->
+          <section class="lesson-section" id="foundations">
+            <div class="lesson-number">1</div>
+            <p class="eyebrow">Form foundations</p>
+            <h2>Good form design begins with structure</h2>
+            <p class="lead">
+              CSS makes a form attractive, but correct HTML makes it usable. Every
+              control needs a clear purpose, a programmatically connected label, and
+              feedback that is not communicated by color alone.
+            </p>
+
+            <div class="three-col">
+              <div class="card">
+                <div class="concept-icon" aria-hidden="true">1</div>
+                <h3>Use real labels</h3>
+                <p>Connect <code>&lt;label for&gt;</code> to the control’s matching <code>id</code>.</p>
+              </div>
+              <div class="card">
+                <div class="concept-icon" aria-hidden="true">2</div>
+                <h3>Group related choices</h3>
+                <p>Use <code>&lt;fieldset&gt;</code> and <code>&lt;legend&gt;</code> for radio and checkbox groups.</p>
+              </div>
+              <div class="card">
+                <div class="concept-icon" aria-hidden="true">3</div>
+                <h3>Keep focus visible</h3>
+                <p>Keyboard users must always see which input or button is active.</p>
+              </div>
+            </div>
+
+            <div class="definition">
+              <strong>Design rule:</strong> A placeholder is an example or hint—not a
+              replacement for a visible label. Placeholder text disappears as soon as
+              the user starts typing.
+            </div>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Correct label and input connection</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="code-panel">
+                <span class="code-label">HTML</span>
+                <pre><code>&lt;label for="email"&gt;Email address&lt;/label&gt;
+&lt;input
+  id="email"
+  name="email"
+  type="email"
+  autocomplete="email"
+  required
+&gt;</code></pre>
+              </div>
+            </div>
+          </section>
+
+          <!-- 2. INPUTS AND LABELS -->
+          <section class="lesson-section" id="inputs">
+            <div class="lesson-number">2</div>
+            <p class="eyebrow">Inputs, labels, textarea</p>
+            <h2>Build a reusable field style</h2>
+            <p class="lead">
+              Style text-like controls consistently: full width, comfortable height,
+              readable padding, a clear border, and a visible focus indicator.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Text input and textarea</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">HTML + CSS</span>
+                  <pre><code>&lt;div class="field"&gt;
+  &lt;label for="full-name"&gt;Full name&lt;/label&gt;
+  &lt;input
+    class="form-control"
+    id="full-name"
+    type="text"
+    placeholder="Jane Smith"
+  &gt;
+&lt;/div&gt;
+
+.form-control {
+  width: 100%;
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid #36455d;
+  border-radius: 10px;
+  background: #080d14;
+  color: white;
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Live result</span>
+                  <form class="demo-form" onsubmit="return false;">
+                    <div class="field">
+                      <label for="demo-full-name">Full name <span class="required">*</span></label>
+                      <input class="text-control" id="demo-full-name" type="text" placeholder="Jane Smith">
+                      <p class="field-help">Use the name shown on your ID.</p>
+                    </div>
+                    <div class="field">
+                      <label for="demo-bio">Short message</label>
+                      <textarea class="text-control" id="demo-bio" placeholder="Write your message here…"></textarea>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <h3>Placeholder, disabled, and readonly states</h3>
+            <div class="states-grid">
+              <div class="state-card">
+                <code>::placeholder</code>
+                <input class="state-control" type="text" placeholder="Helpful example">
+              </div>
+              <div class="state-card">
+                <code>:disabled</code>
+                <input class="state-control" type="text" value="Unavailable field" disabled>
+              </div>
+              <div class="state-card">
+                <code>[readonly]</code>
+                <input class="state-control" type="text" value="Generated account ID" readonly>
+              </div>
+              <div class="state-card">
+                <code>textarea { resize: vertical; }</code>
+                <textarea class="state-control" style="min-height:70px;resize:vertical;">Resize me vertically</textarea>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">📱</span>
+              <div>
+                <strong>Choose meaningful input types</strong>
+                <span>Use <code>email</code>, <code>tel</code>, <code>url</code>, <code>number</code>, and <code>date</code> so mobile browsers can show better keyboards and built-in validation.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 3. BUTTONS -->
+          <section class="lesson-section" id="buttons">
+            <div class="lesson-number">3</div>
+            <p class="eyebrow">Action design</p>
+            <h2>Style buttons for every interaction state</h2>
+            <p class="lead">
+              A button should look clickable, respond to hover and press, show keyboard
+              focus, and clearly communicate when it is disabled.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Primary form button</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">CSS</span>
+                  <pre><code>.submit-button {
+  min-height: 46px;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(
+    120deg,
+    #39e7ff,
+    #7282ff
+  );
+  cursor: pointer;
+  font-weight: 900;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.submit-button:hover {
+  transform: translateY(-2px);
+}
+
+.submit-button:active {
+  transform: translateY(1px);
+}
+
+.submit-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Live states</span>
+                  <div style="width:min(330px,100%);display:grid;gap:12px;">
+                    <button class="demo-submit" type="button">Send message</button>
+                    <button class="demo-submit" type="button" disabled>Submitting…</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">⚙</span>
+              <div>
+                <strong>Always set button type</strong>
+                <span>Inside a form, <code>&lt;button&gt;</code> defaults to submission. Use <code>type="button"</code> for actions that should not submit.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 4. CHECKBOXES AND RADIOS -->
+          <section class="lesson-section" id="choices">
+            <div class="lesson-number">4</div>
+            <p class="eyebrow">Checkboxes and radio buttons</p>
+            <h2>Design custom choices without losing semantics</h2>
+            <p class="lead">
+              Checkboxes allow multiple selections. Radio buttons allow one selection
+              from a named group. Keep the native input in the document and style it
+              with <code>appearance: none</code>.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Custom checkbox and radio controls</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">CSS</span>
+                  <pre><code>.choice input {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #53647e;
+  background: #080d14;
+  appearance: none;
+}
+
+.choice input[type="checkbox"] {
+  border-radius: 6px;
+}
+
+.choice input[type="radio"] {
+  border-radius: 50%;
+}
+
+.choice input:checked {
+  border-color: #39e7ff;
+  background: #39e7ff;
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Live result</span>
+                  <form class="demo-form" onsubmit="return false;">
+                    <fieldset>
+                      <legend>Topics you are interested in</legend>
+                      <div class="choice-list">
+                        <label class="choice"><input type="checkbox" checked> Front-end development</label>
+                        <label class="choice"><input type="checkbox"> Back-end development</label>
+                        <label class="choice"><input type="checkbox"> UI/UX design</label>
+                      </div>
+                    </fieldset>
+                    <fieldset>
+                      <legend>Preferred contact method</legend>
+                      <div class="choice-list">
+                        <label class="choice"><input type="radio" name="demo-contact" checked> Email</label>
+                        <label class="choice"><input type="radio" name="demo-contact"> Phone</label>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">🎯</span>
+              <div>
+                <strong>Make the whole label clickable</strong>
+                <span>Placing the input inside its label creates a larger target and improves use on touch screens.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 5. SELECT -->
+          <section class="lesson-section" id="selects">
+            <div class="lesson-number">5</div>
+            <p class="eyebrow">Select boxes</p>
+            <h2>Style a select while keeping native behavior</h2>
+            <p class="lead">
+              Remove the default arrow with <code>appearance: none</code>, place the
+              select inside a wrapper, and create a decorative arrow on the wrapper.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Custom select box</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">HTML + CSS</span>
+                  <pre><code>&lt;div class="select-wrap"&gt;
+  &lt;select class="select-control"&gt;
+    &lt;option&gt;Choose a subject&lt;/option&gt;
+    &lt;option&gt;Support&lt;/option&gt;
+    &lt;option&gt;Sales&lt;/option&gt;
+  &lt;/select&gt;
+&lt;/div&gt;
+
+.select-wrap {
+  position: relative;
+}
+
+.select-control {
+  width: 100%;
+  appearance: none;
+  padding-right: 42px;
+}
+
+.select-wrap::after {
+  content: "⌄";
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  pointer-events: none;
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Live result</span>
+                  <div class="demo-form">
+                    <div class="field">
+                      <label for="demo-subject">Subject</label>
+                      <div class="select-wrap">
+                        <select class="select-control" id="demo-subject">
+                          <option value="">Choose a subject</option>
+                          <option>Technical support</option>
+                          <option>Sales question</option>
+                          <option>Partnership</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 6. STATES -->
+          <section class="lesson-section" id="states">
+            <div class="lesson-number">6</div>
+            <p class="eyebrow">Hover and focus states</p>
+            <h2>Show users what is happening</h2>
+            <p class="lead">
+              Interactive states are feedback. Hover confirms that a control can be
+              used. Focus shows keyboard position. Valid and invalid states explain
+              whether input meets the requirements.
+            </p>
+
+            <div class="states-grid">
+              <div class="state-card">
+                <code>Normal</code>
+                <input class="state-control" type="text" value="Default field">
+              </div>
+              <div class="state-card">
+                <code>:focus</code>
+                <input class="state-control focus-example" type="text" value="Focused field">
+              </div>
+              <div class="state-card">
+                <code>:valid</code>
+                <input class="state-control valid-example" type="text" value="Correct value">
+              </div>
+              <div class="state-card">
+                <code>:invalid</code>
+                <input class="state-control invalid-example" type="text" value="Incorrect value">
+              </div>
+            </div>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Reusable interaction states</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="code-panel">
+                <span class="code-label">CSS</span>
+                <pre><code>.form-control:hover {
+  border-color: #52657f;
+}
+
+.form-control:focus {
+  border-color: #39e7ff;
+  outline: none;
+  box-shadow:
+    0 0 0 3px rgb(57 231 255 / 11%);
+}
+
+.form-control:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}</code></pre>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">⌨</span>
+              <div>
+                <strong>Do not remove focus without replacing it</strong>
+                <span><code>outline: none</code> is acceptable only when you add an equally visible custom focus style.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 7. VALIDATION -->
+          <section class="lesson-section" id="validation">
+            <div class="lesson-number">7</div>
+            <p class="eyebrow">Validation styling</p>
+            <h2>Explain errors clearly and at the right time</h2>
+            <p class="lead">
+              Browsers provide <code>:valid</code> and <code>:invalid</code>. For a
+              calmer experience, this lesson adds a <code>.touched</code> class after
+              the user leaves a field and <code>.was-validated</code> after submit.
+            </p>
+
+            <div class="sample">
+              <div class="sample-head">
+                <strong>Interactive validation example</strong>
+                <button class="button small copy-button" type="button" data-copy>Copy code</button>
+              </div>
+              <div class="sample-grid">
+                <div class="code-panel">
+                  <span class="code-label">CSS</span>
+                  <pre><code>.form-control.touched:invalid,
+.form.was-validated
+  .form-control:invalid {
+  border-color: #ff6862;
+  box-shadow:
+    0 0 0 3px rgb(255 104 98 / 9%);
+}
+
+.form-control.touched:valid {
+  border-color: #55e2a5;
+}
+
+.form-control:invalid
+  + .error-message {
+  display: block;
+}</code></pre>
+                </div>
+                <div class="result-panel">
+                  <span class="result-label">Try invalid data</span>
+                  <form class="demo-form validation-form" id="validation-demo" novalidate>
+                    <div class="validation-summary" id="validation-demo-summary" role="alert">
+                      Please correct the highlighted fields.
+                    </div>
+                    <div class="field">
+                      <label for="validation-email">Email address <span class="required">*</span></label>
+                      <input class="text-control" id="validation-email" type="email" placeholder="name@example.com" required>
+                      <p class="error-message">Enter a valid email address.</p>
+                    </div>
+                    <div class="field">
+                      <label for="validation-code">Reference code <span class="required">*</span></label>
+                      <input class="text-control" id="validation-code" type="text" placeholder="ABC-123" pattern="[A-Z]{3}-[0-9]{3}" required>
+                      <p class="error-message">Use the format ABC-123.</p>
+                    </div>
+                    <button class="demo-submit" type="submit">Validate form</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+
+            <div class="note">
+              <span class="note-icon" aria-hidden="true">⚠</span>
+              <div>
+                <strong>Never use color alone</strong>
+                <span>Add an error message, an icon, or descriptive text. Connect messages with <code>aria-describedby</code> when building production forms.</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- 8. DESIGN LAB -->
+          <section class="lesson-section" id="design-lab">
+            <div class="lesson-number">8</div>
+            <p class="eyebrow">Interactive design lab</p>
+            <h2>Tune a form’s visual system</h2>
+            <p class="lead">
+              Change accent color, corner radius, and control height. The preview and
+              generated CSS stay synchronized.
+            </p>
+
+            <div class="design-lab">
+              <div class="design-controls">
+                <h3>Design controls</h3>
+
+                <div class="control">
+                  <div class="control-row">
+                    <label for="accent-hue">Accent hue</label>
+                    <output id="accent-hue-output" for="accent-hue">188°</output>
+                  </div>
+                  <input id="accent-hue" type="range" min="0" max="360" value="188">
+                </div>
+
+                <div class="control">
+                  <div class="control-row">
+                    <label for="corner-radius">Corner radius</label>
+                    <output id="corner-radius-output" for="corner-radius">10px</output>
+                  </div>
+                  <input id="corner-radius" type="range" min="0" max="24" value="10">
+                </div>
+
+                <div class="control">
+                  <div class="control-row">
+                    <label for="control-height">Control height</label>
+                    <output id="control-height-output" for="control-height">46px</output>
+                  </div>
+                  <input id="control-height" type="range" min="38" max="60" value="46">
+                </div>
+
+                <div class="note" style="margin-bottom:0;">
+                  <span class="note-icon" aria-hidden="true">✓</span>
+                  <div>
+                    <strong>Keep the system consistent</strong>
+                    <span>Inputs, selects, and buttons should share related heights and radii.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="design-output">
+                <div class="design-preview" id="design-preview">
+                  <form class="preview-form" onsubmit="return false;">
+                    <h3>Request access</h3>
+                    <label for="preview-email">Work email</label>
+                    <input id="preview-email" type="email" placeholder="you@company.com">
+                    <label for="preview-role">Your role</label>
+                    <input id="preview-role" type="text" placeholder="Developer">
+                    <button type="button">Join waitlist</button>
+                  </form>
+                </div>
+                <div class="generated-code">
+                  <span class="code-label">Generated CSS</span>
+                  <pre><code id="design-code"></code></pre>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <!-- 9. CONTACT FORM -->
+          <section class="lesson-section" id="contact-form">
+            <div class="lesson-number">9</div>
+            <p class="eyebrow">Practice project</p>
+            <h2>A clean, styled contact form</h2>
+            <p class="lead">
+              This complete example combines responsive layout, clear labels, text
+              inputs, a select, radio buttons, checkboxes, validation messages, focus
+              styles, and a submission success state.
+            </p>
+
+            <div class="contact-shell">
+              <aside class="contact-info">
+                <p class="eyebrow">Let’s work together</p>
+                <h3>Tell us about your project.</h3>
+                <p>Complete the form and we will respond within one business day.</p>
+                <ul class="contact-points">
+                  <li><span class="contact-point-icon" aria-hidden="true">@</span> hello@example.com</li>
+                  <li><span class="contact-point-icon" aria-hidden="true">⌁</span> Response within 24 hours</li>
+                  <li><span class="contact-point-icon" aria-hidden="true">✓</span> Your information remains private</li>
+                </ul>
+              </aside>
+
+              <form class="contact-form" id="practice-contact-form" novalidate>
+                <div class="success-message" id="contact-success" role="status">
+                  ✓ Thank you! Your form passed validation successfully. This offline lesson does not send data to a server.
+                </div>
+                <div class="validation-summary" id="contact-summary" role="alert">
+                  Please correct the highlighted fields before sending.
+                </div>
+
+                <div class="form-grid">
+                  <div class="form-group">
+                    <label for="contact-name">Full name <span class="required">*</span></label>
+                    <input class="form-control" id="contact-name" name="name" type="text" placeholder="Jane Smith" autocomplete="name" minlength="2" required>
+                    <p class="error-message">Enter at least two characters.</p>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contact-email">Email address <span class="required">*</span></label>
+                    <input class="form-control" id="contact-email" name="email" type="email" placeholder="jane@example.com" autocomplete="email" required>
+                    <p class="error-message">Enter a valid email address.</p>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contact-phone">Phone number</label>
+                    <input class="form-control" id="contact-phone" name="phone" type="tel" placeholder="+93 700 000 000" autocomplete="tel">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="contact-subject">Subject <span class="required">*</span></label>
+                    <div class="select-wrap">
+                      <select class="form-control select-control" id="contact-subject" name="subject" required>
+                        <option value="">Choose a subject</option>
+                        <option>Website development</option>
+                        <option>Software development</option>
+                        <option>Training course</option>
+                        <option>Technical support</option>
+                      </select>
+                    </div>
+                    <p class="error-message">Select a subject.</p>
+                  </div>
+
+                  <fieldset class="form-group full">
+                    <legend>Preferred contact method <span class="required">*</span></legend>
+                    <div class="contact-options">
+                      <label class="choice"><input type="radio" name="preferred-contact" value="email" checked> Email</label>
+                      <label class="choice"><input type="radio" name="preferred-contact" value="phone"> Phone</label>
+                    </div>
+                  </fieldset>
+
+                  <fieldset class="form-group full">
+                    <legend>Services you are interested in</legend>
+                    <div class="contact-options">
+                      <label class="choice"><input type="checkbox" name="services" value="design"> UI design</label>
+                      <label class="choice"><input type="checkbox" name="services" value="frontend"> Front-end</label>
+                      <label class="choice"><input type="checkbox" name="services" value="backend"> Back-end</label>
+                      <label class="choice"><input type="checkbox" name="services" value="training"> Training</label>
+                    </div>
+                  </fieldset>
+
+                  <div class="form-group full">
+                    <label for="contact-message">Project details <span class="required">*</span></label>
+                    <textarea class="form-control" id="contact-message" name="message" placeholder="Describe your project, goals, and timeline…" minlength="20" required></textarea>
+                    <p class="error-message">Write at least 20 characters.</p>
+                  </div>
+
+                  <div class="form-group full terms-row">
+                    <label class="choice">
+                      <input id="contact-terms" name="terms" type="checkbox" required>
+                      <span>I agree that my information may be used to respond to this request. <span class="required">*</span></span>
+                    </label>
+                    <p class="error-message" id="terms-error">You must accept before sending.</p>
+                  </div>
+
+                  <div class="form-group full">
+                    <button class="contact-submit" type="submit">Send message</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+
+            <details style="margin-top:22px;">
+              <summary>View the essential contact-form HTML structure</summary>
+              <div>
+                <pre style="padding:16px;background:#070b11;border-radius:10px;white-space:pre-wrap;"><code>&lt;form class="contact-form" novalidate&gt;
+  &lt;div class="form-group"&gt;
+    &lt;label for="name"&gt;Full name&lt;/label&gt;
+    &lt;input
+      class="form-control"
+      id="name"
+      name="name"
+      type="text"
+      required
+    &gt;
+    &lt;p class="error-message"&gt;
+      Enter your name.
+    &lt;/p&gt;
+  &lt;/div&gt;
+
+  &lt;button type="submit"&gt;
+    Send message
+  &lt;/button&gt;
+&lt;/form&gt;</code></pre>
+              </div>
+            </details>
+          </section>
+
+          <!-- 10. MISTAKES -->
+          <section class="lesson-section" id="mistakes">
+            <div class="lesson-number">10</div>
+            <p class="eyebrow">Form design mistakes</p>
+            <h2>Avoid these common problems</h2>
+
+            <div class="mistakes">
+              <article class="mistake">
+                <div class="mistake-number">1</div>
+                <div>
+                  <h3>Using placeholders instead of labels</h3>
+                  <p>Placeholders disappear and often use low contrast.</p>
+                  <code>Always provide a visible &lt;label&gt;.</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">2</div>
+                <div>
+                  <h3>Removing focus outlines completely</h3>
+                  <p>Keyboard users lose track of their position.</p>
+                  <code>Replace the outline with an equally visible focus ring.</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">3</div>
+                <div>
+                  <h3>Showing errors before the user interacts</h3>
+                  <p>A required empty form should not open as a wall of red fields.</p>
+                  <code>Show errors after blur or submit.</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">4</div>
+                <div>
+                  <h3>Using color as the only error signal</h3>
+                  <p>Some users cannot distinguish red and green states.</p>
+                  <code>Add descriptive text and appropriate ARIA connections.</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">5</div>
+                <div>
+                  <h3>Making controls too small</h3>
+                  <p>Small targets are difficult on touch screens and for users with motor limitations.</p>
+                  <code>Aim for comfortable controls around 44px high.</code>
+                </div>
+              </article>
+
+              <article class="mistake">
+                <div class="mistake-number">6</div>
+                <div>
+                  <h3>Using vague button text</h3>
+                  <p>“Submit” says less than “Send message,” “Create account,” or “Save changes.”</p>
+                  <code>Name the action clearly.</code>
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <!-- 11. PRACTICE -->
+          <section class="lesson-section" id="practice">
+            <div class="lesson-number">11</div>
+            <p class="eyebrow">Practice and review</p>
+            <h2>Test your understanding</h2>
+
+            <details>
+              <summary>Exercise 1: Connect a label to an email input.</summary>
+              <div><code>&lt;label for="email"&gt;Email&lt;/label&gt; &lt;input id="email" type="email"&gt;</code></div>
+            </details>
+
+            <details>
+              <summary>Exercise 2: Style an input only while it has focus.</summary>
+              <div><code>.form-control:focus { border-color: cyan; box-shadow: 0 0 0 3px rgb(0 255 255 / 12%); }</code></div>
+            </details>
+
+            <details>
+              <summary>Exercise 3: Allow users to select exactly one contact method.</summary>
+              <div>Use radio buttons with the same <code>name</code> value.</div>
+            </details>
+
+            <details>
+              <summary>Exercise 4: Allow users to select several services.</summary>
+              <div>Use checkboxes. Each checkbox may use the same name and a different value.</div>
+            </details>
+
+            <details>
+              <summary>Exercise 5: Why should the select arrow ignore pointer events?</summary>
+              <div>Because the decorative arrow sits over the select. <code>pointer-events: none</code> allows the click to reach the native select control.</div>
+            </details>
+
+            <details>
+              <summary>Exercise 6: Show an error only after submit.</summary>
+              <div>Add a class such as <code>.was-validated</code> to the form, then target <code>.was-validated .form-control:invalid</code>.</div>
+            </details>
+
+            <div class="cheatsheet">
+              <h3>CSS forms cheat sheet</h3>
+              <div class="cheat-grid">
+                <code>label { display: block; margin-bottom: 0.5rem; }</code>
+                <code>input { width: 100%; min-height: 44px; }</code>
+                <code>input:focus { outline: 3px solid ...; }</code>
+                <code>input:invalid { border-color: red; }</code>
+                <code>input:checked { background: accent; }</code>
+                <code>select { appearance: none; }</code>
+                <code>textarea { resize: vertical; }</code>
+                <code>button:disabled { cursor: not-allowed; opacity: .55; }</code>
+              </div>
+            </div>
+          </section>
+        </article>
+      </div>
+
+      <footer>
+        <strong>CSS Form Design Lab // Developer Edition</strong>
+        <p>One self-contained lesson. No frameworks, libraries, or internet connection required.</p>
+      </footer>
+    </div>
+  </main>
+
+  <div class="sr-only" id="copy-status" aria-live="polite"></div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const byId = (id) => document.getElementById(id);
+
+      /* Reading progress */
+      const progress = byId("progress");
+      const updateProgress = () => {
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const percentage = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+        progress.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
+      };
+      window.addEventListener("scroll", updateProgress, { passive: true });
+      updateProgress();
+
+      /* Active navigation */
+      const sections = [...document.querySelectorAll(".lesson-section")];
+      const navLinks = [...document.querySelectorAll(".side-nav a")];
+
+      if ("IntersectionObserver" in window) {
+        const observer = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (!visible) return;
+
+          navLinks.forEach((link) => {
+            link.classList.toggle("active", link.hash === `#${visible.target.id}`);
+          });
+        }, {
+          rootMargin: "-18% 0px -68% 0px",
+          threshold: [0, 0.2, 0.5]
+        });
+
+        sections.forEach((section) => observer.observe(section));
+      }
+
+      /* Copy code buttons */
+      const copyStatus = byId("copy-status");
+
+      document.querySelectorAll("[data-copy]").forEach((button) => {
+        button.addEventListener("click", async () => {
+          const sample = button.closest(".sample");
+          const code = sample?.querySelector("pre code")?.textContent.trim() || "";
+          const oldText = button.textContent;
+
+          try {
+            await navigator.clipboard.writeText(code);
+          } catch {
+            const textarea = document.createElement("textarea");
+            textarea.value = code;
+            textarea.setAttribute("readonly", "");
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            textarea.remove();
+          }
+
+          button.textContent = "Copied!";
+          copyStatus.textContent = "Code copied to clipboard.";
+          window.setTimeout(() => {
+            button.textContent = oldText;
+          }, 1400);
+        });
+      });
+
+      /* Validation helpers */
+      const attachTouchedValidation = (form) => {
+        const controls = [...form.querySelectorAll("input, textarea, select")];
+
+        controls.forEach((control) => {
+          const updateControlState = () => {
+            const invalid = !control.checkValidity();
+            control.setAttribute("aria-invalid", String(invalid));
+            control.closest(".form-group")?.classList.toggle("invalid", invalid);
+          };
+
+          control.addEventListener("blur", () => {
+            control.classList.add("touched");
+            updateControlState();
+          });
+
+          control.addEventListener("input", () => {
+            if (control.classList.contains("touched")) {
+              updateControlState();
+            }
+          });
+
+          control.addEventListener("change", () => {
+            if (control.classList.contains("touched")) {
+              updateControlState();
+            }
+          });
+        });
+
+        return controls;
+      };
+
+      /* Small validation demo */
+      const validationDemo = byId("validation-demo");
+      const validationDemoControls = attachTouchedValidation(validationDemo);
+      const validationDemoSummary = byId("validation-demo-summary");
+
+      validationDemo.addEventListener("submit", (event) => {
+        event.preventDefault();
+        validationDemo.classList.add("was-validated");
+        const valid = validationDemo.checkValidity();
+        validationDemoSummary.classList.toggle("visible", !valid);
+
+        validationDemoControls.forEach((control) => {
+          control.setAttribute("aria-invalid", String(!control.checkValidity()));
+        });
+
+        if (!valid) {
+          validationDemoSummary.textContent = "Please correct the highlighted fields.";
+          validationDemoSummary.style.borderColor = "rgba(255, 104, 98, 0.3)";
+          validationDemoSummary.style.background = "rgba(255, 104, 98, 0.07)";
+          validationDemoSummary.style.color = "#ffaaa6";
+          validationDemo.querySelector(":invalid")?.focus();
+        } else {
+          validationDemoSummary.textContent = "✓ Both values are valid.";
+          validationDemoSummary.style.borderColor = "rgba(85, 226, 165, 0.3)";
+          validationDemoSummary.style.background = "rgba(85, 226, 165, 0.07)";
+          validationDemoSummary.style.color = "#88efbf";
+          validationDemoSummary.classList.add("visible");
+        }
+      });
+
+      /* Form design generator */
+      const accentHue = byId("accent-hue");
+      const cornerRadius = byId("corner-radius");
+      const controlHeight = byId("control-height");
+      const designPreview = byId("design-preview");
+      const designCode = byId("design-code");
+
+      const updateDesignLab = () => {
+        const hue = Number(accentHue.value);
+        const radius = Number(cornerRadius.value);
+        const height = Number(controlHeight.value);
+
+        byId("accent-hue-output").textContent = `${hue}°`;
+        byId("corner-radius-output").textContent = `${radius}px`;
+        byId("control-height-output").textContent = `${height}px`;
+
+        designPreview.style.setProperty("--preview-hue", hue);
+        designPreview.style.setProperty("--preview-radius", `${radius}px`);
+        designPreview.style.setProperty("--preview-height", `${height}px`);
+
+        designCode.textContent =
+`.form-control {
+  min-height: ${height}px;
+  border-radius: ${radius}px;
+}
+
+.form-control:focus {
+  border-color: hsl(${hue} 90% 62%);
+  box-shadow:
+    0 0 0 3px
+    hsl(${hue} 90% 60% / 12%);
+}
+
+.submit-button {
+  min-height: ${height}px;
+  border-radius: ${radius}px;
+  background:
+    hsl(${hue} 90% 60%);
+}`;
+      };
+
+      [accentHue, cornerRadius, controlHeight].forEach((control) => {
+        control.addEventListener("input", updateDesignLab);
+      });
+      updateDesignLab();
+
+      /* Complete contact form */
+      const contactForm = byId("practice-contact-form");
+      const contactControls = attachTouchedValidation(contactForm);
+      const contactSummary = byId("contact-summary");
+      const contactSuccess = byId("contact-success");
+      const terms = byId("contact-terms");
+      const termsError = byId("terms-error");
+
+      const updateTermsError = () => {
+        const shouldShow =
+          (contactForm.classList.contains("was-validated") || terms.classList.contains("touched"))
+          && !terms.checked;
+        termsError.style.display = shouldShow ? "block" : "none";
+      };
+
+      terms.addEventListener("change", () => {
+        terms.classList.add("touched");
+        updateTermsError();
+      });
+
+      contactForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        contactForm.classList.add("was-validated");
+        contactSuccess.classList.remove("visible");
+
+        contactControls.forEach((control) => {
+          const invalid = !control.checkValidity();
+          control.setAttribute("aria-invalid", String(invalid));
+          control.closest(".form-group")?.classList.toggle("invalid", invalid);
+        });
+
+        const valid = contactForm.checkValidity();
+        contactSummary.classList.toggle("visible", !valid);
+        updateTermsError();
+
+        if (!valid) {
+          contactForm.querySelector(":invalid")?.focus();
+          return;
+        }
+
+        contactSummary.classList.remove("visible");
+        contactSuccess.classList.add("visible");
+        contactSuccess.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    })();
+  </script>
+</body>
+</html>

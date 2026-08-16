@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Pause and Resume Spinner</title>
+  </head>
+  <body>
+    <div class="spinner" ></div>
+    <button id="btn" type="button" aria-pressed="false">Pause</button>
+
+    <script>
+      const btn = document.getElementById("btn");
+      const spinner = document.querySelector(".spinner");
+
+      btn.addEventListener("click", () => {
+        spinner.classList.toggle("paused");
+
+        const isPaused = spinner.classList.contains("paused");
+        btn.textContent = isPaused ? "Resume" : "Pause";
+        btn.setAttribute("aria-pressed", String(isPaused));
+      });
+    </script>
+  </body>
+</html>
